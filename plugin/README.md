@@ -46,7 +46,7 @@
 4. **重启 DSH**（宿主代码只在启动时加载）。重启后日志会出现一行：
 
    ```text
-   [dsh-pet-ai-girls] v1.0.0 已部署 8 只 AI 娘桌宠 → C:\Users\<你>\.dsh\dsh-pet\pet（144 个文件） · 图鉴：http://127.0.0.1:<端口>/dsh-pet-ai-girls/
+   [dsh-pet-ai-girls] v1.1.0 已部署 8 只 AI 娘桌宠 → C:\Users\<你>\.dsh\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<端口>/dsh-pet-ai-girls/
    ```
 
 ### 方式 B：手工安装（等价于 `install_bundle` 的手工步骤）
@@ -155,13 +155,13 @@ pet pack 的配置就是 dsh-pet 的额外宠物配置文件：
 
 | 字段 | 说明 |
 | --- | --- |
-| `pets[0].size` | 宠物显示尺寸（像素），8 位在 300–360 之间 |
+| `pets[0].size` | 宠物显示尺寸（像素）；v1.1 起统一切换为 340，切换时插件会把它重置回 340 |
 | `pets[0].position.corner` | 初始角落：`bottom-left` / `top-left` / `bottom-right` / `top-right` |
 | `pets[0].position.marginX` / `marginY` | 距角落的水平和垂直偏移（px） |
 | `pets[0].whisperEnabled` | 是否允许碎碎念。dsh-pet 全局默认 true；本 pack 显式设为 `false`，避免默认产生模型调用（需要时自行改 true 并配好模型） |
 | `pets[0].workStatusEnabled` | 是否随 DSH 工作状态切换动画 |
 | `pets[0].fixedEnabled` | 是否固定位置（由 dsh-pet 读取的兼容字段；本 pack 设为 true） |
-| `pets[0].display` | 显示范围：`web` / `desktop` / `both` |
+| `pets[0].display` | 显示范围：`web` / `desktop` / `both` / `none`。v1.1 起「当前角色」为 `both`，其余 7 组为 `none`（由 `/petgirl` 或切换 API 自动改写） |
 | `whisperPrompt` | 该角色的人设与说话风格（碎碎念/对话用） |
 | `workStatusTexts` | 6 组工作状态气泡文案 |
 
@@ -262,7 +262,7 @@ node tools/test_host.mjs
 
 | 现象 | 排查 |
 | --- | --- |
-| 刷新后没看到 8 只宠物 | ① 确认 `%USERPROFILE%\.dsh\dsh-pet\` 存在（dsh-pet 已安装）；② 重启 DSH 看启动日志是否有 `[dsh-pet-ai-girls]` 行；③ 检查 `pet/` 下是否有 8 组 config + animation；④ 在 dsh-pet 设置里确认额外宠物未被禁用（`fixedEnabled` / 数量限制）。 |
+| 刷新后没看到 AI 娘 | ① 确认 `%USERPROFILE%\.dsh\dsh-pet\` 存在（dsh-pet 已安装）；② 重启 DSH 看启动日志是否有 `[dsh-pet-ai-girls]` 行；③ 检查 `pet/` 下是否有 8 组 config + animation；④ 当前只显示 1 只（默认 DeepSeek 娘），用 `/petgirl` 或图鉴页切换到别的角色；⑤ 在 dsh-pet 设置里确认额外宠物未被禁用（`fixedEnabled` / 数量限制）。 |
 | 日志显示「跳过 pet pack 部署」 | 常见原因：`dsh-pet` 用户目录不存在；或包内 `packs/` 未构建（需先跑 `tools/build_packs.py`）。以日志括号内原因为准。 |
 | 图鉴 404 / 打不开 | 确认 DSH 端口与 URL；图鉴路由只在 `webServer` 服务可用时注册，host 侧注册失败会在日志里 warn。 |
 | 想重新覆盖已部署素材 | 删除 `pet/.dsh-pet-ai-girls.json` 后重启 DSH，或设 `DSH_PET_AI_GIRLS_FORCE=1` 再重启。 |
