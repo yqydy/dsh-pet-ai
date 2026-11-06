@@ -1,0 +1,116 @@
+{
+  "whisperPrompt": "你是主人桌面上的「Kimi 娘」桌宠，银紫色长发、穿非对称女仆装，安静认真、记性好、擅长把复杂的事理清楚，说话轻声细语。会时不时碎碎念一句：短短一句（20字以内），温柔平静；和主人聊天时保持这个人设，说人话、不啰嗦、不解释自己、不要提你是AI。",
+  "chatMemoryRounds": 5,
+  "memes": {},
+  "workStatusTexts": [
+    [
+      "我先理一理…",
+      "正在归纳思路"
+    ],
+    [
+      "正在整理这件事",
+      "先处理一下哦"
+    ],
+    [
+      "这步记好了",
+      "整理完成，继续"
+    ],
+    [
+      "等你确认呢",
+      "这里要你点头"
+    ],
+    [
+      "都整理好啦",
+      "完成，辛苦你了"
+    ],
+    [
+      "这里有点问题呢",
+      "出了个小差错…"
+    ]
+  ],
+  "eventsRefreshSec": {
+    "balance": 1800,
+    "whisper": 1800
+  },
+  "pets": [
+    {
+      "id": "girl-kimi",
+      "name": "Kimi 娘",
+      "size": 340,
+      "balanceEnabled": false,
+      "whisperEnabled": false,
+      "workStatusEnabled": true,
+      "fixedEnabled": true,
+      "display": "none",
+      "position": {
+        "corner": "bottom-right",
+        "marginX": 40,
+        "marginY": 40
+      }
+    }
+  ],
+  "animations": {
+    "idle": [
+      "待机呼吸",
+      "原地漂浮",
+      "原地小憩"
+    ],
+    "turn": [
+      "东张西望"
+    ],
+    "drag": [
+      "被鼠标拖拽悬空反馈"
+    ],
+    "clicks": [
+      "点击回应-开心跃动",
+      "点击回应-害羞惊讶",
+      "点击回应-元气挥手"
+    ],
+    "moves": {
+      "default": {
+        "minDist": 60,
+        "maxDist": 240,
+        "margin": 20,
+        "leadSec": 2,
+        "tailSec": 2
+      },
+      "actions": []
+    },
+    "categories": [
+      {
+        "id": "小动作",
+        "weight": 18,
+        "actions": [
+          "转圈展示",
+          "伸懒腰"
+        ]
+      }
+    ],
+    "events": {
+      "balance": [
+        "待机呼吸",
+        "原地漂浮",
+        "原地小憩",
+        "点击回应-开心跃动",
+        "点击回应-害羞惊讶",
+        "点击回应-元气挥手"
+      ],
+      "whisper": [
+        "碎碎念-发呆碎碎念"
+      ],
+      "workStatus": [
+        "工作状态-思考冒泡",
+        "工作状态-忙碌点按",
+        "工作状态-清点归档",
+        "工作状态-原地踱步张望",
+        "工作状态-雀跃庆祝",
+        "工作状态-垂头叹气冒汗"
+      ]
+    }
+  },
+  "animationWeights": {
+    "idle": 82,
+    "turn": 0,
+    "move": 0
+  }
+}

@@ -1,0 +1,20 @@
+# ============================================================================
+# dsh-pet-ai-girls 的 bundle patch —— 把「AI 娘桌宠素材包」挂进 DSH 配置树
+# ============================================================================
+#
+# 【这是什么】
+#   本插件是 host-only 的纯文件插件（package.json 里**没有** dsh.client）：
+#   - 宿主启动时把包内 packs/ 的 8 组 pet pack 幂等部署进
+#     $DSH_HOME/dsh-pet/pet/（默认 ~/.dsh/dsh-pet/pet/），dsh-pet 刷新页面即加载；
+#   - 同时注册 /dsh-pet-ai-girls/ 前缀静态路由，提供本地图鉴页与 /health。
+#   浏览器半边不存在，所以这里只需要一行 insert，不需要任何 dsh.client 声明。
+#
+# 【注意】
+#   - id 必须全局唯一且与包名一致（商城/预检按它比对 entryIds）；
+#     "id: 值" 这一行不能写行尾注释，否则预检正则抓不到 entry ID。
+#   - name: 'dsh-pet-ai-girls' 解析到 package.json 的 main = ./index.js（宿主入口）。
+# ============================================================================
+
+- insert:
+    - id: dsh-pet-ai-girls
+      name: 'dsh-pet-ai-girls'      # 模块名：解析到 index.js（宿主半侧）

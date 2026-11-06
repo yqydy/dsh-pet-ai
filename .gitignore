@@ -1,0 +1,21 @@
+# ---- 可再生 / 体积大的中间产物（运行 tools/ 下的脚本即可重建，不随仓库提交） ----
+build/
+dist/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# ---- 临时 / 本机 ----
+*.log
+*.tmp
+.cache/
+node_modules/
+.pnpm-test/
+
+# ---- 系统 ----
+.DS_Store
+Thumbs.db
+desktop.ini

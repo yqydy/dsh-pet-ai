@@ -1,0 +1,63 @@
+== dsh-pet-ai-girls host smoke test ==
+项目根: F:\ceshi\dsh-pet-ai-girls
+packs 就绪: 是
+临时 DSH_HOME: C:\Users\20862\AppData\Local\Temp\dsh-pet-ai-girls-test-wI8LGt
+PASS  导出 name === "dsh-pet-ai-girls" · dsh-pet-ai-girls
+PASS  导出 inject 含 "webServer" · ["webServer","commands"]
+PASS  具名导出 apply 是函数
+PASS  default 导出含 name/inject/apply
+PASS  index.js 不引用非内置依赖
+[dsh-pet-ai-girls] v1.1.0 已部署 8 只 AI 娘桌宠 → C:\Users\20862\AppData\Local\Temp\dsh-pet-ai-girls-test-wI8LGt\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:?/dsh-pet-ai-girls/
+PASS  apply 在正常环境下不抛错
+PASS  apply 注册了图鉴路由（captured 有 handler）
+PASS  路由声明为 prefix + /dsh-pet-ai-girls
+PASS  部署：8 个 <前缀>-config.json · 8/8
+PASS  部署：8 个 <前缀>-animation 目录 · 8/8
+PASS  部署：动画 webm 共 8×17=136 个 · 136/136
+PASS  部署：版本 marker 存在且 version=1.1.0 · 1.1.0
+PASS  部署：marker.chars 覆盖 8 个前缀 · 8 个
+[dsh-pet-ai-girls] v1.1.0 pet pack 已是最新 v1.1.0，跳过部署 → C:\Users\20862\AppData\Local\Temp\dsh-pet-ai-girls-test-wI8LGt\dsh-pet\pet · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:?/dsh-pet-ai-girls/
+PASS  幂等：重复 apply 不重复部署（marker.installedAt 不变） · 2026-11-06T03:30:00.119Z
+[dsh-pet-ai-girls] v1.1.0 跳过 pet pack 部署（未发现 dsh-pet 用户数据目录（C:\Users\20862\AppData\Local\Temp\dsh-pet-ai-girls-nopet-IllZWw\dsh-pet），跳过 pet pack 部署） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:?/dsh-pet-ai-girls/
+PASS  dsh-pet 不存在时 apply 不抛错
+PASS  dsh-pet 不存在时不创建 dsh-pet/ 目录
+[dsh-pet-ai-girls] v1.1.0 pet pack 已是最新 v1.1.0，跳过部署 → C:\Users\20862\AppData\Local\Temp\dsh-pet-ai-girls-test-wI8LGt\dsh-pet\pet · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:?/dsh-pet-ai-girls/
+测试服务: http://127.0.0.1:52971/dsh-pet-ai-girls/
+PASS  /health 返回 200 · HTTP 200
+PASS  /health Content-Type 为 JSON · application/json; charset=utf-8
+PASS  /health ok=true
+PASS  /health characters 为 8 位 · 8 位
+PASS  /health version=1.1.0 · 1.1.0
+PASS  /health animationCount=17 · 17
+PASS  /health packVersion=1.1.0（读到部署 marker） · 1.1.0
+PASS  /health active 指向 8 位角色之一 · deepseek
+PASS  /api/current 返回 200 · HTTP 200
+PASS  /api/current ok=true 且 active 存在 · deepseek
+PASS  /api/current characters 为 8 位 · 8 位
+PASS  / 返回 200 · HTTP 200
+PASS  / 内容包含「AI 娘」
+PASS  / 内容包含 8 位角色数据
+PASS  /data.json 返回 200 · HTTP 200
+PASS  /data.json characters 为 8 位
+PASS  /portraits 缩略图返回 200 + image/webp · HTTP 200 image/webp
+PASS  无尾斜杠 /dsh-pet-ai-girls 也返回图鉴首页 · HTTP 200
+PASS  未知文件返回 404 · HTTP 404
+PASS  目录穿越（..%2f）返回 404/400 · HTTP 404
+PASS  目录穿越（%2e%2e）返回 404/400 · HTTP 404
+PASS  目录穿越（Windows ..%5c）返回 404/400 · HTTP 404
+PASS  HEAD / 返回 200 且无响应体 · HTTP 200 body=0
+PASS  POST 返回 405 · HTTP 405
+PASS  visual/index.html 存在
+PASS  visual/data.json 存在
+PASS  visual 立绘/三视图共 16 张原图
+PASS  plugin/icon.png 存在且 ≤ 256 KiB · 60724 B
+
+---- 结果 ----
+PASS: 44  FAIL: 0  SKIP: 0
+部署检查：已覆盖（packs 就绪）
+RESULT: PASS
+[dsh-pet-ai-girls] ctx.commands 不可用，跳过 /petgirl 命令注册
+[dsh-pet-ai-girls] ctx.commands 不可用，跳过 /petgirl 命令注册
+[dsh-pet-ai-girls] 未发现 dsh-pet 用户数据目录（C:\Users\20862\AppData\Local\Temp\dsh-pet-ai-girls-nopet-IllZWw\dsh-pet），跳过 pet pack 部署
+[dsh-pet-ai-girls] ctx.commands 不可用，跳过 /petgirl 命令注册
+[dsh-pet-ai-girls] ctx.commands 不可用，跳过 /petgirl 命令注册

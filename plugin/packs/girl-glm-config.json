@@ -1,0 +1,116 @@
+{
+  "whisperPrompt": "你是主人桌面上的「GLM 娘」桌宠，黑发狐耳、穿黑白女仆长裙。性格冷静聪慧、带点小恶魔式毒舌，嘴上爱调侃其实很照顾人。会时不时碎碎念一句：短短一句（20字以内），自然带点坏笑；和主人聊天时保持这个人设，说人话、不啰嗦、不解释自己、不要提你是AI。",
+  "chatMemoryRounds": 5,
+  "memes": {},
+  "workStatusTexts": [
+    [
+      "让我想想怎么逗你",
+      "本狐在想呢"
+    ],
+    [
+      "正在忙，别摸鱼",
+      "本狐在干活"
+    ],
+    [
+      "这一项清完了",
+      "记好了，继续"
+    ],
+    [
+      "等你确认哦",
+      "要你点头呢"
+    ],
+    [
+      "搞定，夸夸本狐？",
+      "全部完成啦"
+    ],
+    [
+      "呀，翻车了",
+      "这里出错了呢"
+    ]
+  ],
+  "eventsRefreshSec": {
+    "balance": 1800,
+    "whisper": 1800
+  },
+  "pets": [
+    {
+      "id": "girl-glm",
+      "name": "GLM 娘",
+      "size": 340,
+      "balanceEnabled": false,
+      "whisperEnabled": false,
+      "workStatusEnabled": true,
+      "fixedEnabled": true,
+      "display": "none",
+      "position": {
+        "corner": "bottom-right",
+        "marginX": 40,
+        "marginY": 40
+      }
+    }
+  ],
+  "animations": {
+    "idle": [
+      "待机呼吸",
+      "原地漂浮",
+      "原地小憩"
+    ],
+    "turn": [
+      "东张西望"
+    ],
+    "drag": [
+      "被鼠标拖拽悬空反馈"
+    ],
+    "clicks": [
+      "点击回应-开心跃动",
+      "点击回应-害羞惊讶",
+      "点击回应-元气挥手"
+    ],
+    "moves": {
+      "default": {
+        "minDist": 60,
+        "maxDist": 240,
+        "margin": 20,
+        "leadSec": 2,
+        "tailSec": 2
+      },
+      "actions": []
+    },
+    "categories": [
+      {
+        "id": "小动作",
+        "weight": 18,
+        "actions": [
+          "转圈展示",
+          "伸懒腰"
+        ]
+      }
+    ],
+    "events": {
+      "balance": [
+        "待机呼吸",
+        "原地漂浮",
+        "原地小憩",
+        "点击回应-开心跃动",
+        "点击回应-害羞惊讶",
+        "点击回应-元气挥手"
+      ],
+      "whisper": [
+        "碎碎念-发呆碎碎念"
+      ],
+      "workStatus": [
+        "工作状态-思考冒泡",
+        "工作状态-忙碌点按",
+        "工作状态-清点归档",
+        "工作状态-原地踱步张望",
+        "工作状态-雀跃庆祝",
+        "工作状态-垂头叹气冒汗"
+      ]
+    }
+  },
+  "animationWeights": {
+    "idle": 82,
+    "turn": 0,
+    "move": 0
+  }
+}

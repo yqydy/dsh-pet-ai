@@ -1,0 +1,840 @@
+{
+  "tool": "tools/verify_switch.py",
+  "generated_at": "2026-11-06T11:26:29",
+  "base_url": "http://127.0.0.1:57076",
+  "pet_dir": "C:\\Users\\20862\\.dsh\\dsh-pet\\pet",
+  "switch_to": "qwen",
+  "switch_back": "deepseek",
+  "summary": {
+    "PASS": 28
+  },
+  "checks": [
+    {
+      "id": "switch.initial",
+      "name": "初始 /api/current active=deepseek",
+      "status": "PASS",
+      "detail": "实际='deepseek'（脚本仍会按流程切到 qwen 再切回 deepseek）",
+      "evidence": null
+    },
+    {
+      "id": "switch.initial.windows",
+      "name": "initial：桌面宠物窗口恰好 2 个（main 720×579 + 当前 680×547）",
+      "status": "PASS",
+      "detail": "发现 2 个: [(680, 547, 3344428), (720, 579, 2492470)]（等待 1619ms）",
+      "evidence": null
+    },
+    {
+      "id": "switch.initial.capture",
+      "name": "initial：PrintWindow 抓图",
+      "status": "PASS",
+      "detail": "680x547 34340B window-01-dsh-pet_桌宠_桌面模式_.png; 720x579 45917B window-02-dsh-pet_桌宠_桌面模式_.png",
+      "evidence": null
+    },
+    {
+      "id": "switch.post_switch",
+      "name": "POST /api/switch {\"id\":\"qwen\"} → ok/active/reloading",
+      "status": "PASS",
+      "detail": "status=200 ok=True active='qwen' reloading=True body={\"ok\":true,\"active\":{\"id\":\"qwen\",\"prefix\":\"girl-qwen\",\"name\":\"Qwen 娘\"},\"reloading\":true,\"characters\":[{\"id\":\"deepseek\",\"prefix\":\"girl-deepseek\",\"name\":\"DeepSeek 娘\"},{\"id\":\"gpt\",\"prefix\":\"girl-gpt\",\"na",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.live_config",
+      "name": "after_qwen：live /config 恰好 girl-qwen display=both",
+      "status": "PASS",
+      "detail": "display=both 的条目: ['girl-qwen']（live 条目 8 个）",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.api_current",
+      "name": "after_qwen：GET /api/current active=qwen",
+      "status": "PASS",
+      "detail": "status=200 active='qwen'",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.health",
+      "name": "after_qwen：/health active=qwen 且唯一 active 标记一致",
+      "status": "PASS",
+      "detail": "status=200 active='qwen' marks=['qwen'] version='1.1.0'",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.display",
+      "name": "after_qwen：恰好 1 个 pack display=both（girl-qwen）、其余 none",
+      "status": "PASS",
+      "detail": "both=['girl-qwen']；none=7/7；configs=8",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.size",
+      "name": "after_qwen：8 pack size 统一 340",
+      "status": "PASS",
+      "detail": "sizes=['340']",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.position",
+      "name": "after_qwen：8 pack position 统一 bottom-right/40/40",
+      "status": "PASS",
+      "detail": "positions=['bottom-right/40/40']",
+      "evidence": null
+    },
+    {
+      "id": "switch.after_qwen.marker",
+      "name": "after_qwen：active marker active=qwen",
+      "status": "PASS",
+      "detail": "active='qwen' marker={\"active\": \"qwen\", \"prefix\": \"girl-qwen\", \"name\": \"Qwen 娘\", \"updatedAt\": \"2026-11-06T03:26:15.811Z\"}",
+      "evidence": null
+    },
+    {
+      "id": "switch.qwen.windows",
+      "name": "qwen：桌面宠物窗口恰好 2 个（main 720×579 + 当前 680×547）",
+      "status": "PASS",
+      "detail": "发现 2 个: [(680, 547, 3607132), (720, 579, 4196704)]（等待 2929ms）",
+      "evidence": null
+    },
+    {
+      "id": "switch.qwen.capture",
+      "name": "qwen：PrintWindow 抓图",
+      "status": "PASS",
+      "detail": "680x547 39244B window-01-dsh-pet_桌宠_桌面模式_.png; 720x579 45708B window-02-dsh-pet_桌宠_桌面模式_.png",
+      "evidence": null
+    },
+    {
+      "id": "switch.gallery_qwen",
+      "name": "图鉴页（实机路由）：switcher 渲染 + Qwen 娘 chip「当前」+ 消费 /api/current",
+      "status": "PASS",
+      "detail": "screenshot=True dom={\"has_switcher_title\": true, \"is_active_chips\": [\"qwen\"], \"note_current\": \"Qwen 娘\", \"expected_id\": \"qwen\", \"expected_name\": \"Qwen 娘\", \"ok\": true}",
+      "evidence": null
+    },
+    {
+      "id": "switch.get_switch_back",
+      "name": "GET /api/switch?id=deepseek → ok/active/reloading",
+      "status": "PASS",
+      "detail": "status=200 ok=True active='deepseek' reloading=True",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.live_config",
+      "name": "final_deepseek：live /config 恰好 girl-deepseek display=both",
+      "status": "PASS",
+      "detail": "display=both 的条目: ['girl-deepseek']（live 条目 8 个）",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.api_current",
+      "name": "final_deepseek：GET /api/current active=deepseek",
+      "status": "PASS",
+      "detail": "status=200 active='deepseek'",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.health",
+      "name": "final_deepseek：/health active=deepseek 且唯一 active 标记一致",
+      "status": "PASS",
+      "detail": "status=200 active='deepseek' marks=['deepseek'] version='1.1.0'",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.display",
+      "name": "final_deepseek：恰好 1 个 pack display=both（girl-deepseek）、其余 none",
+      "status": "PASS",
+      "detail": "both=['girl-deepseek']；none=7/7；configs=8",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.size",
+      "name": "final_deepseek：8 pack size 统一 340",
+      "status": "PASS",
+      "detail": "sizes=['340']",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.position",
+      "name": "final_deepseek：8 pack position 统一 bottom-right/40/40",
+      "status": "PASS",
+      "detail": "positions=['bottom-right/40/40']",
+      "evidence": null
+    },
+    {
+      "id": "switch.final_deepseek.marker",
+      "name": "final_deepseek：active marker active=deepseek",
+      "status": "PASS",
+      "detail": "active='deepseek' marker={\"active\": \"deepseek\", \"prefix\": \"girl-deepseek\", \"name\": \"DeepSeek 娘\", \"updatedAt\": \"2026-11-06T03:26:22.334Z\"}",
+      "evidence": null
+    },
+    {
+      "id": "switch.deepseek.windows",
+      "name": "deepseek：桌面宠物窗口恰好 2 个（main 720×579 + 当前 680×547）",
+      "status": "PASS",
+      "detail": "发现 2 个: [(680, 547, 2623542), (720, 579, 1247318)]（等待 2959ms）",
+      "evidence": null
+    },
+    {
+      "id": "switch.deepseek.capture",
+      "name": "deepseek：PrintWindow 抓图",
+      "status": "PASS",
+      "detail": "680x547 35746B window-01-dsh-pet_桌宠_桌面模式_.png; 720x579 43751B window-02-dsh-pet_桌宠_桌面模式_.png",
+      "evidence": null
+    },
+    {
+      "id": "switch.window_content_changed",
+      "name": "切换前后 680×547 窗口像素显著不同（窗口内容真的换人）",
+      "status": "PASS",
+      "detail": "diff_ratio=0.493（阈值 0.10）",
+      "evidence": null
+    },
+    {
+      "id": "switch.gallery_deepseek",
+      "name": "图鉴页（实机路由）：switcher 渲染 + DeepSeek 娘 chip「当前」+ 消费 /api/current",
+      "status": "PASS",
+      "detail": "screenshot=True dom={\"has_switcher_title\": true, \"is_active_chips\": [\"deepseek\"], \"note_current\": \"DeepSeek 娘\", \"expected_id\": \"deepseek\", \"expected_name\": \"DeepSeek 娘\", \"ok\": true}",
+      "evidence": null
+    },
+    {
+      "id": "switch.main_unaffected",
+      "name": "切换全过程 main 配置指纹不变",
+      "status": "PASS",
+      "detail": "baseline=ff008a7e9fa056a7dabefd7676b0c70644ec9532ac45fc324a04beb68f432d1a final=ff008a7e9fa056a7dabefd7676b0c70644ec9532ac45fc324a04beb68f432d1a",
+      "evidence": null
+    },
+    {
+      "id": "switch.main_vs_v10_snapshot",
+      "name": "main 指纹与 v1.0 部署前快照一致（原主宠物未受影响）",
+      "status": "PASS",
+      "detail": "v1.0 快照=ff008a7e9fa056a7dabefd7676b0c70644ec9532ac45fc324a04beb68f432d1a final=ff008a7e9fa056a7dabefd7676b0c70644ec9532ac45fc324a04beb68f432d1a",
+      "evidence": null
+    }
+  ],
+  "artifacts": {
+    "baseline_main_hash": "ff008a7e9fa056a7dabefd7676b0c70644ec9532ac45fc324a04beb68f432d1a",
+    "initial": {
+      "wait_ms": 1619,
+      "windows": [
+        {
+          "handle": 3344428,
+          "width": 680,
+          "height": 547,
+          "title": "dsh-pet 桌宠（桌面模式）"
+        },
+        {
+          "handle": 2492470,
+          "width": 720,
+          "height": 579,
+          "title": "dsh-pet 桌宠（桌面模式）"
+        }
+      ],
+      "captured": [
+        {
+          "index": 1,
+          "handle": 3344428,
+          "title": "dsh-pet 桌宠（桌面模式）",
+          "width": 680,
+          "height": 547,
+          "path": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\initial\\window-01-dsh-pet_桌宠_桌面模式_.png",
+          "bytes": 34340,
+          "result": "ok 680x547 via PrintWindow"
+        },
+        {
+          "index": 2,
+          "handle": 2492470,
+          "title": "dsh-pet 桌宠（桌面模式）",
+          "width": 720,
+          "height": 579,
+          "path": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\initial\\window-02-dsh-pet_桌宠_桌面模式_.png",
+          "bytes": 45917,
+          "result": "ok 720x579 via PrintWindow"
+        }
+      ],
+      "composite": "build\\shots\\switcher-initial.png",
+      "by_size": {
+        "680x547": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\initial\\window-01-dsh-pet_桌宠_桌面模式_.png",
+        "720x579": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\initial\\window-02-dsh-pet_桌宠_桌面模式_.png"
+      }
+    },
+    "switch_to_qwen": {
+      "status": 200,
+      "error": "",
+      "body_head": "{\"ok\":true,\"active\":{\"id\":\"qwen\",\"prefix\":\"girl-qwen\",\"name\":\"Qwen 娘\"},\"reloading\":true,\"characters\":[{\"id\":\"deepseek\",\"prefix\":\"girl-deepseek\",\"name\":\"DeepSeek 娘\"},{\"id\":\"gpt\",\"prefix\":\"girl-gpt\",\"name\":\"GPT 娘\"},{\"id\":\"claude\",\"prefix\":\"girl-claude\",\"name\":\"Claude 娘\"},{\"id\":\"grok\",\"prefix\":"
+    },
+    "after_qwen": {
+      "live_display": {
+        "girl-deepseek": "none",
+        "girl-gpt": "none",
+        "girl-claude": "none",
+        "girl-grok": "none",
+        "girl-gemini": "none",
+        "girl-kimi": "none",
+        "girl-glm": "none",
+        "girl-qwen": "both"
+      },
+      "configs": {
+        "girl-claude": {
+          "id": "girl-claude",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-deepseek": {
+          "id": "girl-deepseek",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-gemini": {
+          "id": "girl-gemini",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-glm": {
+          "id": "girl-glm",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-gpt": {
+          "id": "girl-gpt",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-grok": {
+          "id": "girl-grok",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-kimi": {
+          "id": "girl-kimi",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-qwen": {
+          "id": "girl-qwen",
+          "display": "both",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        }
+      },
+      "marker": {
+        "active": "qwen",
+        "prefix": "girl-qwen",
+        "name": "Qwen 娘",
+        "updatedAt": "2026-11-06T03:26:15.811Z"
+      },
+      "api_current": {
+        "ok": true,
+        "active": {
+          "id": "qwen",
+          "prefix": "girl-qwen",
+          "name": "Qwen 娘"
+        },
+        "characters": [
+          {
+            "id": "deepseek",
+            "prefix": "girl-deepseek",
+            "name": "DeepSeek 娘"
+          },
+          {
+            "id": "gpt",
+            "prefix": "girl-gpt",
+            "name": "GPT 娘"
+          },
+          {
+            "id": "claude",
+            "prefix": "girl-claude",
+            "name": "Claude 娘"
+          },
+          {
+            "id": "grok",
+            "prefix": "girl-grok",
+            "name": "Grok 娘"
+          },
+          {
+            "id": "gemini",
+            "prefix": "girl-gemini",
+            "name": "Gemini 娘"
+          },
+          {
+            "id": "kimi",
+            "prefix": "girl-kimi",
+            "name": "Kimi 娘"
+          },
+          {
+            "id": "glm",
+            "prefix": "girl-glm",
+            "name": "GLM 娘"
+          },
+          {
+            "id": "qwen",
+            "prefix": "girl-qwen",
+            "name": "Qwen 娘"
+          }
+        ]
+      },
+      "health": {
+        "ok": true,
+        "name": "dsh-pet-ai-girls",
+        "version": "1.1.0",
+        "packVersion": "1.1.0",
+        "deployed": true,
+        "animationCount": 17,
+        "active": {
+          "id": "qwen",
+          "prefix": "girl-qwen",
+          "name": "Qwen 娘"
+        },
+        "characters": [
+          {
+            "id": "deepseek",
+            "prefix": "girl-deepseek",
+            "name": "DeepSeek 娘",
+            "config": "girl-deepseek-config.json",
+            "animationDir": "girl-deepseek-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "gpt",
+            "prefix": "girl-gpt",
+            "name": "GPT 娘",
+            "config": "girl-gpt-config.json",
+            "animationDir": "girl-gpt-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "claude",
+            "prefix": "girl-claude",
+            "name": "Claude 娘",
+            "config": "girl-claude-config.json",
+            "animationDir": "girl-claude-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "grok",
+            "prefix": "girl-grok",
+            "name": "Grok 娘",
+            "config": "girl-grok-config.json",
+            "animationDir": "girl-grok-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "gemini",
+            "prefix": "girl-gemini",
+            "name": "Gemini 娘",
+            "config": "girl-gemini-config.json",
+            "animationDir": "girl-gemini-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "kimi",
+            "prefix": "girl-kimi",
+            "name": "Kimi 娘",
+            "config": "girl-kimi-config.json",
+            "animationDir": "girl-kimi-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "glm",
+            "prefix": "girl-glm",
+            "name": "GLM 娘",
+            "config": "girl-glm-config.json",
+            "animationDir": "girl-glm-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "qwen",
+            "prefix": "girl-qwen",
+            "name": "Qwen 娘",
+            "config": "girl-qwen-config.json",
+            "animationDir": "girl-qwen-animation",
+            "animations": 17,
+            "active": true
+          }
+        ]
+      },
+      "windows": {
+        "wait_ms": 2929,
+        "windows": [
+          {
+            "handle": 3607132,
+            "width": 680,
+            "height": 547,
+            "title": "dsh-pet 桌宠（桌面模式）"
+          },
+          {
+            "handle": 4196704,
+            "width": 720,
+            "height": 579,
+            "title": "dsh-pet 桌宠（桌面模式）"
+          }
+        ],
+        "captured": [
+          {
+            "index": 1,
+            "handle": 3607132,
+            "title": "dsh-pet 桌宠（桌面模式）",
+            "width": 680,
+            "height": 547,
+            "path": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\qwen\\window-01-dsh-pet_桌宠_桌面模式_.png",
+            "bytes": 39244,
+            "result": "ok 680x547 via PrintWindow"
+          },
+          {
+            "index": 2,
+            "handle": 4196704,
+            "title": "dsh-pet 桌宠（桌面模式）",
+            "width": 720,
+            "height": 579,
+            "path": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\qwen\\window-02-dsh-pet_桌宠_桌面模式_.png",
+            "bytes": 45708,
+            "result": "ok 720x579 via PrintWindow"
+          }
+        ],
+        "composite": "build\\shots\\switcher-qwen.png",
+        "by_size": {
+          "680x547": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\qwen\\window-01-dsh-pet_桌宠_桌面模式_.png",
+          "720x579": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\qwen\\window-02-dsh-pet_桌宠_桌面模式_.png"
+        }
+      },
+      "config_after_switch": {
+        "live_entries": [
+          "girl-claude",
+          "girl-deepseek",
+          "girl-gemini",
+          "girl-glm",
+          "girl-gpt",
+          "girl-grok",
+          "girl-kimi",
+          "girl-qwen",
+          "main"
+        ]
+      }
+    },
+    "gallery_qwen": {
+      "shot": {
+        "ok": true,
+        "size": 1024661,
+        "error": ""
+      },
+      "dom_check": {
+        "has_switcher_title": true,
+        "is_active_chips": [
+          "qwen"
+        ],
+        "note_current": "Qwen 娘",
+        "expected_id": "qwen",
+        "expected_name": "Qwen 娘",
+        "ok": true
+      }
+    },
+    "final_deepseek": {
+      "live_display": {
+        "girl-deepseek": "both",
+        "girl-gpt": "none",
+        "girl-claude": "none",
+        "girl-grok": "none",
+        "girl-gemini": "none",
+        "girl-kimi": "none",
+        "girl-glm": "none",
+        "girl-qwen": "none"
+      },
+      "configs": {
+        "girl-claude": {
+          "id": "girl-claude",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-deepseek": {
+          "id": "girl-deepseek",
+          "display": "both",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-gemini": {
+          "id": "girl-gemini",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-glm": {
+          "id": "girl-glm",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-gpt": {
+          "id": "girl-gpt",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-grok": {
+          "id": "girl-grok",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-kimi": {
+          "id": "girl-kimi",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        },
+        "girl-qwen": {
+          "id": "girl-qwen",
+          "display": "none",
+          "size": 340,
+          "corner": "bottom-right",
+          "marginX": 40,
+          "marginY": 40
+        }
+      },
+      "marker": {
+        "active": "deepseek",
+        "prefix": "girl-deepseek",
+        "name": "DeepSeek 娘",
+        "updatedAt": "2026-11-06T03:26:22.334Z"
+      },
+      "api_current": {
+        "ok": true,
+        "active": {
+          "id": "deepseek",
+          "prefix": "girl-deepseek",
+          "name": "DeepSeek 娘"
+        },
+        "characters": [
+          {
+            "id": "deepseek",
+            "prefix": "girl-deepseek",
+            "name": "DeepSeek 娘"
+          },
+          {
+            "id": "gpt",
+            "prefix": "girl-gpt",
+            "name": "GPT 娘"
+          },
+          {
+            "id": "claude",
+            "prefix": "girl-claude",
+            "name": "Claude 娘"
+          },
+          {
+            "id": "grok",
+            "prefix": "girl-grok",
+            "name": "Grok 娘"
+          },
+          {
+            "id": "gemini",
+            "prefix": "girl-gemini",
+            "name": "Gemini 娘"
+          },
+          {
+            "id": "kimi",
+            "prefix": "girl-kimi",
+            "name": "Kimi 娘"
+          },
+          {
+            "id": "glm",
+            "prefix": "girl-glm",
+            "name": "GLM 娘"
+          },
+          {
+            "id": "qwen",
+            "prefix": "girl-qwen",
+            "name": "Qwen 娘"
+          }
+        ]
+      },
+      "health": {
+        "ok": true,
+        "name": "dsh-pet-ai-girls",
+        "version": "1.1.0",
+        "packVersion": "1.1.0",
+        "deployed": true,
+        "animationCount": 17,
+        "active": {
+          "id": "deepseek",
+          "prefix": "girl-deepseek",
+          "name": "DeepSeek 娘"
+        },
+        "characters": [
+          {
+            "id": "deepseek",
+            "prefix": "girl-deepseek",
+            "name": "DeepSeek 娘",
+            "config": "girl-deepseek-config.json",
+            "animationDir": "girl-deepseek-animation",
+            "animations": 17,
+            "active": true
+          },
+          {
+            "id": "gpt",
+            "prefix": "girl-gpt",
+            "name": "GPT 娘",
+            "config": "girl-gpt-config.json",
+            "animationDir": "girl-gpt-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "claude",
+            "prefix": "girl-claude",
+            "name": "Claude 娘",
+            "config": "girl-claude-config.json",
+            "animationDir": "girl-claude-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "grok",
+            "prefix": "girl-grok",
+            "name": "Grok 娘",
+            "config": "girl-grok-config.json",
+            "animationDir": "girl-grok-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "gemini",
+            "prefix": "girl-gemini",
+            "name": "Gemini 娘",
+            "config": "girl-gemini-config.json",
+            "animationDir": "girl-gemini-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "kimi",
+            "prefix": "girl-kimi",
+            "name": "Kimi 娘",
+            "config": "girl-kimi-config.json",
+            "animationDir": "girl-kimi-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "glm",
+            "prefix": "girl-glm",
+            "name": "GLM 娘",
+            "config": "girl-glm-config.json",
+            "animationDir": "girl-glm-animation",
+            "animations": 17,
+            "active": false
+          },
+          {
+            "id": "qwen",
+            "prefix": "girl-qwen",
+            "name": "Qwen 娘",
+            "config": "girl-qwen-config.json",
+            "animationDir": "girl-qwen-animation",
+            "animations": 17,
+            "active": false
+          }
+        ]
+      },
+      "windows": {
+        "wait_ms": 2959,
+        "windows": [
+          {
+            "handle": 2623542,
+            "width": 680,
+            "height": 547,
+            "title": "dsh-pet 桌宠（桌面模式）"
+          },
+          {
+            "handle": 1247318,
+            "width": 720,
+            "height": 579,
+            "title": "dsh-pet 桌宠（桌面模式）"
+          }
+        ],
+        "captured": [
+          {
+            "index": 1,
+            "handle": 2623542,
+            "title": "dsh-pet 桌宠（桌面模式）",
+            "width": 680,
+            "height": 547,
+            "path": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\deepseek\\window-01-dsh-pet_桌宠_桌面模式_.png",
+            "bytes": 35746,
+            "result": "ok 680x547 via PrintWindow"
+          },
+          {
+            "index": 2,
+            "handle": 1247318,
+            "title": "dsh-pet 桌宠（桌面模式）",
+            "width": 720,
+            "height": 579,
+            "path": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\deepseek\\window-02-dsh-pet_桌宠_桌面模式_.png",
+            "bytes": 43751,
+            "result": "ok 720x579 via PrintWindow"
+          }
+        ],
+        "composite": "build\\shots\\switcher-deepseek.png",
+        "by_size": {
+          "680x547": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\deepseek\\window-01-dsh-pet_桌宠_桌面模式_.png",
+          "720x579": "F:\\ceshi\\dsh-pet-ai-girls\\build\\shots\\switch-windows\\deepseek\\window-02-dsh-pet_桌宠_桌面模式_.png"
+        }
+      }
+    },
+    "window_diff_ratio": 0.493,
+    "gallery_deepseek": {
+      "shot": {
+        "ok": true,
+        "size": 1025380,
+        "error": ""
+      },
+      "dom_check": {
+        "has_switcher_title": true,
+        "is_active_chips": [
+          "deepseek"
+        ],
+        "note_current": "DeepSeek 娘",
+        "expected_id": "deepseek",
+        "expected_name": "DeepSeek 娘",
+        "ok": true
+      }
+    },
+    "final_main_hash": "ff008a7e9fa056a7dabefd7676b0c70644ec9532ac45fc324a04beb68f432d1a"
+  }
+}

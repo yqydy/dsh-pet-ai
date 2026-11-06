@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>AI 娘桌宠图鉴 · dsh-pet-ai-girls</title>
+<meta name="description" content="dsh-pet-ai-girls：8 位 AI 拟人娘桌宠，透明动画 webm + 立绘 / 三视图图鉴。原角色设计 ZipZipPipe，CC BY-NC-SA 4.0。">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #070a14;
+    --panel: rgba(18, 26, 46, .84);
+    --panel-solid: #0f1729;
+    --line: rgba(150, 166, 200, .16);
+    --line-strong: rgba(150, 166, 200, .28);
+    --text: #e8edfa;
+    --muted: #93a0bd;
+    --muted-2: #6d7c9e;
+    --accent: #6d8bff;
+    --accent-soft: rgba(109, 139, 255, .3);
+    --radius: 18px;
+    --shadow: 0 24px 70px -28px rgba(0, 0, 0, .9);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(900px 620px at 10% -10%, rgba(77, 107, 254, .24), transparent 62%),
+      radial-gradient(820px 560px at 92% 6%, rgba(139, 92, 246, .2), transparent 64%),
+      radial-gradient(1000px 760px at 50% 112%, rgba(56, 189, 248, .13), transparent 62%),
+      linear-gradient(180deg, #080c18 0%, #06090f 55%, #070b14 100%);
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: .55;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 74%);
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 74%);
+  }
+  a { color: #a8bcff; text-decoration: none; }
+  a:hover { color: #cfdcff; text-decoration: underline; text-underline-offset: 3px; }
+  code {
+    font-family: ui-monospace, "Cascadia Code", "Consolas", "Microsoft YaHei", monospace;
+    font-size: .88em;
+    background: rgba(255, 255, 255, .07);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 6px;
+    padding: 1px 6px;
+    white-space: nowrap;
+    color: #cfd9f5;
+  }
+
+  /* ---------- 顶部 ---------- */
+  .wrap { width: min(1240px, calc(100% - 40px)); margin: 0 auto; }
+  .hero { padding: 76px 0 40px; text-align: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 5px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .035);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .eyebrow i {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #6ee7b7;
+    box-shadow: 0 0 12px #6ee7b7;
+    font-style: normal;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(38px, 6.6vw, 66px);
+    line-height: 1.08;
+    letter-spacing: .02em;
+    font-weight: 800;
+    background: linear-gradient(100deg, #e5ecff 0%, #9db8ff 38%, #c7a8ff 68%, #86e3ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 10px 42px rgba(109, 139, 255, .28));
+  }
+  .hero .subtitle {
+    margin: 18px auto 0;
+    max-width: 720px;
+    color: #b7c4e2;
+    font-size: clamp(14px, 1.6vw, 17px);
+  }
+  .hero .credit {
+    margin: 14px auto 0;
+    color: var(--muted-2);
+    font-size: 12.5px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .stats span {
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .03);
+    color: var(--muted);
+    font-size: 12.5px;
+  }
+  .stats b { color: #dbe5ff; font-weight: 700; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: linear-gradient(100deg, #5b7cff, #8b5cf6);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 12px 34px -12px rgba(91, 124, 255, .8);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover { transform: translateY(-2px); color: #fff; text-decoration: none; box-shadow: 0 18px 40px -14px rgba(91, 124, 255, .95); }
+  .btn.ghost {
+    background: rgba(255, 255, 255, .04);
+    border-color: var(--line-strong);
+    color: #cfd9f5;
+    box-shadow: none;
+  }
+  .btn.ghost:hover { background: rgba(255, 255, 255, .08); }
+  #live-status { font-size: 12.5px; }
+  #live-status[data-state="ok"] { color: #86efac; border-color: rgba(134, 239, 172, .3); }
+  #live-status[data-state="off"] { color: var(--muted-2); }
+
+  /* ---------- 区块 ---------- */
+  section { padding: 34px 0; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
+  .section-head h2 {
+    margin: 0;
+    font-size: clamp(22px, 3vw, 30px);
+    letter-spacing: .01em;
+    font-weight: 750;
+  }
+  .section-head h2::after {
+    content: "";
+    display: block;
+    width: 46px;
+    height: 3px;
+    margin-top: 10px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #5b7cff, #8b5cf6 60%, transparent);
+  }
+  .section-head p { margin: 0; color: var(--muted-2); font-size: 13px; text-align: right; }
+
+  /* ---------- 卡片网格 ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgba(21, 30, 54, .92), rgba(12, 18, 34, .96));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font: inherit;
+    padding: 0;
+    transition: transform .26s ease, border-color .26s ease, box-shadow .26s ease;
+  }
+  .card:hover, .card:focus-visible {
+    transform: translateY(-5px);
+    border-color: var(--accent-soft);
+    box-shadow: 0 26px 60px -26px var(--accent-soft), var(--shadow);
+    outline: none;
+  }
+  .card:focus-visible { box-shadow: 0 0 0 2px var(--accent), 0 26px 60px -26px rgba(0, 0, 0, .8); }
+  .card-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: linear-gradient(180deg, #f7f9ff 0%, #e6ecff 62%, #d3def8 100%);
+  }
+  .card-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 62%, rgba(8, 12, 24, .22) 100%);
+    pointer-events: none;
+  }
+  .card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    mix-blend-mode: multiply;
+    transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+  }
+  .card:hover .card-media img { transform: scale(1.04); }
+  .card-no {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    z-index: 2;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .2);
+    background: rgba(7, 11, 22, .5);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    font-size: 11.5px;
+    letter-spacing: .12em;
+    color: #e6edff;
+  }
+  .card-kind {
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    z-index: 2;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    box-shadow: 0 6px 18px -6px var(--accent);
+  }
+  .card-body { display: flex; flex-direction: column; flex: 1; padding: 15px 15px 14px; }
+  .card-title { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+  .card-title h3 { margin: 0; font-size: 18px; font-weight: 750; letter-spacing: .01em; }
+  .card-sub { color: var(--muted); font-size: 12px; }
+  .card-desc {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .traits { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 11px 0 0; }
+  .traits li {
+    padding: 1px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .035);
+    color: #c4cfe8;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .card-turn {
+    position: relative;
+    margin-top: 12px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    background: linear-gradient(180deg, #f5f8ff, #dfe7ff);
+  }
+  .card-turn img {
+    display: block;
+    width: 100%;
+    height: 82px;
+    object-fit: cover;
+    object-position: center 24%;
+    mix-blend-mode: multiply;
+    transition: transform .5s ease;
+  }
+  .card:hover .card-turn img { transform: scale(1.05); }
+  .card-turn span {
+    position: absolute;
+    right: 8px;
+    bottom: 6px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .78);
+    color: #3c4c74;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .anim-details { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .anim-details summary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--muted);
+    list-style: none;
+    user-select: none;
+  }
+  .anim-details summary::-webkit-details-marker { display: none; }
+  .anim-details summary::before {
+    content: "▸";
+    color: var(--accent);
+    transition: transform .2s ease;
+  }
+  .anim-details[open] summary::before { transform: rotate(90deg); }
+  .anim-details summary b { color: #cdd8f2; font-weight: 600; }
+  .anim-groups { display: flex; flex-direction: column; gap: 7px; margin-top: 9px; }
+  .anim-group { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+  .anim-group b { min-width: 48px; color: var(--accent); font-size: 11px; font-weight: 650; }
+  .anim-tag {
+    padding: 1px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .045);
+    color: #c3cee8;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  /* ---------- 安装说明 ---------- */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .step {
+    position: relative;
+    padding: 20px 18px 18px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(21, 30, 54, .78), rgba(12, 18, 34, .85));
+  }
+  .step-no {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    color: var(--accent);
+  }
+  .step h3 { margin: 0 0 7px; font-size: 15.5px; }
+  .step p { margin: 0; color: var(--muted); font-size: 12.8px; }
+  .note {
+    margin-top: 16px;
+    padding: 15px 18px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .025);
+    color: var(--muted);
+    font-size: 12.8px;
+  }
+  .note b { color: #d5def5; }
+  .note .kbd {
+    display: inline-block;
+    padding: 0 6px;
+    border: 1px solid var(--line-strong);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, .06);
+    font-size: 11px;
+    color: #d5def5;
+  }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    margin-top: 26px;
+    padding: 30px 0 44px;
+    border-top: 1px solid var(--line);
+    color: var(--muted-2);
+    font-size: 12.5px;
+  }
+  .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; }
+  .foot-credit { max-width: 760px; }
+  .foot-credit strong { color: #c9d4ef; font-weight: 600; }
+  .badge-license {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .03);
+    color: #b9c6e4;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+
+  /* ---------- 灯箱 ---------- */
+  .lb { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 22px; }
+  .lb[hidden] { display: none; }
+  .lb-backdrop { position: absolute; inset: 0; background: rgba(4, 7, 14, .82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  .lb-panel {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr);
+    width: min(1160px, 100%);
+    height: min(90vh, 860px);
+    border: 1px solid rgba(255, 255, 255, .13);
+    border-radius: 22px;
+    background: linear-gradient(180deg, #101a30, #0a101f);
+    box-shadow: 0 44px 130px rgba(0, 0, 0, .72);
+    overflow: hidden;
+  }
+  .lb-left { display: flex; flex-direction: column; min-height: 0; background: radial-gradient(120% 110% at 50% -10%, rgba(77, 107, 254, .16), transparent 58%), #090e1b; }
+  .lb-tabs { display: flex; align-items: center; gap: 8px; padding: 14px 16px 10px; }
+  .lb-tabs button {
+    padding: 5px 15px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, .04);
+    color: var(--muted);
+    font: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .lb-tabs button:hover { color: #dce5fb; border-color: var(--line-strong); }
+  .lb-tabs button.active { background: var(--accent); border-color: transparent; color: #fff; box-shadow: 0 8px 22px -8px var(--accent); }
+  .lb-tabs .lb-pos { margin-left: auto; color: var(--muted-2); font-size: 12px; letter-spacing: .16em; }
+  .lb-stage {
+    flex: 1;
+    min-height: 0;
+    margin: 0 16px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    background: linear-gradient(180deg, #f6f8ff, #dde6ff);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lb-stage img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .lb-meta { display: flex; flex-direction: column; min-height: 0; padding: 24px 22px 18px; overflow-y: auto; }
+  .lb-kicker { color: var(--accent); font-size: 11.5px; font-weight: 700; letter-spacing: .2em; }
+  .lb-meta h3 { margin: 7px 0 2px; font-size: 26px; font-weight: 800; letter-spacing: .01em; }
+  .lb-sub { color: var(--muted); font-size: 13px; }
+  .lb-desc { margin: 15px 0 0; color: #b9c5e0; font-size: 13.4px; line-height: 1.7; }
+  .lb-traits { margin: 14px 0 0; }
+  .lb-anim { margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--line); }
+  .lb-anim h4 { margin: 0 0 8px; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .08em; }
+  .lb-anim .anim-groups { max-height: 210px; overflow-y: auto; padding-right: 4px; }
+  .lb-tip { margin-top: auto; padding-top: 16px; color: var(--muted-2); font-size: 11.5px; line-height: 1.8; }
+  .lb-tip .kbd { display: inline-block; padding: 0 5px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 4px; background: rgba(255, 255, 255, .05); color: #c9d4ef; }
+  .lb-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: rgba(8, 12, 24, .62);
+    color: #dbe4fa;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .lb-close:hover { background: rgba(255, 255, 255, .12); transform: rotate(90deg); }
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    width: 42px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    transform: translateY(-50%);
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: rgba(8, 12, 24, .6);
+    color: #e7eeff;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .lb-nav:hover { background: rgba(109, 139, 255, .28); border-color: var(--accent-soft); }
+  .lb-nav.prev { left: 8px; }
+  .lb-nav.next { right: 8px; }
+
+  /* ---------- 切换当前桌宠 ---------- */
+  .switcher {
+    margin: 4px 0 30px;
+    padding: 18px 20px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(20, 28, 50, .82), rgba(13, 18, 33, .82));
+    box-shadow: var(--shadow);
+  }
+  .switcher-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .switcher-head h2 { margin: 0; font-size: 17px; letter-spacing: .01em; }
+  .switcher-head p { margin: 0; color: var(--muted); font-size: 13px; }
+  .switch-chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 13px; }
+  .switch-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, .045);
+    color: var(--text);
+    font-size: 13.5px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease, transform .12s ease;
+  }
+  .switch-chip:hover { border-color: var(--accent-soft); background: rgba(109, 139, 255, .14); }
+  .switch-chip:active { transform: translateY(1px); }
+  .switch-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--chip-accent, var(--accent)); opacity: .8; }
+  .switch-chip.is-active {
+    border-color: var(--accent);
+    background: rgba(109, 139, 255, .22);
+    box-shadow: 0 0 0 1px var(--accent-soft), 0 10px 26px -14px var(--accent);
+  }
+  .switch-chip.is-active::after { content: "当前"; font-size: 11px; font-weight: 700; color: var(--accent); }
+  .switch-chip[disabled] { opacity: .55; cursor: progress; }
+  .switch-note { margin: 11px 0 0; color: var(--muted-2); font-size: 12.5px; }
+  .switch-note b { color: var(--muted); }
+  .switch-note .ok { color: #7ee2a8; }
+  .switch-note .err { color: #ff9d9d; }
+
+  @media (max-width: 900px) {
+    .hero { padding: 54px 0 28px; }
+    .section-head { align-items: flex-start; flex-direction: column; gap: 6px; }
+    .section-head p { text-align: left; }
+    .lb { padding: 10px; }
+    .lb-panel { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); height: 94vh; }
+    .lb-meta { padding: 16px 16px 14px; }
+    .lb-meta h3 { font-size: 21px; }
+    .lb-stage { margin: 0 12px 12px; }
+    .lb-tabs { padding: 12px 12px 8px; }
+    .lb-anim .anim-groups { max-height: 150px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<header class="hero wrap">
+  <p class="eyebrow"><i></i> DSH PET PACK · AI GIRLS</p>
+  <h1>AI 娘桌宠图鉴</h1>
+  <p class="subtitle">dsh-pet-ai-girls · 8 位 AI 拟人角色 · 透明动画桌面宠物</p>
+  <p class="credit">
+    原角色设计 ZipZipPipe（上善无形 / DeepSeek）·
+    <a href="https://genderswapai.com/zh-TW/ai-gijinka" target="_blank" rel="noreferrer noopener">genderswapai.com</a> ·
+    CC BY-NC-SA 4.0 · 非官方同人作品
+  </p>
+  <div class="stats">
+    <span><b>8</b> 位 AI 娘</span>
+    <span><b>17</b> 个动画 / 只</span>
+    <span><b>136</b> 个透明 webm</span>
+    <span>0 外部依赖</span>
+    <span id="live-status">检测 pet pack 状态…</span>
+  </div>
+  <div class="hero-actions">
+    <a class="btn" href="#gallery">浏览 8 位角色</a>
+    <a class="btn ghost" href="#install">安装与使用</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="switcher" id="switcher" hidden>
+    <div class="switcher-head">
+      <h2>切换当前桌宠</h2>
+      <p>同一时间只显示 1 只；点下面的角色立即换人（桌面窗口会自动重建），也可在 DSH 对话框输入 <code>/petgirl qwen</code>。</p>
+    </div>
+    <div class="switch-chips" id="switch-chips"></div>
+    <p class="switch-note" id="switch-note">正在读取当前桌宠…</p>
+  </section>
+
+  <section id="gallery">
+    <div class="section-head">
+      <h2>8 位 AI 拟人娘</h2>
+      <p>点击卡片查看立绘 / 三视图，展开可看全部 17 个动画</p>
+    </div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+  </section>
+
+  <section id="install">
+    <div class="section-head">
+      <h2>安装与使用</h2>
+      <p>本页由插件 host 半侧的本地静态路由提供，不依赖任何 CDN</p>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <span class="step-no">STEP 01</span>
+        <h3>安装插件</h3>
+        <p>把 <code>dsh-pet-ai-girls</code> 放进 DSH profile 的 <code>node_modules</code>，让它的 <code>dsh.bundle.patch</code> 进入层栈，然后重启 DSH。本插件是 host-only，没有浏览器半边，不需要构建。</p>
+      </article>
+      <article class="step">
+        <span class="step-no">STEP 02</span>
+        <h3>自动部署 pet pack</h3>
+        <p>宿主启动时会把 8 组 <code>girl-*-config.json</code> 与 <code>girl-*-animation/</code> 幂等复制到 <code>%USERPROFILE%\.dsh\dsh-pet\pet\</code>（或 <code>$DSH_HOME/dsh-pet/pet/</code>），写好版本 marker；已是最新版本则跳过。</p>
+      </article>
+      <article class="step">
+        <span class="step-no">STEP 03</span>
+        <h3>只显示一只，随时切换</h3>
+        <p>同一时间只有 1 只 AI 娘出现在桌面上（默认 DeepSeek 娘）。用本页顶部「切换当前桌宠」按钮组，或在 DSH 对话框输入 <code>/petgirl qwen</code>（<code>/petgirl</code> 留空可查看当前与全部可选角色）即可换人；选择会持久化，下次启动仍是上次那只。</p>
+      </article>
+      <article class="step">
+        <span class="step-no">STEP 04</span>
+        <h3>按需改配置</h3>
+        <p>编辑 <code>pet/girl-&lt;id&gt;-config.json</code> 里的 <code>size</code>、<code>position</code>、<code>whisperEnabled</code> 等字段，保存后刷新页面即可生效（切换时插件会统一大小/位置到右下角，原地换人）。删除 marker 或设 <code>DSH_PET_AI_GIRLS_FORCE=1</code> 可强制重部署。</p>
+      </article>
+    </div>
+    <p class="note">
+      <b>本页地址：</b><code>http://127.0.0.1:&lt;DSH 端口&gt;/dsh-pet-ai-girls/</code> ·
+      <b>健康检查：</b><a href="health"><code>/dsh-pet-ai-girls/health</code></a> ·
+      <b>卸载：</b>删除插件目录，并删除 <code>%USERPROFILE%\.dsh\dsh-pet\pet\</code> 下 8 组 <code>girl-*-config.json</code> 与 <code>girl-*-animation/</code>（以及 <code>.dsh-pet-ai-girls.json</code> marker）即可。
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <p class="foot-credit">
+      <strong>AI 娘桌宠图鉴</strong> · dsh-pet-ai-girls v1.1.0 ·
+      原角色设计 <strong>ZipZipPipe</strong>（上善无形 / DeepSeek），
+      来源 <a href="https://genderswapai.com/zh-TW/ai-gijinka" target="_blank" rel="noreferrer noopener">genderswapai.com · AI 拟人角色图鉴</a>。
+      素材以 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer noopener">CC BY-NC-SA 4.0</a> 授权，仅供非商业的同人展示与个人使用。
+    </p>
+    <span class="badge-license">CC BY-NC-SA 4.0 · 非官方同人 · 代码 MIT</span>
+  </div>
+</footer>
+
+<!-- 灯箱 -->
+<div class="lb" id="lightbox" hidden>
+  <div class="lb-backdrop" data-close></div>
+  <div class="lb-panel" role="dialog" aria-modal="true" aria-labelledby="lb-name">
+    <button class="lb-close" type="button" data-close aria-label="关闭">✕</button>
+    <div class="lb-left">
+      <div class="lb-tabs" role="tablist" aria-label="图片类型">
+        <button type="button" role="tab" id="tab-portrait" data-tab="portrait" class="active" aria-selected="true">立绘</button>
+        <button type="button" role="tab" id="tab-turnaround" data-tab="turnaround" aria-selected="false">三视图</button>
+        <span class="lb-pos" id="lb-pos">01 / 08</span>
+      </div>
+      <div class="lb-stage">
+        <img id="lb-img" src="" alt="">
+      </div>
+    </div>
+    <button class="lb-nav prev" id="lb-prev" type="button" aria-label="上一位角色">‹</button>
+    <button class="lb-nav next" id="lb-next" type="button" aria-label="下一位角色">›</button>
+    <div class="lb-meta">
+      <span class="lb-kicker" id="lb-kicker">GIRL #01</span>
+      <h3 id="lb-name">—</h3>
+      <span class="lb-sub" id="lb-sub">—</span>
+      <p class="lb-desc" id="lb-desc"></p>
+      <ul class="traits lb-traits" id="lb-traits"></ul>
+      <div class="lb-anim">
+        <h4>17 个动画（点击卡片可展开）</h4>
+        <div class="anim-groups" id="lb-anims"></div>
+      </div>
+      <p class="lb-tip">
+        键盘：<span class="kbd">←</span> <span class="kbd">→</span> 切换角色 ·
+        <span class="kbd">Tab</span> 切换立绘 / 三视图 ·
+        <span class="kbd">Esc</span> 关闭
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY-DATA-START -->
+<script id="gallery-data" type="application/json">{"plugin":"dsh-pet-ai-girls","version":"1.1.0","title":"AI 娘桌宠图鉴","subtitle":"dsh-pet-ai-girls · 8 位 AI 拟人角色 · 透明动画桌面宠物","generatedAt":"2026-11-06T11:28:29","animationGroups":[{"group":"待机","names":["待机呼吸","原地漂浮","原地小憩"]},{"group":"互动","names":["东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手"]},{"group":"碎碎念","names":["碎碎念-发呆碎碎念"]},{"group":"工作状态","names":["工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗"]},{"group":"小动作","names":["转圈展示","伸懒腰"]}],"animationCount":17,"credit":{"author":"ZipZipPipe（上善无形 / DeepSeek）","license":"CC BY-NC-SA 4.0","licenseUrl":"https://creativecommons.org/licenses/by-nc-sa/4.0/","source":"genderswapai.com AI 拟人角色图鉴","sourceUrl":"https://genderswapai.com/zh-TW/ai-gijinka","note":"非官方同人作品：角色原案版权归原作者所有，本项目仅作个人桌宠/图鉴展示。"},"characters":[{"id":"deepseek","prefix":"girl-deepseek","name":"DeepSeek 娘","subtitle":"蓝发鲸鱼娘","accent":"#4d6bfe","traits":["蓝色长发","鲸鱼尾巴","黑白女仆裙","爱吃白米饭"],"description":"DeepSeek 的非官方拟人娘化形象，中文社群常叫她「蓝色大肥鱼」。蓝发女仆配鲸鱼尾巴，温柔聪明又有点爱摸鱼。","portrait":"portraits/deepseek.webp","portraitThumb":"portraits/thumbs/deepseek.webp","turnaround":"turnarounds/deepseek.webp","turnaroundThumb":"turnarounds/thumbs/deepseek.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"gpt","prefix":"girl-gpt","name":"GPT 娘","subtitle":"白发龙娘","accent":"#10b981","traits":["白发龙娘","龙角与翅膀","白色礼服","蓝色小团子"],"description":"ChatGPT 的非官方拟人娘化形象：白发的龙族少女，穿白色礼服、长着小龙角和龙翼，身边总跟着一只蓝色小团子。","portrait":"portraits/gpt.webp","portraitThumb":"portraits/thumbs/gpt.webp","turnaround":"turnarounds/gpt.webp","turnaroundThumb":"turnarounds/thumbs/gpt.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"claude","prefix":"girl-claude","name":"Claude 娘","subtitle":"橙发与花朵发饰","accent":"#e07a5f","traits":["橙色长发","花朵发饰","黑橙长裙","手不释卷"],"description":"Claude 的非官方拟人娘化形象：橙色长发配花朵发饰，穿黑橙相间的长裙，总是捧着书，温和又细心。","portrait":"portraits/claude.webp","portraitThumb":"portraits/thumbs/claude.webp","turnaround":"turnarounds/claude.webp","turnaroundThumb":"turnarounds/thumbs/claude.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"grok","prefix":"girl-grok","name":"Grok 娘","subtitle":"金发与黑色礼服","accent":"#d4af37","traits":["金色长发","黑色礼服","大十字戟","傲娇毒舌"],"description":"Grok 的非官方拟人娘化形象：金发配黑色哥特礼服，手持黑色大十字戟，傲娇毒舌但其实心软。","portrait":"portraits/grok.webp","portraitThumb":"portraits/thumbs/grok.webp","turnaround":"turnarounds/grok.webp","turnaroundThumb":"turnarounds/thumbs/grok.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"gemini","prefix":"girl-gemini","name":"Gemini 娘","subtitle":"异色瞳与蓝紫猫耳","accent":"#8b5cf6","traits":["蓝紫渐变发","猫耳","异色瞳","星星装饰"],"description":"Gemini 的非官方拟人娘化形象：蓝紫渐变的头发、猫耳与异色瞳，活泼好奇，身上点缀着星星和闪光。","portrait":"portraits/gemini.webp","portraitThumb":"portraits/thumbs/gemini.webp","turnaround":"turnarounds/gemini.webp","turnaroundThumb":"turnarounds/thumbs/gemini.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"kimi","prefix":"girl-kimi","name":"Kimi 娘","subtitle":"银紫长发与非对称女仆装","accent":"#a78bfa","traits":["银紫长发","非对称女仆装","安静可靠","擅长整理"],"description":"Kimi 的非官方拟人娘化形象：银紫色长发，穿不对称设计的女仆装，安静可靠、擅长把复杂的事理清楚。","portrait":"portraits/kimi.webp","portraitThumb":"portraits/thumbs/kimi.webp","turnaround":"turnarounds/kimi.webp","turnaroundThumb":"turnarounds/thumbs/kimi.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"glm","prefix":"girl-glm","name":"GLM 娘","subtitle":"黑发狐耳与女仆装","accent":"#f472b6","traits":["黑色长发","狐耳","黑白女仆裙","小恶魔毒舌"],"description":"GLM 的非官方拟人娘化形象：黑发狐耳配黑白女仆长裙，冷静聪慧，有点小恶魔式的毒舌。","portrait":"portraits/glm.webp","portraitThumb":"portraits/thumbs/glm.webp","turnaround":"turnarounds/glm.webp","turnaroundThumb":"turnarounds/thumbs/glm.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]},{"id":"qwen","prefix":"girl-qwen","name":"Qwen 娘","subtitle":"圆形发饰与蓝紫衣裙","accent":"#38bdf8","traits":["蓝色长发","圆形发饰","团扇","蓝紫衣裙"],"description":"Qwen 的非官方拟人娘化形象：蓝发配圆形发饰，执一把团扇，穿蓝紫色衣裙，温婉典雅带点古风。","portrait":"portraits/qwen.webp","portraitThumb":"portraits/thumbs/qwen.webp","turnaround":"turnarounds/qwen.webp","turnaroundThumb":"turnarounds/thumbs/qwen.webp","animationCount":17,"animations":["待机呼吸","原地漂浮","原地小憩","东张西望","被鼠标拖拽悬空反馈","点击回应-开心跃动","点击回应-害羞惊讶","点击回应-元气挥手","碎碎念-发呆碎碎念","工作状态-思考冒泡","工作状态-忙碌点按","工作状态-清点归档","工作状态-原地踱步张望","工作状态-雀跃庆祝","工作状态-垂头叹气冒汗","转圈展示","伸懒腰"]}]}</script>
+<!-- GALLERY-DATA-END -->
+
+<script>
+(function () {
+  'use strict';
+  var DATA = JSON.parse(document.getElementById('gallery-data').textContent);
+  var CHARS = DATA.characters || [];
+  var GROUPS = DATA.animationGroups || [];
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function hexToRgba(hex, alpha) {
+    var h = String(hex || '#6d8bff').replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+  }
+  function animGroupsHtml() {
+    return GROUPS.map(function (g) {
+      return '<div class="anim-group"><b>' + esc(g.group) + '</b>' +
+        g.names.map(function (n) { return '<span class="anim-tag">' + esc(n) + '</span>'; }).join('') +
+        '</div>';
+    }).join('');
+  }
+
+  /* ---------- 卡片 ---------- */
+  var grid = document.getElementById('grid');
+  grid.innerHTML = CHARS.map(function (ch, i) {
+    var accent = ch.accent || '#6d8bff';
+    var style = '--accent:' + esc(accent) + ';--accent-soft:' + hexToRgba(accent, 0.34) + ';';
+    return '' +
+      '<button class="card" type="button" style="' + style + '" data-index="' + i + '" ' +
+        'aria-label="查看 ' + esc(ch.name) + ' 的立绘与三视图">' +
+        '<div class="card-media">' +
+          '<img src="' + esc(ch.portraitThumb) + '" alt="' + esc(ch.name) + ' 立绘" loading="lazy" decoding="async">' +
+          '<span class="card-no">' + pad2(i + 1) + '</span>' +
+          '<span class="card-kind">立绘</span>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-title"><h3>' + esc(ch.name) + '</h3><span class="card-sub">' + esc(ch.subtitle) + '</span></div>' +
+          '<p class="card-desc">' + esc(ch.description) + '</p>' +
+          '<ul class="traits">' + (ch.traits || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
+          '<div class="card-turn">' +
+            '<img src="' + esc(ch.turnaroundThumb) + '" alt="' + esc(ch.name) + ' 三视图" loading="lazy" decoding="async">' +
+            '<span>三视图</span>' +
+          '</div>' +
+          '<details class="anim-details"><summary><b>' + (ch.animationCount || 17) + '</b> 个动画</summary>' +
+            '<div class="anim-groups">' + animGroupsHtml() + '</div>' +
+          '</details>' +
+        '</div>' +
+      '</button>';
+  }).join('');
+
+  /* ---------- 灯箱 ---------- */
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbName = document.getElementById('lb-name');
+  var lbSub = document.getElementById('lb-sub');
+  var lbDesc = document.getElementById('lb-desc');
+  var lbTraits = document.getElementById('lb-traits');
+  var lbAnims = document.getElementById('lb-anims');
+  var lbPos = document.getElementById('lb-pos');
+  var lbKicker = document.getElementById('lb-kicker');
+  var tabs = Array.prototype.slice.call(lb.querySelectorAll('[data-tab]'));
+  var cur = 0;
+  var tab = 'portrait';
+  var lastFocus = null;
+
+  function renderLightbox() {
+    var ch = CHARS[cur];
+    if (!ch) return;
+    var accent = ch.accent || '#6d8bff';
+    var imgSrc = tab === 'turnaround' ? ch.turnaround : ch.portrait;
+    lbImg.src = imgSrc;
+    lbImg.alt = ch.name + (tab === 'turnaround' ? ' 三视图' : ' 立绘');
+    lb.style.setProperty('--accent', accent);
+    lb.style.setProperty('--accent-soft', hexToRgba(accent, 0.34));
+    lbName.textContent = ch.name;
+    lbSub.textContent = ch.subtitle + ' · ' + ch.prefix;
+    lbDesc.textContent = ch.description;
+    lbTraits.innerHTML = (ch.traits || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('');
+    lbAnims.innerHTML = animGroupsHtml();
+    lbPos.textContent = pad2(cur + 1) + ' / ' + pad2(CHARS.length);
+    lbKicker.textContent = 'GIRL #' + pad2(cur + 1);
+    tabs.forEach(function (b) {
+      var on = b.getAttribute('data-tab') === tab;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+  function openLightbox(index) {
+    cur = (index + CHARS.length) % CHARS.length;
+    tab = 'portrait';
+    lastFocus = document.activeElement;
+    renderLightbox();
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lb-prev').focus();
+  }
+  function closeLightbox() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function step(delta) {
+    cur = (cur + delta + CHARS.length) % CHARS.length;
+    renderLightbox();
+  }
+  function setTab(next) {
+    if (next !== 'portrait' && next !== 'turnaround') return;
+    tab = next;
+    renderLightbox();
+  }
+
+  grid.addEventListener('click', function (e) {
+    var card = e.target.closest ? e.target.closest('.card') : null;
+    if (!card) return;
+    openLightbox(parseInt(card.getAttribute('data-index'), 10) || 0);
+  });
+  lb.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.hasAttribute && t.hasAttribute('data-close')) { closeLightbox(); return; }
+    if (t.hasAttribute && t.hasAttribute('data-tab')) setTab(t.getAttribute('data-tab'));
+  });
+  document.getElementById('lb-prev').addEventListener('click', function (e) { e.stopPropagation(); step(-1); });
+  document.getElementById('lb-next').addEventListener('click', function (e) { e.stopPropagation(); step(1); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); closeLightbox(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    else if (e.key === 'Tab') { e.preventDefault(); setTab(tab === 'portrait' ? 'turnaround' : 'portrait'); }
+  });
+
+  /* ---------- 深链：index.html?open=3&tab=turnaround（便于截图/分享） ---------- */
+  try {
+    var params = new URLSearchParams(location.search);
+    var openStr = params.get('open');
+    if (openStr !== null) {
+      var openIdx = parseInt(openStr, 10);
+      if (!isNaN(openIdx)) {
+        openLightbox(openIdx);
+        var tabStr = params.get('tab');
+        if (tabStr === 'turnaround') setTab('turnaround');
+      }
+    }
+  } catch (e) { /* 深链失败不影响页面 */ }
+
+  /* ---------- 切换当前桌宠（HTTP 路由下可用；file:// 预览静默隐藏） ---------- */
+  var switcher = document.getElementById('switcher');
+  var chips = document.getElementById('switch-chips');
+  var note = document.getElementById('switch-note');
+  var apiBase = 'api/';
+  var activeId = null;
+  function switchNote(html, cls) {
+    if (!note) return;
+    note.innerHTML = html;
+    note.className = 'switch-note' + (cls ? ' ' + cls : '');
+  }
+  function renderChips(chars, active) {
+    activeId = active && active.id ? active.id : null;
+    chips.innerHTML = (chars || []).map(function (c) {
+      var ch = CHARS.filter(function (x) { return x.id === c.id; })[0] || {};
+      var style = '--chip-accent:' + (ch.accent || '#6d8bff');
+      var on = c.id === activeId;
+      return '<button type="button" class="switch-chip' + (on ? ' is-active' : '') + '" style="' + style + '" data-id="' + esc(c.id) + '">' +
+        '<span class="dot"></span>' + esc(c.name) + '</button>';
+    }).join('');
+  }
+  function loadCurrent() {
+    fetch(apiBase + 'current', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (j) {
+      switcher.hidden = false;
+      renderChips(j.characters || [], j.active || null);
+      switchNote('当前桌宠：<b>' + esc((j.active || {}).name || '—') +
+        '</b>。点击任意角色即可切换，选择会保存；桌面宠物窗口会在几秒内重建，网页里的桌宠刷新页面后同步。', 'ok');
+    }).catch(function () {
+      switcher.hidden = true; /* file:// 打开或插件未加载时隐藏切换器 */
+    });
+  }
+  chips.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.switch-chip') : null;
+    if (!btn || btn.disabled) return;
+    var id = btn.getAttribute('data-id');
+    if (!id || id === activeId) return;
+    Array.prototype.forEach.call(chips.querySelectorAll('.switch-chip'), function (b) { b.disabled = true; });
+    btn.classList.add('is-active');
+    switchNote('正在切换为 <b>' + esc(btn.textContent.trim()) + '</b>…', '');
+    fetch(apiBase + 'switch', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ id: id }),
+    }).then(function (r) {
+      return r.json().then(function (j) { return { ok: r.ok, j: j }; });
+    }).then(function (res) {
+      if (!res.ok || !res.j || !res.j.ok) throw new Error((res.j && res.j.error) || '切换失败');
+      renderChips(res.j.characters || [], res.j.active || null);
+      switchNote('已切换为 <b>' + esc((res.j.active || {}).name || id) + '</b>' +
+        (res.j.reloading ? '，桌面宠物窗口正在重建…' : '（桌面宠物重建请求未送达，刷新页面后同步）') +
+        '。网页里的桌宠刷新页面后同步。', 'ok');
+    }).catch(function (err) {
+      renderChips(CHARS.map(function (c) { return { id: c.id, prefix: c.prefix, name: c.name }; }),
+        { id: activeId });
+      switchNote('切换失败：' + esc(err.message || String(err)), 'err');
+    }).then(function () {
+      Array.prototype.forEach.call(chips.querySelectorAll('.switch-chip'), function (b) { b.disabled = false; });
+    });
+  });
+  loadCurrent();
+
+  /* ---------- 健康检查：/health（HTTP 下可用；file:// 预览静默降级） ---------- */
+  var statusEl = document.getElementById('live-status');
+  fetch('health', { cache: 'no-store' }).then(function (r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function (j) {
+    if (j && j.ok) {
+      statusEl.textContent = 'pet pack 已就绪 · v' + (j.version || '1.0.0');
+      statusEl.setAttribute('data-state', 'ok');
+    } else {
+      statusEl.textContent = 'pet pack 状态未知';
+      statusEl.setAttribute('data-state', 'off');
+    }
+  }).catch(function () {
+    statusEl.textContent = '本地静态预览 · 未连接 DSH';
+    statusEl.setAttribute('data-state', 'off');
+  });
+})();
+</script>
+</body>
+</html>
