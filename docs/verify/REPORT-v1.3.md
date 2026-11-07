@@ -20,7 +20,7 @@
 | F. 窗口/切换回归 | **PASS**（verify_switch PASS=28）：始终 **2 个**「dsh-pet 桌宠（桌面模式）」窗口（720×579 main + 680×547 当前）；qwen↔deepseek 抽测通过（窗口内容像素差 0.438），最终 **active=deepseek** |
 | G. 截图 | `build/shots/gallery-q-chibi.png`（1600×2600，含新「Q 版桌宠形象」区）、`build/shots/live-anim-q-deepseek-montage.png`（实机 Q 版 360° 20 帧）、`build/shots/live-anim-q-deepseek/frame-01..*.png`、Q 版窗口截图 |
 | 原主宠物 main | **未受影响**：main sha256 与 v1.0 基线一致，main thumb 200/441,437B |
-| P0 / P1 / P2 | **P0=0，P1=0，P2=3**（其中 **P2-1 图鉴/文档 lineup 缺陷建议修**；P2-2 host 缓存、P2-3 GUI 抓图限制为已知环境限制） |
+| P0 / P1 / P2 | **P0=0，P1=0，P2=3**（其中 **P2-1 图鉴/文档 lineup 缺陷已修复并复验 PASS（2026-11-07 13:0x）**；P2-2 host 缓存、P2-3 GUI 抓图限制为已知环境限制） |
 
 ## 1. 结论表（A–G）
 
@@ -79,7 +79,7 @@
 | glm | 0.150 | 0.072 | ×0.48 | 0.235→0.307 | 218/572 → 295/510 |
 | qwen | 0.111 | 0.053 | ×0.48 | 0.231→0.258 | 211/526 → 272/540 |
 
-**视觉复核（8/8）**：逐张查看 `build/chibi/<id>-review.png`（左原图/右 Q 版），8 个角色均呈现明显"大头短身"Q 版特征（头明显变大、躯干/腿明显缩短、面部比例放大），且保留各自角色识别特征（发型/配色/配饰）。`build/chibi/lineup.png` 与 `docs/screenshots/chibi-lineup.png` 内容问题见 P2-1。
+**视觉复核（8/8）**：逐张查看 `build/chibi/<id>-review.png`（左原图/右 Q 版），8 个角色均呈现明显"大头短身"Q 版特征（头明显变大、躯干/腿明显缩短、面部比例放大），且保留各自角色识别特征（发型/配色/配饰）。`build/chibi/lineup.png` 已修复为 8 人 lineup（1600×364，见 P2-1 修复复验）。
 
 ## 4. C. Q 版素材上的 2.5D 转台（verify_25d 重跑）
 
@@ -108,7 +108,7 @@
 - **icon 更新验证**：`icon.png` 256×256、**61,267 B**（≤256KiB）、sha256=`cf5ae153f64b3c5d…`（v1.2 为 60,724B，已更换）；图像内容为 8 个 Q 版大头头像网格 + 「AI 娘 / 8 位 AI 娘·桌宠图鉴」字样（符合"图标换成 Q 版大头头像"）。
 - 图鉴：内嵌 gallery-data version=**1.3.0**、含 `chibiLineup` 与每角色 `chibi/chibiThumb` 字段（8/8，文件均存在）；`plugin/visual/chibi` 资源 8 webp + lineup.webp；32 个原有图片引用 + 新增引用全部存在。
 - `test_host.mjs`：**PASS: 44 / FAIL: 0 / SKIP: 0 / RESULT: PASS / exit 0**。
-- docs 截图 4 件存在：`turntable-360.png`(213,714B)、`turntable-actions.png`(272,493B)、`live-2.5d-spin.png`(236,650B)、`chibi-lineup.png`(74,209B，内容问题见 P2-1)。
+- docs 截图 4 件存在：`turntable-360.png`(213,714B)、`turntable-actions.png`(272,493B)、`live-2.5d-spin.png`(236,650B)、`chibi-lineup.png`(**1600×364，537,316B，已修复为 8 人 lineup**)。
 - 活 API：/health 版本缓存 WARN（已知）、/data.json 与 /api/current PASS；静态 `<img>` WARN 为既有检查口径（图片由内嵌 JSON 动态渲染），CSS url() SKIP。
 
 ## 7. F/G. 窗口、切换回归与截图
@@ -121,13 +121,13 @@
 
 | 证据 | 路径 | 说明 |
 | --- | --- | --- |
-| 图鉴页（含 Q 版区，高图） | `build/shots/gallery-q-chibi.png`（1600×2600，2.24 MB） | 顶部 v1.3.0 徽标 + 「Q 版桌宠形象」区（内容问题见 P2-1） |
+| 图鉴页（含 Q 版区，高图） | `build/shots/gallery-q-chibi.png`（1600×2700，2.64 MB） | 顶部 v1.3.0 徽标 + 「Q 版桌宠形象」区（**已修复：8 人 lineup**）；裁剪 `build/verify/gallery-q-section.png` |
 | 图鉴页（标准截图） | `build/shots/gallery.png`（1600×1200，1.17 MB） | verify_shots 重跑 |
 | 实机 Q 版 360° 抓帧 | `build/shots/live-anim-q-deepseek-montage.png`（1600×994，20 帧@200ms） | 真实桌面窗口：Q 版大头短身形象完成正面→侧身→背面→侧身→正面转台（气泡可见） |
 | 实机逐帧原图 | `build/shots/live-anim-q-deepseek/frame-01..20.png` | 38819B 等 |
 | Q 版转台渲染帧（docs） | `docs/screenshots/turntable-360.png`（Q 版）、`turntable-actions.png`（Q 版动作） | 已确认换成 Q 版证据（人工查看：大头短身转台清晰） |
-| Q 版 lineup（docs） | `docs/screenshots/chibi-lineup.png` | **仅 deepseek 单体（200×364），见 P2-1** |
-| Q 版形象区资源 | `plugin/visual/chibi/*.webp`、`lineup.webp` | 8 头像 webp + lineup.webp（lineup 内容问题见 P2-1） |
+| Q 版 lineup（docs） | `docs/screenshots/chibi-lineup.png` | **1600×364（8 人，537,316B）——已修复并复验 PASS** |
+| Q 版形象区资源 | `plugin/visual/chibi/*.webp`、`lineup.webp` | 8 头像 webp + lineup.webp（1600×364，8 人；已修复并复验 PASS） |
 | 前后对比/定量图 | `build/verify/chibi-<id>-compare.png`（8 张）、`build/chibi/<id>-review.png`（8 张）、`build/chibi/lineup.png` | 人工复核 8/8 |
 | 桌宠窗口截图 | `build/shots/pet-windows/window-01..02-*.png`（680×547/720×579）+ GUI 窗口 | verify_shots PASS=16 |
 | alpha 透明 / 预览页 | `build/shots/alpha-test.png`、`petpack-preview.png`（895,000B） | alpha PASS（identical 0.86/0.86、black≈0）；预览 8/8 Q 版待机 |
@@ -137,13 +137,20 @@
 ### P0（阻断）— 0 个
 ### P1（严重）— 0 个
 
-### P2（非阻塞，建议交付前处理第 1 条）
+### P2（非阻塞）
 
-1. **【建议修复】图鉴/文档 Q 版 lineup 只有 1 个角色，不是 8 人 lineup**
-   - 现象：`build/chibi/lineup.png` 为 **200×364**（只有 deepseek 1 人；8 人 lineup 应为 8×200=1600 宽）。`docs/screenshots/chibi-lineup.png` 与 build 版完全相同（74,209 B）；`tools/gallery_build.py` 把该图 ×8 放大成 `plugin/visual/chibi/lineup.webp`（1600×2912，仍是同一张单角色图），图鉴页「Q 版桌宠形象」区 `<img alt="8 位 AI 娘的 Q 版形象…">` 实际显示单个 deepseek。
-   - 根因（只读推断）：最后一次 `python tools/chibi.py <部分角色>`（12:19，仅 deepseek）局部重跑时，`lineup(names)` 只用传入的 1 个角色覆盖了 lineup.png；12:22 的 gallery_build 再放大引用。
-   - 修复建议：无参重跑 `python tools/chibi.py`（生成 8 人 1600×364 lineup）→ 重跑 `python tools/gallery_build.py`（更新 lineup.webp）→ 更新 `docs/screenshots/chibi-lineup.png`；随后图鉴页 Q 版区即显示 8 人 lineup。
-   - 严重度：P2（可见的展示/文档缺陷，不影响桌宠功能与 8 个 Q 版动画本体）。
+> **P2-1 修复复验记录（2026-11-07 13:0x，Lead 修复后 verifier 独立复验）**：
+> - 修复方式：`tools/chibi.py` 改为 `lineup(CHARS)` 永远画 8 人；无参重跑 `python tools/chibi.py` + `python tools/gallery_build.py`；`python tools/install_profile.py` 更新 profile。
+> - 文件复核：`build/chibi/lineup.png` = **1600×364（537,316 B）**；`plugin/visual/chibi/lineup.webp` = **1600×364（222,356 B）**；`docs/screenshots/chibi-lineup.png` = **1600×364（537,316 B，与 build 版同 sha d0677af3…）**。
+> - Live 复核：`GET /dsh-pet-ai-girls/chibi/lineup.webp` → **200 image/webp 1600×364（222,356 B）**；`/data.json` version=1.3.0 且 `chibiLineup=chibi/lineup.webp`。
+> - 页面复核：重截 `build/shots/gallery-q-chibi.png`（1600×2700）并裁出 `build/verify/gallery-q-section.png`——「Q 版桌宠形象」区现在显示 **deepseek/gpt/claude/grok/gemini/kimi/glm/qwen 8 人 lineup**（带名字标签，1600×364），标签与 alt 一致。
+> - 其余结论抽查未受影响：/health packVersion=1.3.0（version=1.1.0 仍为已知 host 缓存）、active=deepseek、8 chars；/config 恰好 girl-deepseek both；main sha256 与基线一致；桌面仍 2 个桌宠窗口（680×547 + 720×579）。
+> - **结论：P2-1 已修复并复验 PASS。**
+
+1. **【已修复并复验 PASS】图鉴/文档 Q 版 lineup 曾只有 1 个角色（修复前）**
+   - 修复前：`build/chibi/lineup.png` 为 200×364（仅 deepseek）；`docs/screenshots/chibi-lineup.png` 同图（74,209 B）；`gallery_build.py` ×8 放大成 `plugin/visual/chibi/lineup.webp`（1600×2912 单角色），图鉴页「Q 版桌宠形象」区因此只显示单个 deepseek。
+   - 根因（已由 Lead 确认）：`tools/chibi.py` 局部重跑时 `lineup(names)` 用单角色覆盖 lineup.png；现已改为 `lineup(CHARS)` 永远画 8 人。
+   - 修复后复验：8 人 1600×364 lineup（build/docs/gallery/live 全链路），页面截图确认 8 人（见上）。
 2. **host 代码模块缓存**：`/health version=1.1.0`，而 package.json/packVersion/data.json 均 1.3.0 → 重启 DSH 后一致；按 Lead 指示记 WARN、不判 FAIL。
 3. **GUI web overlay 抓图限制**（环境限制，沿袭）：DSH GUI 根路径 401；本轮 PrintWindow 成功抓到 GUI 主窗口（1296×828）与 2 个桌宠窗口，无 FAIL。
 
@@ -173,4 +180,4 @@ python tools/verify_switch.py --base-url http://127.0.0.1:50679 # PASS=28；测�
 
 ## 10. 最终判定
 
-**v1.3 验证 PASS（附 1 条 P2 建议修复）**：8 个角色已全部切换为 Q 版（reference/sheets 设定图 → sheets 三视图 → chibi 大头短身变形 → 136 个 Q 版 webm 重渲并部署），Q 版定量与 8/8 前后对比视觉复核、Q 版 2.5D 转台/转身、实机 Q 版 360° 抓帧、live 配置/200 路由、插件 1.3.0/新图标/test_host 44 PASS、切回 deepseek 的切换回归均通过；main 未受影响。P0/P1=0；**P2-1（图鉴与 docs 的 Q 版 lineup 仅显示 1 个角色，需重跑 chibi.py/gallery_build.py 修复）** 建议交付前处理；另有 host 缓存与 GUI overlay 两条已知环境限制。最终 active=deepseek、2 个桌宠窗口。
+**v1.3 验证 PASS（P2-1 已修复并复验 PASS）**：8 个角色已全部切换为 Q 版（reference/sheets 设定图 → sheets 三视图 → chibi 大头短身变形 → 136 个 Q 版 webm 重渲并部署），Q 版定量与 8/8 前后对比视觉复核、Q 版 2.5D 转台/转身、实机 Q 版 360° 抓帧、live 配置/200 路由、插件 1.3.0/新图标/test_host 44 PASS、切回 deepseek 的切换回归均通过；main 未受影响。P0/P1=0；**P2-1（图鉴与 docs 的 Q 版 lineup）已修复：build/chibi/lineup.png、plugin/visual/chibi/lineup.webp、docs/screenshots/chibi-lineup.png、live `/chibi/lineup.webp` 均为 1600×364 八人 lineup，图鉴页「Q 版桌宠形象」区重截确认 8 人**；剩余仅 host 模块缓存与 GUI overlay 两条已知环境限制（WARN）。最终 active=deepseek、2 个桌宠窗口。
