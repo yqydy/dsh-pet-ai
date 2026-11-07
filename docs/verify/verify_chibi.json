@@ -1,0 +1,491 @@
+{
+  "tool": "tools/verify_chibi.py",
+  "generated_at": "2026-11-07T12:31:44",
+  "chars": [
+    "deepseek",
+    "gpt",
+    "claude",
+    "grok",
+    "gemini",
+    "kimi",
+    "glm",
+    "qwen"
+  ],
+  "summary": {
+    "PASS": 11,
+    "WARN": 1
+  },
+  "method_note": "短身指标 leg_ratio=腿部（剪影分叉区域）高度/总高；头部放大采用上部35%面积占比参考口径 + review 对比图人工复核",
+  "table": {
+    "deepseek": {
+      "orig": {
+        "H": 1000,
+        "W": 549,
+        "leg_ratio": 0.169,
+        "top35_area": 0.271,
+        "top45_area": 0.408,
+        "w20": 226,
+        "w80": 377,
+        "w20_over_w80": 0.599
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 585,
+        "leg_ratio": 0.082,
+        "top35_area": 0.269,
+        "top45_area": 0.398,
+        "w20": 300,
+        "w80": 290,
+        "w20_over_w80": 1.034
+      },
+      "compare": "build\\verify\\chibi-deepseek-compare.png",
+      "ref_sheet_bytes": 618188
+    },
+    "gpt": {
+      "orig": {
+        "H": 1000,
+        "W": 630,
+        "leg_ratio": 0.031,
+        "top35_area": 0.263,
+        "top45_area": 0.359,
+        "w20": 268,
+        "w80": 528,
+        "w20_over_w80": 0.508
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 720,
+        "leg_ratio": 0.014,
+        "top35_area": 0.239,
+        "top45_area": 0.4,
+        "w20": 283,
+        "w80": 254,
+        "w20_over_w80": 1.114
+      },
+      "compare": "build\\verify\\chibi-gpt-compare.png",
+      "ref_sheet_bytes": 768450
+    },
+    "claude": {
+      "orig": {
+        "H": 1000,
+        "W": 552,
+        "leg_ratio": 0.095,
+        "top35_area": 0.227,
+        "top45_area": 0.374,
+        "w20": 202,
+        "w80": 526,
+        "w20_over_w80": 0.384
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 584,
+        "leg_ratio": 0.053,
+        "top35_area": 0.259,
+        "top45_area": 0.371,
+        "w20": 262,
+        "w80": 261,
+        "w20_over_w80": 1.004
+      },
+      "compare": "build\\verify\\chibi-claude-compare.png",
+      "ref_sheet_bytes": 996396
+    },
+    "grok": {
+      "orig": {
+        "H": 1000,
+        "W": 561,
+        "leg_ratio": 0.145,
+        "top35_area": 0.284,
+        "top45_area": 0.418,
+        "w20": 325,
+        "w80": 493,
+        "w20_over_w80": 0.659
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 646,
+        "leg_ratio": 0.005,
+        "top35_area": 0.307,
+        "top45_area": 0.439,
+        "w20": 469,
+        "w80": 282,
+        "w20_over_w80": 1.663
+      },
+      "compare": "build\\verify\\chibi-grok-compare.png",
+      "ref_sheet_bytes": 806788
+    },
+    "gemini": {
+      "orig": {
+        "H": 1000,
+        "W": 570,
+        "leg_ratio": 0.446,
+        "top35_area": 0.318,
+        "top45_area": 0.511,
+        "w20": 238,
+        "w80": 112,
+        "w20_over_w80": 2.125
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 692,
+        "leg_ratio": 0.24,
+        "top35_area": 0.274,
+        "top45_area": 0.395,
+        "w20": 357,
+        "w80": 254,
+        "w20_over_w80": 1.406
+      },
+      "compare": "build\\verify\\chibi-gemini-compare.png",
+      "ref_sheet_bytes": 708188
+    },
+    "kimi": {
+      "orig": {
+        "H": 1000,
+        "W": 571,
+        "leg_ratio": 0.009,
+        "top35_area": 0.248,
+        "top45_area": 0.401,
+        "w20": 211,
+        "w80": 445,
+        "w20_over_w80": 0.474
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 632,
+        "leg_ratio": 0.002,
+        "top35_area": 0.287,
+        "top45_area": 0.396,
+        "w20": 352,
+        "w80": 311,
+        "w20_over_w80": 1.132
+      },
+      "compare": "build\\verify\\chibi-kimi-compare.png",
+      "ref_sheet_bytes": 789998
+    },
+    "glm": {
+      "orig": {
+        "H": 1000,
+        "W": 572,
+        "leg_ratio": 0.15,
+        "top35_area": 0.235,
+        "top45_area": 0.365,
+        "w20": 218,
+        "w80": 523,
+        "w20_over_w80": 0.417
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 510,
+        "leg_ratio": 0.072,
+        "top35_area": 0.307,
+        "top45_area": 0.416,
+        "w20": 295,
+        "w80": 343,
+        "w20_over_w80": 0.86
+      },
+      "compare": "build\\verify\\chibi-glm-compare.png",
+      "ref_sheet_bytes": 636262
+    },
+    "qwen": {
+      "orig": {
+        "H": 1000,
+        "W": 526,
+        "leg_ratio": 0.111,
+        "top35_area": 0.231,
+        "top45_area": 0.361,
+        "w20": 211,
+        "w80": 469,
+        "w20_over_w80": 0.45
+      },
+      "chibi": {
+        "H": 1000,
+        "W": 540,
+        "leg_ratio": 0.053,
+        "top35_area": 0.258,
+        "top45_area": 0.379,
+        "w20": 272,
+        "w80": 332,
+        "w20_over_w80": 0.819
+      },
+      "compare": "build\\verify\\chibi-qwen-compare.png",
+      "ref_sheet_bytes": 713910
+    }
+  },
+  "checks": [
+    {
+      "id": "chibi.assets",
+      "name": "v1.3 资产完整性（原图/原始三视图/Q版三视图/头像/对比图 各 8）",
+      "status": "PASS",
+      "detail": "8 角色 × 9 类资产齐全（reference/sheets、build/sheets、build/chibi）",
+      "evidence": null
+    },
+    {
+      "id": "chibi.lineup",
+      "name": "build/chibi/lineup.png 存在（8 人 Q 版 lineup）",
+      "status": "PASS",
+      "detail": "build\\chibi\\lineup.png (74209B)",
+      "evidence": null
+    },
+    {
+      "id": "chibi.deepseek.short_body",
+      "name": "deepseek 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.169 → Q=0.082（×0.49）；top35面积 原=0.271 → Q=0.269；w20/宽 原=226/549 → Q=300/585",
+      "evidence": {
+        "compare": "build\\verify\\chibi-deepseek-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 549,
+          "leg_ratio": 0.169,
+          "top35_area": 0.271,
+          "top45_area": 0.408,
+          "w20": 226,
+          "w80": 377,
+          "w20_over_w80": 0.599
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 585,
+          "leg_ratio": 0.082,
+          "top35_area": 0.269,
+          "top45_area": 0.398,
+          "w20": 300,
+          "w80": 290,
+          "w20_over_w80": 1.034
+        },
+        "ref_sheet": "reference\\sheets\\deepseek-threeview.webp",
+        "ref_sheet_bytes": 618188
+      }
+    },
+    {
+      "id": "chibi.gpt.short_body",
+      "name": "gpt 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.031 → Q=0.014（×0.45）；top35面积 原=0.263 → Q=0.239；w20/宽 原=268/630 → Q=283/720",
+      "evidence": {
+        "compare": "build\\verify\\chibi-gpt-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 630,
+          "leg_ratio": 0.031,
+          "top35_area": 0.263,
+          "top45_area": 0.359,
+          "w20": 268,
+          "w80": 528,
+          "w20_over_w80": 0.508
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 720,
+          "leg_ratio": 0.014,
+          "top35_area": 0.239,
+          "top45_area": 0.4,
+          "w20": 283,
+          "w80": 254,
+          "w20_over_w80": 1.114
+        },
+        "ref_sheet": "reference\\sheets\\gpt-threeview.webp",
+        "ref_sheet_bytes": 768450
+      }
+    },
+    {
+      "id": "chibi.claude.short_body",
+      "name": "claude 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.095 → Q=0.053（×0.56）；top35面积 原=0.227 → Q=0.259；w20/宽 原=202/552 → Q=262/584",
+      "evidence": {
+        "compare": "build\\verify\\chibi-claude-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 552,
+          "leg_ratio": 0.095,
+          "top35_area": 0.227,
+          "top45_area": 0.374,
+          "w20": 202,
+          "w80": 526,
+          "w20_over_w80": 0.384
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 584,
+          "leg_ratio": 0.053,
+          "top35_area": 0.259,
+          "top45_area": 0.371,
+          "w20": 262,
+          "w80": 261,
+          "w20_over_w80": 1.004
+        },
+        "ref_sheet": "reference\\sheets\\claude-threeview.webp",
+        "ref_sheet_bytes": 996396
+      }
+    },
+    {
+      "id": "chibi.grok.short_body",
+      "name": "grok 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.145 → Q=0.005（×0.03）；top35面积 原=0.284 → Q=0.307；w20/宽 原=325/561 → Q=469/646",
+      "evidence": {
+        "compare": "build\\verify\\chibi-grok-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 561,
+          "leg_ratio": 0.145,
+          "top35_area": 0.284,
+          "top45_area": 0.418,
+          "w20": 325,
+          "w80": 493,
+          "w20_over_w80": 0.659
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 646,
+          "leg_ratio": 0.005,
+          "top35_area": 0.307,
+          "top45_area": 0.439,
+          "w20": 469,
+          "w80": 282,
+          "w20_over_w80": 1.663
+        },
+        "ref_sheet": "reference\\sheets\\grok-threeview.webp",
+        "ref_sheet_bytes": 806788
+      }
+    },
+    {
+      "id": "chibi.gemini.short_body",
+      "name": "gemini 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.446 → Q=0.240（×0.54）；top35面积 原=0.318 → Q=0.274；w20/宽 原=238/570 → Q=357/692",
+      "evidence": {
+        "compare": "build\\verify\\chibi-gemini-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 570,
+          "leg_ratio": 0.446,
+          "top35_area": 0.318,
+          "top45_area": 0.511,
+          "w20": 238,
+          "w80": 112,
+          "w20_over_w80": 2.125
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 692,
+          "leg_ratio": 0.24,
+          "top35_area": 0.274,
+          "top45_area": 0.395,
+          "w20": 357,
+          "w80": 254,
+          "w20_over_w80": 1.406
+        },
+        "ref_sheet": "reference\\sheets\\gemini-threeview.webp",
+        "ref_sheet_bytes": 708188
+      }
+    },
+    {
+      "id": "chibi.kimi.short_body",
+      "name": "kimi 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.009 → Q=0.002（×0.22）；top35面积 原=0.248 → Q=0.287；w20/宽 原=211/571 → Q=352/632",
+      "evidence": {
+        "compare": "build\\verify\\chibi-kimi-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 571,
+          "leg_ratio": 0.009,
+          "top35_area": 0.248,
+          "top45_area": 0.401,
+          "w20": 211,
+          "w80": 445,
+          "w20_over_w80": 0.474
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 632,
+          "leg_ratio": 0.002,
+          "top35_area": 0.287,
+          "top45_area": 0.396,
+          "w20": 352,
+          "w80": 311,
+          "w20_over_w80": 1.132
+        },
+        "ref_sheet": "reference\\sheets\\kimi-threeview.webp",
+        "ref_sheet_bytes": 789998
+      }
+    },
+    {
+      "id": "chibi.glm.short_body",
+      "name": "glm 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.150 → Q=0.072（×0.48）；top35面积 原=0.235 → Q=0.307；w20/宽 原=218/572 → Q=295/510",
+      "evidence": {
+        "compare": "build\\verify\\chibi-glm-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 572,
+          "leg_ratio": 0.15,
+          "top35_area": 0.235,
+          "top45_area": 0.365,
+          "w20": 218,
+          "w80": 523,
+          "w20_over_w80": 0.417
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 510,
+          "leg_ratio": 0.072,
+          "top35_area": 0.307,
+          "top45_area": 0.416,
+          "w20": 295,
+          "w80": 343,
+          "w20_over_w80": 0.86
+        },
+        "ref_sheet": "reference\\sheets\\glm-threeview.webp",
+        "ref_sheet_bytes": 636262
+      }
+    },
+    {
+      "id": "chibi.qwen.short_body",
+      "name": "qwen 短身/短腿：Q版腿部分叉高度占比显著小于原图（≤0.75×）",
+      "status": "PASS",
+      "detail": "leg_ratio 原=0.111 → Q=0.053（×0.48）；top35面积 原=0.231 → Q=0.258；w20/宽 原=211/526 → Q=272/540",
+      "evidence": {
+        "compare": "build\\verify\\chibi-qwen-compare.png",
+        "orig": {
+          "H": 1000,
+          "W": 526,
+          "leg_ratio": 0.111,
+          "top35_area": 0.231,
+          "top45_area": 0.361,
+          "w20": 211,
+          "w80": 469,
+          "w20_over_w80": 0.45
+        },
+        "chibi": {
+          "H": 1000,
+          "W": 540,
+          "leg_ratio": 0.053,
+          "top35_area": 0.258,
+          "top45_area": 0.379,
+          "w20": 272,
+          "w80": 332,
+          "w20_over_w80": 0.819
+        },
+        "ref_sheet": "reference\\sheets\\qwen-threeview.webp",
+        "ref_sheet_bytes": 713910
+      }
+    },
+    {
+      "id": "chibi.head_proxy",
+      "name": "头部/上身放大参考指标（上部 35% 剪影面积占比 Q版 vs 原图）",
+      "status": "WARN",
+      "detail": "5/8 角色 Q版上部面积占比更大（差值：deepseek:-0.002, gpt:-0.024, claude:+0.032, grok:+0.023, gemini:-0.044, kimi:+0.039, glm:+0.072, qwen:+0.027）。说明：本套美术头发/耳朵/宽袖使颈部剪影凹陷不稳定，程序化\"头高占比\"采用此参考口径 + review 对比图人工复核（见 §报告）",
+      "evidence": null
+    },
+    {
+      "id": "chibi.review_sheets",
+      "name": "8 张 <id>-review.png（左原图/右Q版）可供人工复核",
+      "status": "PASS",
+      "detail": "deepseek-review.png(301361B); gpt-review.png(350707B); claude-review.png(349090B); grok-review.png(382020B); gemini-review.png(335957B); kimi-review.png(346920B); glm-review.png(340389B); qwen-review.png(313487B)",
+      "evidence": null
+    }
+  ]
+}

@@ -508,6 +508,85 @@ def v12_checks(packs_dir, pet_dir, plugin_dir):
     return info
 
 
+def v13_checks(packs_dir, pet_dir, plugin_dir):
+    """v1.3 契约：Q 版（chibi）资产链 + marker=package.json 版本 + 媒体总量。"""
+    pkg_version = None
+    try:
+        with open(os.path.join(plugin_dir, 'package.json'), 'r', encoding='utf-8-sig') as f:
+            pkg_version = str(json.load(f).get('version') or '')
+    except Exception:  # noqa: BLE001
+        pass
+    info = {'package_json_version': pkg_version,
+            'ref_sheets': {}, 'sheets': {}, 'chibi': {}, 'gallery_chibi': {}}
+    ref_dir = os.path.join(PROJECT, 'reference', 'sheets')
+    sheet_dir = os.path.join(PROJECT, 'build', 'sheets')
+    chibi_dir = os.path.join(PROJECT, 'build', 'chibi')
+    vis_chibi = os.path.join(plugin_dir, 'visual', 'chibi')
+    ids = EXPECTED_IDS
+    # 1) reference/sheets 8 张设定图
+    missing_ref = []
+    for cid in ids:
+        p = os.path.join(ref_dir, '%s-threeview.webp' % cid)
+        if os.path.isfile(p):
+            info['ref_sheets'][cid] = os.path.getsize(p)
+        else:
+            missing_ref.append(cid)
+    ref_bytes = sum(info['ref_sheets'].values())
+    info['ref_total_bytes'] = ref_bytes
+    add('v13.reference_sheets', 'reference/sheets 8 张 ai-chan-sheets 设定图存在（webp）',
+        'PASS' if not missing_ref else 'FAIL',
+        ('8/8，合计 %.2f MiB' % (ref_bytes / 1048576.0)) if not missing_ref else '缺少: %s' % missing_ref)
+    # 2) build/sheets 原始三视图 & 3) build/chibi Q版三视图
+    miss_sheets = []
+    for cid in ids:
+        for v in ('front', 'side', 'back'):
+            if not os.path.isfile(os.path.join(sheet_dir, '%s-%s.png' % (cid, v))):
+                miss_sheets.append('%s-%s' % (cid, v))
+    add('v13.sheets_split', 'build/sheets 原始三视图 front/side/back 齐全（24 张）',
+        'PASS' if not miss_sheets else 'FAIL', '24/24' if not miss_sheets else '缺少: %s' % miss_sheets[:8])
+    miss_chibi = []
+    for cid in ids:
+        for v in ('front', 'side', 'back', 'portrait', 'review'):
+            p = os.path.join(chibi_dir, '%s-%s.png' % (cid, v))
+            if os.path.isfile(p):
+                info['chibi']['%s-%s' % (cid, v)] = os.path.getsize(p)
+            else:
+                miss_chibi.append('%s-%s' % (cid, v))
+    lineup = os.path.join(chibi_dir, 'lineup.png')
+    add('v13.chibi_assets', 'build/chibi Q版三视图/头像/对比图 齐全（40 张）+ lineup.png',
+        'PASS' if not miss_chibi and os.path.isfile(lineup) else 'FAIL',
+        ('40/40 + lineup（%dB）' % os.path.getsize(lineup)) if not miss_chibi and os.path.isfile(lineup)
+        else '缺少: %s%s' % (miss_chibi[:8], '' if os.path.isfile(lineup) else ' + lineup'))
+    # 4) 图鉴 Q 版资源
+    miss_gal = []
+    for cid in ids:
+        for name in ('%s.webp' % cid,):
+            p = os.path.join(vis_chibi, name)
+            if os.path.isfile(p):
+                info['gallery_chibi'][cid] = os.path.getsize(p)
+            else:
+                miss_gal.append(name)
+    gl = os.path.join(vis_chibi, 'lineup.webp')
+    gal_ok = not miss_gal and os.path.isfile(gl)
+    add('v13.gallery_chibi', 'plugin/visual/chibi Q版头像/lineup 资源齐全',
+        'PASS' if gal_ok else 'FAIL',
+        '8 webp + lineup.webp' if gal_ok else '缺少: %s%s' % (miss_gal, '' if os.path.isfile(gl) else ' + lineup.webp'))
+    # 5) marker 版本（明确 1.3.x == package.json）
+    marker_version = None
+    mp = os.path.join(pet_dir, '.dsh-pet-ai-girls.json')
+    if os.path.isfile(mp):
+        try:
+            with open(mp, 'r', encoding='utf-8-sig') as f:
+                marker_version = str((json.load(f) or {}).get('version') or '')
+        except Exception:  # noqa: BLE001
+            pass
+    info['marker_version'] = marker_version
+    add('v13.marker', '部署 marker version == package.json（v1.3.0）',
+        'PASS' if marker_version and pkg_version and marker_version == pkg_version else 'FAIL',
+        'marker=%r package.json=%r' % (marker_version, pkg_version))
+    return info
+
+
 def main():
     ap = argparse.ArgumentParser(description='Independent pet pack verifier')
     ap.add_argument('--packs-dir', default=os.path.join(PROJECT, 'plugin', 'packs'))
@@ -772,6 +851,9 @@ def main():
     # ---------- v1.2 契约（三视图 2.5D 转台：marker/动画池/权重/媒体总量） ----------
     v12 = v12_checks(packs_dir, os.path.abspath(args.pet_dir), os.path.abspath(args.plugin_dir))
 
+    # ---------- v1.3 契约（Q 版 chibi 资产链） ----------
+    v13 = v13_checks(packs_dir, os.path.abspath(args.pet_dir), os.path.abspath(args.plugin_dir))
+
     # ---------- 跨 pack 一致性与汇总 ----------
     if len(name_sets) == len(EXPECTED_IDS):
         base_prefix = prefix_map[EXPECTED_IDS[0]]
@@ -809,6 +891,7 @@ def main():
         'refs_total': all_refs_total,
         'v11': v11,
         'v12': v12,
+        'v13': v13,
     }
     write_out(out_path, packs_dir, ffmpeg, expected_names, summary)
     return 0 if not any(c['status'] == 'FAIL' for c in checks) else 1
@@ -829,6 +912,7 @@ def write_out(out_path, packs_dir, ffmpeg, expected_names, summary=None):
         'packs': (summary or {}).get('packs', {}),
         'v11': (summary or {}).get('v11'),
         'v12': (summary or {}).get('v12'),
+        'v13': (summary or {}).get('v13'),
         'checks': checks,
         'files': files_report,
     }

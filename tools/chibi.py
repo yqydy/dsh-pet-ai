@@ -206,7 +206,8 @@ def main():
         canvas.save(os.path.join(OUT_DIR, '%s-portrait.png' % c))
         print('OK', c)
 
-    lineup(names)
+    # always build the full 8-character lineup, even for subset runs
+    lineup(CHARS)
 
 
 if __name__ == '__main__':
