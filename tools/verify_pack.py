@@ -390,12 +390,131 @@ def v11_checks(packs_dir, pet_dir, expect_active=''):
     return info
 
 
+def v12_checks(packs_dir, pet_dir, plugin_dir):
+    """v1.2 契约：部署 marker=1.2.0；clicks=4（含转圈展示）；categories 单组 weight=24/3 actions；
+    animationWeights=76/0/0；packs 媒体总大小与 build/webm 母版一致。"""
+    pkg_version = None
+    try:
+        with open(os.path.join(plugin_dir, 'package.json'), 'r', encoding='utf-8-sig') as f:
+            pkg_version = str(json.load(f).get('version') or '')
+    except Exception:  # noqa: BLE001
+        pass
+    marker = None
+    marker_path = os.path.join(pet_dir, '.dsh-pet-ai-girls.json')
+    if os.path.isfile(marker_path):
+        try:
+            with open(marker_path, 'r', encoding='utf-8-sig') as f:
+                marker = json.load(f)
+        except Exception:  # noqa: BLE001
+            marker = {'_parse_error': True}
+    configs = {}
+    for fn in sorted(os.listdir(packs_dir)):
+        m = re.match(r'^(.+?)-config\.(json|jsonc)$', fn)
+        if not m:
+            continue
+        try:
+            cfg, _ = load_pack_config(os.path.join(packs_dir, fn))
+        except Exception:  # noqa: BLE001
+            continue
+        pet = (cfg.get('pets') or [{}])[0] if isinstance(cfg.get('pets'), list) else {}
+        anims = cfg.get('animations') if isinstance(cfg.get('animations'), dict) else {}
+        cats = anims.get('categories') if isinstance(anims.get('categories'), list) else []
+        configs[m.group(1)] = {
+            'clicks': anims.get('clicks') if isinstance(anims.get('clicks'), list) else [],
+            'categories': [{'weight': c.get('weight'), 'actions': c.get('actions')}
+                           for c in cats if isinstance(c, dict)],
+            'weights': cfg.get('animationWeights') if isinstance(cfg.get('animationWeights'), dict) else {},
+        }
+    marker_version = str((marker or {}).get('version') or '')
+    is_v12 = marker_version.startswith('1.2') or any('转圈展示' in c['clicks'] for c in configs.values()) \
+        or any(c['weights'].get('idle') == 76 for c in configs.values())
+    info = {'mode': 'v1.2' if is_v12 else 'v1.1/other', 'package_json_version': pkg_version,
+            'marker_version': marker_version, 'configs': configs}
+    if not is_v12:
+        add('v12.mode', 'v1.2 三视图 2.5D 转台契约', 'SKIP', '检测为 v1.1 或更早配置（无 2.5D 动画池特征）')
+        return info
+
+    # 1) 部署 marker 版本
+    if marker is None:
+        add('v12.marker', '部署 marker .dsh-pet-ai-girls.json 存在且 version=1.2.0', 'FAIL',
+            '未找到 %s' % marker_path)
+    else:
+        ok = bool(pkg_version) and marker_version == pkg_version
+        add('v12.marker', '部署 marker .dsh-pet-ai-girls.json version == package.json',
+            'PASS' if ok else 'FAIL',
+            'marker.version=%r package.json=%r path=%s' % (marker_version, pkg_version, marker_path))
+
+    # 2) clicks = 4 且含转圈展示
+    bad = [k for k, c in configs.items() if len(c['clicks']) != 4 or '转圈展示' not in c['clicks']]
+    add('v12.clicks', '8 config clicks=4 且含「转圈展示」', 'PASS' if not bad else 'FAIL',
+        ('8/8 符合（%s）' % configs[list(configs)[0]]['clicks']) if not bad else '异常: %s' % bad)
+
+    # 3) categories 单组 weight=24/3 actions（转圈展示/东张西望/伸懒腰）
+    want = {'转圈展示', '东张西望', '伸懒腰'}
+    bad_cat = []
+    for k, c in configs.items():
+        cats = c['categories']
+        if len(cats) != 1 or cats[0].get('weight') != 24 or len(set(cats[0].get('actions') or [])) != 3 \
+                or set(cats[0].get('actions') or []) != want:
+            bad_cat.append('%s: %s' % (k, cats))
+    add('v12.categories', '8 config categories 单组 weight=24 actions=3（转圈展示/东张西望/伸懒腰）',
+        'PASS' if not bad_cat else 'FAIL',
+        ('8/8 符合（%s）' % json.dumps(configs[list(configs)[0]]['categories'], ensure_ascii=False))
+        if not bad_cat else '; '.join(bad_cat[:4]))
+
+    # 4) animationWeights = 76/0/0
+    bad_w = [k for k, c in configs.items()
+             if c['weights'].get('idle') != 76 or c['weights'].get('turn') != 0 or c['weights'].get('move') != 0]
+    add('v12.weights', '8 config animationWeights=76/0/0', 'PASS' if not bad_w else 'FAIL',
+        ('8/8 符合（%s）' % json.dumps(configs[list(configs)[0]]['weights'], ensure_ascii=False))
+        if not bad_w else '异常: %s' % bad_w)
+
+    # 5) packs 媒体总数/总大小 == build/webm 母版（证明重渲后打包一致）
+    build_webm = os.path.join(PROJECT, 'build', 'webm')
+    packs_files = packs_bytes = 0
+    for prefix in configs:
+        d = os.path.join(packs_dir, '%s-animation' % prefix)
+        if os.path.isdir(os.path.join(d, 'webm')):
+            d = os.path.join(d, 'webm')
+        if not os.path.isdir(d):
+            continue
+        for fn in os.listdir(d):
+            fp = os.path.join(d, fn)
+            if fn.lower().endswith('.webm') and os.path.isfile(fp):
+                packs_files += 1
+                packs_bytes += os.path.getsize(fp)
+    info['packs_files'] = packs_files
+    info['packs_bytes'] = packs_bytes
+    if os.path.isdir(build_webm):
+        b_files = b_bytes = 0
+        for ch in os.listdir(build_webm):
+            chd = os.path.join(build_webm, ch)
+            if not os.path.isdir(chd):
+                continue
+            for fn in os.listdir(chd):
+                fp = os.path.join(chd, fn)
+                if fn.lower().endswith('.webm') and os.path.isfile(fp):
+                    b_files += 1
+                    b_bytes += os.path.getsize(fp)
+        info['build_files'] = b_files
+        info['build_bytes'] = b_bytes
+        add('v12.media_total', 'packs 媒体总数/总大小与 build/webm 母版一致（重渲后打包一致）',
+            'PASS' if (packs_files == b_files and packs_bytes == b_bytes) else 'FAIL',
+            'packs=%d 个/%.2f MiB；build/webm=%d 个/%.2f MiB' % (
+                packs_files, packs_bytes / 1048576.0, b_files, b_bytes / 1048576.0))
+    else:
+        add('v12.media_total', 'packs 媒体总数/总大小与 build/webm 母版一致', 'SKIP',
+            'build/webm 母版不存在，packs=%d 个/%.2f MiB' % (packs_files, packs_bytes / 1048576.0))
+    return info
+
+
 def main():
     ap = argparse.ArgumentParser(description='Independent pet pack verifier')
     ap.add_argument('--packs-dir', default=os.path.join(PROJECT, 'plugin', 'packs'))
     ap.add_argument('--pet-dir', default=os.path.join(os.path.expanduser('~'), '.dsh', 'dsh-pet', 'pet'),
                     help='已部署的 pet 目录（读 active marker；默认用户 .dsh）')
     ap.add_argument('--expect-active', default='', help='期望当前 active 角色 id（如 deepseek；留空则只比对 marker 一致性）')
+    ap.add_argument('--plugin-dir', default=os.path.join(PROJECT, 'plugin'), help='插件目录（读取 package.json 版本）')
     ap.add_argument('--out', default=os.path.join(PROJECT, 'build', 'verify', 'verify_pack.json'))
     ap.add_argument('--no-media', action='store_true', help='skip ffmpeg media probing')
     ap.add_argument('--ffmpeg', default='')
@@ -650,6 +769,9 @@ def main():
     # ---------- v1.1 行为契约（单角色显示 + active marker + 统一 size/position） ----------
     v11 = v11_checks(packs_dir, os.path.abspath(args.pet_dir), args.expect_active)
 
+    # ---------- v1.2 契约（三视图 2.5D 转台：marker/动画池/权重/媒体总量） ----------
+    v12 = v12_checks(packs_dir, os.path.abspath(args.pet_dir), os.path.abspath(args.plugin_dir))
+
     # ---------- 跨 pack 一致性与汇总 ----------
     if len(name_sets) == len(EXPECTED_IDS):
         base_prefix = prefix_map[EXPECTED_IDS[0]]
@@ -686,6 +808,7 @@ def main():
         'bytes_total': all_bytes_total,
         'refs_total': all_refs_total,
         'v11': v11,
+        'v12': v12,
     }
     write_out(out_path, packs_dir, ffmpeg, expected_names, summary)
     return 0 if not any(c['status'] == 'FAIL' for c in checks) else 1
@@ -704,6 +827,8 @@ def write_out(out_path, packs_dir, ffmpeg, expected_names, summary=None):
         'summary': dict(statuses, files_total=(summary or {}).get('files_total'),
                         bytes_total=(summary or {}).get('bytes_total')),
         'packs': (summary or {}).get('packs', {}),
+        'v11': (summary or {}).get('v11'),
+        'v12': (summary or {}).get('v12'),
         'checks': checks,
         'files': files_report,
     }

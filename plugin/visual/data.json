@@ -1,9 +1,9 @@
 {
   "plugin": "dsh-pet-ai-girls",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "AI 娘桌宠图鉴",
   "subtitle": "dsh-pet-ai-girls · 8 位 AI 拟人角色 · 透明动画桌面宠物",
-  "generatedAt": "2026-11-06T11:28:29",
+  "generatedAt": "2026-11-07T11:32:09",
   "animationGroups": [
     {
       "group": "待机",

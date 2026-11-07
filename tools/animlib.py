@@ -22,6 +22,15 @@ MAX_H = 322             # character height on canvas (leaves room for jumps/effe
 MAX_W = 600
 FEET_PAD = 6            # cutout.py pads 6px below the feet
 
+# ---------------------------------------------------------------------------
+# three-view (2.5D turntable) assets
+# ---------------------------------------------------------------------------
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+THREEVIEW_DIR = os.path.join(ROOT_DIR, 'build', 'threeview')
+TV_CHAR_H = 1000.0      # character height inside the normalised three-view canvas
+TV_FEET_Y = 1060.0      # feet baseline inside the normalised three-view canvas
+TV_SCALE = MAX_H / TV_CHAR_H
+
 FFMPEG = os.environ.get(
     'PET_FFMPEG',
     r'C:\Users\20862\AppData\Roaming\Python\Python38\site-packages\imageio_ffmpeg\binaries\ffmpeg-win64-v4.2.2.exe',
@@ -114,6 +123,150 @@ class Character:
         data = affine_inverse_data(forward)
         return self.img.transform((canvas_w, canvas_h), Image.AFFINE, data,
                                   resample=Image.BICUBIC)
+
+
+# ----------------------------------------------------------------------------
+# 2.5D turntable character (front / side / back three-view art)
+# ----------------------------------------------------------------------------
+class TurnCharacter:
+    """Pseudo-3D paper doll built from front / side / back turnaround art.
+
+    Yaw rendering:
+      * four view segments: front (0°), left profile (90°), back (180°),
+        right profile (270°);
+      * horizontal squash near the segment edges = perspective foreshortening;
+      * short crossfade at the four view boundaries; when ``blur_deg`` > 0 the
+        frame is a temporal average of neighbouring yaw angles, which reads as
+        rotation motion blur and hides the crossfade;
+      * the ground shadow width follows the visible silhouette (front/back
+        dress wide, profile narrow).
+    """
+
+    def __init__(self, name):
+        if not os.path.isdir(THREEVIEW_DIR):
+            raise RuntimeError('three-view assets missing: ' + THREEVIEW_DIR +
+                               '  (run: python tools/threeview.py)')
+        def load(label):
+            return Image.open(os.path.join(THREEVIEW_DIR, '%s-%s.png' % (name, label))).convert('RGBA')
+        self.name = name
+        self.views = {
+            'front': load('front'),
+            'side': load('side'),                       # drawn facing left
+            'back': load('back'),
+        }
+        self.views['side_m'] = self.views['side'].transpose(Image.FLIP_LEFT_RIGHT)
+        s = TV_SCALE
+        self.sw = int(round(self.views['front'].width * s))
+        self.sh = int(round(self.views['front'].height * s))
+        for k in list(self.views):
+            self.views[k] = self.views[k].resize((self.sw, self.sh), Image.LANCZOS)
+        # pivot (feet) position inside the scaled view: x = centre, y = feet line
+        self.pivot_x = self.sw / 2.0
+        self.pivot_y = TV_FEET_Y * s
+        self.top_y = GROUND_Y - self.pivot_y
+
+    # -- view selection -----------------------------------------------------
+    @staticmethod
+    def _segment(angle):
+        """(view_label, scale_x) for an absolute yaw angle in [0, 360)."""
+        a = angle % 360.0
+        r = math.radians(a)
+        if a <= 45.0:
+            return 'front', math.cos(r)
+        if a <= 135.0:
+            return 'side', math.sin(r)
+        if a <= 225.0:
+            return 'back', -math.cos(r)
+        if a <= 315.0:
+            return 'side_m', -math.sin(r)
+        return 'front', math.cos(r)
+
+    _BOUNDARIES = (45.0, 135.0, 225.0, 315.0)
+    _FADE = 6.0
+
+    def _base_frame(self, angle):
+        """Character-only RGBA frame (640x360) at one exact yaw angle."""
+        a = angle % 360.0
+        # near a view boundary? crossfade the two neighbouring segments
+        for b in self._BOUNDARIES:
+            d = (a - b + 540.0) % 360.0 - 180.0       # signed distance in (-180,180]
+            if abs(d) < self._FADE:
+                t = (d + self._FADE) / (2.0 * self._FADE)
+                t = t * t * (3 - 2 * t)
+                v1, sx1 = self._segment(b - 0.01)
+                v2, sx2 = self._segment(b + 0.01)
+                return Image.blend(self._render_view(v1, sx1), self._render_view(v2, sx2), t)
+        v, sx = self._segment(a)
+        return self._render_view(v, sx)
+
+    def _render_view(self, label, scale_x):
+        canvas = Image.new('RGBA', (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
+        img = self.views[label]
+        w = max(1, int(round(self.sw * scale_x)))
+        if w != self.sw:
+            img = img.resize((w, self.sh), Image.LANCZOS)
+        x = int(round(CANVAS_W / 2.0 - self.pivot_x * scale_x))
+        y = int(round(self.top_y))
+        canvas.alpha_composite(img, (x, y))
+        return canvas
+
+    def _yaw_frame(self, yaw, blur_deg):
+        if blur_deg <= 0.2:
+            return self._base_frame(yaw)
+        # temporal supersampling: centre weighted more than the two side samples
+        centre = self._base_frame(yaw).convert('RGBA')
+        prev = self._base_frame(yaw - blur_deg).convert('RGBA')
+        nxt = self._base_frame(yaw + blur_deg).convert('RGBA')
+        side = Image.blend(prev, nxt, 0.5)
+        return Image.blend(side, centre, 0.55)
+
+    # -- compositing --------------------------------------------------------
+    def _shadow(self, frame, pose):
+        """Ground shadow ellipse; width follows the frame's lower silhouette."""
+        sx, sy, deg, tx, ty = pose
+        a = np.asarray(frame)[:, :, 3]
+        ys, xs = np.nonzero(a > 24)
+        if len(ys) == 0:
+            return None
+        bottom = int(ys.max())
+        band = max(2, int(0.18 * MAX_H))
+        sel = ys >= bottom - band
+        foot_w = float(xs[sel].max() - xs[sel].min()) if sel.any() else 90.0
+        shadow = Image.new('RGBA', (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
+        draw_shadow(shadow, _ShadowProxy(foot_w), pose, alpha=58)
+        return shadow
+
+    def render(self, pose, yaw=0.0, blur_deg=0.0):
+        """Render one 640x360 RGBA frame (character + ground shadow)."""
+        frame = self._yaw_frame(yaw, blur_deg)
+        shadow = self._shadow(frame, pose)
+        layer = new_layer()
+        if shadow is not None:
+            layer.alpha_composite(shadow)
+        # pose transform around the feet anchor (same math as Character.render)
+        sx, sy, deg, tx, ty = pose
+        ax, ay = CANVAS_W / 2.0, float(GROUND_Y)
+        acx = CANVAS_W / 2.0 + tx
+        acy = GROUND_Y + ty
+        r = math.radians(deg)
+        cos_r, sin_r = math.cos(r), math.sin(r)
+        a = cos_r * sx
+        b = -sin_r * sy
+        d = sin_r * sx
+        e = cos_r * sy
+        c = acx - (a * ax + b * ay)
+        f = acy - (d * ax + e * ay)
+        transformed = frame.transform((CANVAS_W, CANVAS_H), Image.AFFINE,
+                                      affine_inverse_data((a, b, c, d, e, f)),
+                                      resample=Image.BICUBIC)
+        layer.alpha_composite(transformed)
+        return layer
+
+
+class _ShadowProxy:
+    """Minimal character stand-in for draw_shadow(): width of the ground footprint."""
+    def __init__(self, footprint_w):
+        self.draw_w = max(60.0, footprint_w * 2.0)
 
 
 # ----------------------------------------------------------------------------
@@ -227,6 +380,20 @@ def ease_in_out(t):
     return 0.5 - 0.5 * math.cos(math.pi * t)
 
 
+def key_interp(keys, u):
+    """Piecewise smooth interpolation of [(u0, v0), (u1, v1), ...]."""
+    if u <= keys[0][0]:
+        return keys[0][1]
+    for i in range(len(keys) - 1):
+        a, va = keys[i]
+        b, vb = keys[i + 1]
+        if a <= u <= b:
+            if b - a <= 1e-9:
+                return vb
+            return va + (vb - va) * ease_in_out((u - a) / (b - a))
+    return keys[-1][1]
+
+
 # ----------------------------------------------------------------------------
 # animation specs
 # ----------------------------------------------------------------------------
@@ -241,6 +408,10 @@ class Anim:
     def pose(self, u, t):
         """u = normalized time 0..1, t = seconds. Return pose + particle callback."""
         raise NotImplementedError
+
+    def yaw_frame(self, u, t):
+        """2.5D animations override: return (yaw_degrees, blur_degrees) or None."""
+        return None
 
 
 class RestIdle(Anim):
@@ -306,39 +477,43 @@ class NapIdle(Anim):
 
 
 class LookAround(Anim):
-    """东张西望: turn animation (play once, engine flips facing afterwards)."""
+    """东张西望: 2.5D look-around — turn to both profiles, then back to front.
 
-    def __init__(self, duration=3.0):
+    Uses the front / right-profile / left-profile three-view art so the pet
+    visibly turns around in 3D instead of sliding its flat image.
+    """
+
+    def __init__(self, duration=3.2):
         super().__init__('东张西望', duration, loop=False)
+        self.keys = [(0.00, 0.0), (0.08, 0.0), (0.22, -74.0), (0.40, -74.0),
+                     (0.52, 0.0), (0.60, 0.0), (0.74, 74.0), (0.92, 74.0),
+                     (1.00, 0.0)]
 
     def pose(self, u, t):
-        # look left, then right, settle back to centre
-        if u < 0.25:
-            k = ease_in_out(u / 0.25)
-            tx = -26 * k
-            deg = -3.0 * k
-            sx = 1.0
-        elif u < 0.5:
-            k = ease_in_out((u - 0.25) / 0.25)
-            tx = -26 + 52 * k
-            deg = -3.0 + 6.0 * k
-            sx = 1.0
-        elif u < 0.7:
-            k = ease_in_out((u - 0.5) / 0.2)
-            tx = 26 - 26 * k
-            deg = 3.0 - 3.0 * k
-            sx = 1.0
-        else:
-            k = ease_in_out((u - 0.7) / 0.3)
-            tx = 0.0
-            deg = 0.0
-            sx = 1.0 - 0.03 * math.sin(k * math.pi)
-        bob = -2.0 * math.sin(u * 3 * math.pi) * (1 - smooth(u))
-        return (sx, 1.0, deg, tx, bob), None
+        # gentle bob; end at neutral so the engine can crossfade back to idle
+        bob = -2.5 * math.sin(min(1.0, u / 0.22) * math.pi) if u < 0.22 else 0.0
+        bob += -2.0 * math.sin(min(1.0, (u - 0.52) / 0.14) * math.pi) if 0.52 <= u < 0.66 else 0.0
+        deg = 1.2 * math.sin(2 * math.pi * u) * (1.0 - smooth(u))
+        tx = 3.0 * math.sin(2 * math.pi * u)
+        return (1.0, 1.0, deg, tx, bob), None
+
+    def yaw_frame(self, u, t):
+        yaw = key_interp(self.keys, u)
+        # tiny idle sway while holding a profile (makes it feel alive)
+        hold = 4.0 if 0.22 <= u <= 0.40 or 0.74 <= u <= 0.92 else 0.0
+        if hold:
+            yaw += hold * math.sin((u % 0.18) / 0.18 * 2 * math.pi) * 0.5
+        d = abs(key_interp(self.keys, min(1.0, u + 0.015)) -
+                key_interp(self.keys, max(0.0, u - 0.015)))
+        return (yaw, min(13.0, d * 0.9 + 1.0))
 
 
 class DragFlail(Anim):
-    """被鼠标拖拽悬空反馈: dangling sway loop (feet lifted off the ground)."""
+    """被鼠标拖拽悬空反馈: dangling sway loop (feet lifted off the ground).
+
+    Adds a ±40° yaw sway through the front/side views so the dangling pet
+    shows its profile while being carried.
+    """
 
     def __init__(self, duration=1.6):
         super().__init__('被鼠标拖拽悬空反馈', duration, loop=True)
@@ -347,6 +522,11 @@ class DragFlail(Anim):
         w = 2 * math.pi * u
         return (1.0, 1.012, 6.0 * math.sin(w), 6.5 * math.sin(w + 0.9),
                 -19 + 3.0 * math.sin(w * 2)), None
+
+    def yaw_frame(self, u, t):
+        w = 2 * math.pi * u
+        # hangs sideways and slowly swings through the profile views
+        return (15.0 + 60.0 * math.sin(w + 0.35), 4.0)
 
 
 class ClickJoy(Anim):
@@ -395,6 +575,15 @@ class ClickJoy(Anim):
                         draw_heart(d, x, y, size, (255, 120, 160, a))
         return (sx, sy, deg, 0.0, ty), fx
 
+    def yaw_frame(self, u, t):
+        # happy jump + 360° spin, ends facing front
+        keys = [(0.00, 0.0), (0.18, 0.0), (0.52, 220.0), (0.72, 360.0),
+                (1.00, 360.0)]
+        yaw = key_interp(keys, u)
+        d = abs(key_interp(keys, min(1.0, u + 0.012)) -
+                key_interp(keys, max(0.0, u - 0.012)))
+        return (yaw % 360.0, min(14.0, d * 0.9 + (2.0 if d > 1.0 else 0.0)))
+
 
 class ClickShy(Anim):
     """点击回应-害羞惊讶."""
@@ -442,6 +631,14 @@ class ClickShy(Anim):
                     draw_sweat(d, CANVAS_W / 2 + 56, GROUND_Y - 262 + drop_k * 18, 7,
                                (140, 205, 250, int(240 * (1 - drop_k * 0.7))))
         return (sx, 1.0, deg, tx, ty), fx
+
+    def yaw_frame(self, u, t):
+        keys = [(0.00, 0.0), (0.10, 0.0), (0.28, -98.0), (0.50, -98.0),
+                (0.74, 0.0), (1.00, 0.0)]
+        yaw = key_interp(keys, u)
+        d = abs(key_interp(keys, min(1.0, u + 0.015)) -
+                key_interp(keys, max(0.0, u - 0.015)))
+        return (yaw, min(12.0, d * 0.85 + 2.0))
 
 
 class ClickWave(Anim):
@@ -621,6 +818,15 @@ class Celebrate(Anim):
                                 fill=(c[0], c[1], c[2], a))
         return (sx, sy, deg, 0.0, ty), fx
 
+    def yaw_frame(self, u, t):
+        # celebratory 360° hop-spin, ends facing front again
+        keys = [(0.00, 0.0), (0.12, 0.0), (0.46, 200.0), (0.58, 245.0),
+                (0.82, 360.0), (1.00, 360.0)]
+        yaw = key_interp(keys, u)
+        d = abs(key_interp(keys, min(1.0, u + 0.012)) -
+                key_interp(keys, max(0.0, u - 0.012)))
+        return (yaw % 360.0, min(14.0, d * 0.9 + (2.0 if d > 1.0 else 0.0)))
+
 
 class DroopSweat(Anim):
     """工作状态-垂头叹气冒汗."""
@@ -693,39 +899,36 @@ class WhisperDaze(Anim):
 
 
 class SpinShow(Anim):
-    """转圈展示: 360° spin (random 小动作)."""
+    """转圈展示: real 2.5D 360° turntable built from the three-view art."""
 
-    def __init__(self, duration=2.4):
+    def __init__(self, duration=2.8):
         super().__init__('转圈展示', duration, loop=False)
 
     def pose(self, u, t):
-        if u < 0.12:
-            k = ease_out(u / 0.12)
-            sx = 1.0 + 0.05 * k
-            sy = 1.0 - 0.04 * k
-            ang = 0.0
-        elif u < 0.88:
-            k = ease_in_out((u - 0.12) / 0.76)
+        if u < 0.08:
+            k = ease_out(u / 0.08)
+            sy = 1.0 - 0.03 * k
+            sx = 1.0 + 0.02 * k
+            bob = -2.0 * k
+        elif u > 0.92:
+            k = ease_out((u - 0.92) / 0.08)
+            sy = 1.0 - 0.02 * (1 - k)
             sx = 1.0
-            sy = 1.0
-            ang = 0.0
-            # paper-doll spin: horizontal squash cycle, 2 fake turns
-            spin = k * 2
-            sx = math.cos(spin * math.pi)
-            if abs(sx) < 0.06:
-                sx = 0.06 if sx >= 0 else -0.06
-            sx = abs(sx)
-            if sx < 0.35:
-                sy = 1.0 + 0.03 * (0.35 - sx)
-            deg = 0.0
-            ang = 0.0
-            jump = 6 * math.sin(k * math.pi * 2) ** 2
-            return (sx, sy, deg, 0.0, -jump), None
+            bob = 1.0 * (1 - k)
         else:
-            k = ease_out((u - 0.88) / 0.12)
+            sy = 1.0
             sx = 1.0
-            sy = 1.0 + 0.02 * math.sin(k * math.pi)
-        return (sx, sy, 0.0, 0.0, 0.0), None
+            bob = -3.0 * math.sin((u - 0.08) / 0.84 * math.pi)
+        return (sx, sy, 0.0, 0.0, bob), None
+
+    def yaw_frame(self, u, t):
+        if u <= 0.08 or u >= 0.92:
+            return (0.0, 0.0)          # holds the front view before/after
+        k = (u - 0.08) / 0.84
+        yaw = 360.0 * ease_in_out(k)
+        d = abs(ease_in_out(min(1.0, k + 0.012)) - ease_in_out(max(0.0, k - 0.012)))
+        blur = min(18.0, 360.0 * d * 0.9)
+        return (yaw % 360.0, blur)
 
 
 class Stretch(Anim):
@@ -775,16 +978,26 @@ def encode_frames(frames_dir, out_path, crf=30):
     subprocess.run(cmd, check=True)
 
 
-def render_anim(char, anim, out_path, keep_frames=False, crf=30):
+def render_anim(char, anim, out_path, keep_frames=False, crf=30, turn=None):
+    """Render one animation to webm.
+
+    ``turn`` is an optional TurnCharacter: animations that return a yaw via
+    ``Anim.yaw_frame`` are rendered with the 2.5D three-view turntable.
+    """
     tmp = tempfile.mkdtemp(prefix='petanim_')
     try:
         for i in range(anim.frames):
             u = i / float(anim.frames)
             t = i / float(FPS)
             pose, fx = anim.pose(u, t)
-            layer = new_layer()
-            draw_shadow(layer, char, pose)
-            layer.alpha_composite(char.render(pose))
+            yaw_spec = anim.yaw_frame(u, t)
+            if yaw_spec is not None and turn is not None:
+                yaw, blur = yaw_spec
+                layer = turn.render(pose, yaw, blur)
+            else:
+                layer = new_layer()
+                draw_shadow(layer, char, pose)
+                layer.alpha_composite(char.render(pose))
             if fx:
                 fx(layer)
             layer.save(os.path.join(tmp, 'f%04d.png' % i), optimize=False)
@@ -822,6 +1035,11 @@ if __name__ == '__main__':
     os.makedirs(out_dir, exist_ok=True)
     char = Character(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                                   'build', 'cutouts', 'portrait-%s.png' % char_name))
+    turn = None
+    try:
+        turn = TurnCharacter(char_name)
+    except Exception as e:  # noqa: BLE001 - three-view assets are optional for 2D clips
+        print('WARN 2.5D turntable disabled (%s); run tools/threeview.py first' % e)
     print('character base:', char.img.size, 'scale', round(char.s0, 3),
           'draw', round(char.draw_w), 'x', round(char.draw_h))
     anims = [RestIdle(), FloatIdle(), NapIdle(), LookAround(), DragFlail(),
@@ -833,6 +1051,6 @@ if __name__ == '__main__':
     for key in selected:
         anim = mapping[key]
         out = os.path.join(out_dir, char_name + '-' + anim.name + '.webm')
-        render_anim(char, anim, out)
+        render_anim(char, anim, out, turn=turn)
         print('OK', anim.name, '->', os.path.basename(out),
               os.path.getsize(out), 'bytes', verify_alpha(out))

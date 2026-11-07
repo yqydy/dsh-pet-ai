@@ -92,6 +92,7 @@ def build_char(task):
     cid, crf = task
     t0 = time.time()
     char = animlib.Character(os.path.join(CUTOUT_DIR, 'portrait-%s.png' % cid))
+    turn = animlib.TurnCharacter(cid)
     out_dir = os.path.join(WEBM_DIR, cid)
     os.makedirs(out_dir, exist_ok=True)
     entries = {}
@@ -99,7 +100,7 @@ def build_char(task):
         anim = cls()
         out_path = os.path.join(out_dir, anim.name + '.webm')
         t_anim = time.time()
-        animlib.render_anim(char, anim, out_path, crf=crf)
+        animlib.render_anim(char, anim, out_path, crf=crf, turn=turn)
         size = os.path.getsize(out_path)
         entries[anim.name] = {
             'file': 'webm/%s/%s.webm' % (cid, anim.name),
@@ -543,6 +544,18 @@ def main(argv=None):
 
     os.makedirs(WEBM_DIR, exist_ok=True)
     os.makedirs(PREVIEW_DIR, exist_ok=True)
+
+    # --- phase 0: make sure the three-view (2.5D turntable) assets exist ------
+    if not args.finalize_only:
+        threeview_dir = os.path.join(ROOT, 'build', 'threeview')
+        needed = [os.path.join(threeview_dir, '%s-front.png' % c) for c in chars]
+        if not all(os.path.exists(p) for p in needed):
+            print('generating three-view turntable assets (front/side/back) ...', flush=True)
+            try:
+                subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'threeview.py')] + chars,
+                               check=True)
+            except subprocess.CalledProcessError as e:
+                sys.exit('threeview.py failed (%s); 2.5D animations need Pillow+numpy+scipy' % e)
 
     entries_by_char = {}
     build_times = {}

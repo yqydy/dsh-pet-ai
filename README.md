@@ -7,6 +7,7 @@
 - **同一时间只显示 1 只**（默认 DeepSeek 娘），可用 `/petgirl` 命令、图鉴页按钮或 API **自由切换**，选择会持久化
 - 每位角色 **17 个透明动画**（待机 ×3、点击回应 ×3、拖拽、东张西望、碎碎念、工作状态 ×6、转圈、伸懒腰）
 - 素材规格与 dsh-pet 原生素材一致：**640×360 / 24fps / VP9-alpha webm**，共 **136 个动画文件**
+- **2.5D 三视图转台**：用三视图的正面 / 侧面 / 背面做真正的转身动画（360° 转圈展示、左右转身、点击转身、拖拽侧身、庆祝转圈），不是一张平面立绘在晃
 - 附带 **立绘 + 三视图图鉴页**（8 角色 × 立绘/三视图，灯箱浏览，纯本地资源）
 - 插件会**自动把 pet pack 部署进 dsh-pet**：安装插件后每次启动自动同步素材，默认只显示 1 只，可随时切换
 
@@ -28,13 +29,25 @@
 
 ![8 位 AI 娘桌宠](docs/screenshots/pets-wall-all8.png)
 
+**2.5D 三视图转台**（v1.2.0）：「转圈展示」会真实转 360° —— 正面 → 侧面 → 背面 → 侧面 → 正面：
+
+![2.5D 360 度转台](docs/screenshots/turntable-360.png)
+
+转身/侧身相关动作（逐帧取样）：东张西望、点击害羞转身、拖拽侧身、雀跃庆祝转圈：
+
+![2.5D 转身动作](docs/screenshots/turntable-actions.png)
+
+**真实桌面实机抓帧**（dsh-pet 桌面窗口，200ms 一张，正好抓到一个 360° 转圈）：
+
+![实机 2.5D 转圈](docs/screenshots/live-2.5d-spin.png)
+
 **单宠显示 + 切换实测**：左=原 dsh-pet 主宠物，右=当前 AI 娘；下面是当前 DeepSeek 娘 与切换成 Qwen 娘后的真实桌面窗口抓图：
 
 ![当前 DeepSeek 娘](docs/screenshots/switcher-deepseek.png)
 
 ![切换为 Qwen 娘](docs/screenshots/switcher-qwen.png)
 
-更多截图见 [`docs/screenshots/`](docs/screenshots/)；v1.1 复验报告见 [`docs/verify/REPORT-v1.1.md`](docs/verify/REPORT-v1.1.md)。
+更多截图见 [`docs/screenshots/`](docs/screenshots/)；独立复验报告见 [`docs/verify/`](docs/verify/)。
 
 ---
 
@@ -44,7 +57,8 @@
 | --- | --- |
 | dsh-pet 用户数据里的 8 套 pet pack | ✅ 已部署到 `%USERPROFILE%\.dsh\dsh-pet\pet\`，**同一时间只显示 1 只**（默认 DeepSeek 娘） |
 | 桌面模式宠物窗口 | ✅ 只剩 2 个窗口：原 dsh-pet 主宠物 + 当前 AI 娘（切换时会自动重建，见 `docs/screenshots/switcher-deepseek.png`） |
-| 插件 `dsh-pet-ai-girls` v1.1.0 | ✅ 已装进 `%USERPROFILE%\.dsh\profiles\desktop\`（node_modules + package.json 依赖 + bundles + pnpm-lock），已热加载生效 |
+| 插件 `dsh-pet-ai-girls` v1.2.0 | ✅ 已装进 `%USERPROFILE%\.dsh\profiles\desktop\`（node_modules + package.json 依赖 + bundles + pnpm-lock）。**当前 DSH 进程内仍是 v1.1.0 已加载代码**（Node ESM 模块缓存，重启用新代码）；但 pet pack 配置与 136 个动画素材已经是 v1.2.0，且已实测生效 |
+| 2.5D 三视图转台 | ✅ 6 个动作已用三视图（正/侧/背）渲染，实机桌面抓帧确认 360° 转身；点宠物约 75% 概率触发转身/转圈 |
 | 切换能力 | ✅ `/petgirl` 命令 + 图鉴页「切换当前桌宠」按钮 + `/api/switch` API，选择持久化到 `pet/.dsh-pet-ai-girls-active.json` |
 | 图鉴页 | `plugin/visual/index.html` 可直接双击打开；DSH 运行时可访问 `http://127.0.0.1:<DSH端口>/dsh-pet-ai-girls/` |
 
@@ -57,8 +71,11 @@
 
 - **切换当前桌宠（重点）**：在 DSH 对话框输入 `/petgirl`（留空=查看当前与全部可选），
   输入 `/petgirl qwen`（也接受 `Qwen 娘`、`girl-qwen`）即可换人；
-  或打开图鉴页 `http://127.0.0.1:57076/dsh-pet-ai-girls/` 点顶部「切换当前桌宠」按钮组。
+  或打开图鉴页 `http://127.0.0.1:<DSH端口>/dsh-pet-ai-girls/` 点顶部「切换当前桌宠」按钮组。
   切换后桌面宠物窗口几秒内自动重建，网页里的桌宠刷新页面后同步；选择会保存，下次启动仍是上次那只。
+- **2.5D 转身/转圈**：点一下宠物约有 75% 概率触发 2.5D 动作（跳起来转一圈 / 害羞转身躲开 / 转台展示）；
+  空闲时「小动作」类别（24% 权重）会随机触发「转圈展示」（360° 三视图转台，能看到侧面和背面）或「东张西望」；
+  拖拽时她会侧身悬空摇摆；任务完成时「雀跃庆祝」会跳跃转圈。
 - **桌面上**：当前 AI 娘会出现在屏幕右下角，可以用鼠标**拖动 / 甩抛**，点一下有回应动画与爱心/星星；
   右键菜单可以点播动作、说话、回到初始位置、重载配置。
 - **切换对话目标**：`/pet`（可输入 `girl-claude` 等 id 或「Claude 娘」），`/chat 你好` 与当前桌宠对话，
@@ -96,7 +113,7 @@
 
 ```text
 dsh-pet-ai/
-├─ plugin/                      ← 可安装的 DSH 插件 v1.1.0（host-only，随仓库提交）
+├─ plugin/                      ← 可安装的 DSH 插件 v1.2.0（host-only，随仓库提交）
 │  ├─ package.json              name=dsh-pet-ai-girls，dsh.bundle.patch
 │  ├─ cordis.patch.yml          insert id/name = dsh-pet-ai-girls
 │  ├─ index.js                  宿主半侧：自动部署 pet pack + 单宠显示/切换 + 图鉴/切换 API
@@ -107,8 +124,11 @@ dsh-pet-ai/
 ├─ reference/                  ← 原始素材：8 张立绘 webp + 8 张三视图 png（来自 genderswapai.com）
 ├─ tools/                      ← 可复现流水线
 │  ├─ cutout.py                白底 → 透明抠图
-│  ├─ animlib.py               640×360 纸片人动画引擎（17 个动作 + 粒子 + 阴影）
+│  ├─ threeview.py             三视图 → 正面/侧面/背面透明立绘（scipy 连通域拆分 + 统一高度/基线/转轴）
+│  ├─ animlib.py               640×360 动画引擎（纸片人 + 2.5D 三视图转台 + 粒子 + 阴影）
 │  ├─ build_assets.py          全量渲染（8 worker，crf36，自检 + montage）
+│  ├─ spin_test.py             2.5D 转台原型 / 视角网格预览
+│  ├─ spin_review.py           转台动画逐帧审核图
 │  ├─ framecheck.mjs           Chrome/CDP alpha 边界检查（防裁切）
 │  ├─ build_packs.py           生成 pet pack 配置 + 拷 webm，可 --deploy
 │  ├─ switch_pet.py            单角色切换助手（/petgirl 的独立脚本版）
@@ -142,7 +162,7 @@ dsh-pet-ai/
    - `dsh.profile.bundles` 数组里在 `"dsh-pet"` 后面加 `"dsh-pet-ai-girls"`
 3. 同步锁文件：`pnpm install --lockfile-only`（或忽略，插件装好后 DSH 首次启动会自行修复依赖）。
 4. 重启 DSH。启动日志出现
-   `[dsh-pet-ai-girls] v1.1.0 已部署 8 只 AI 娘桌宠 → ...\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<port>/dsh-pet-ai-girls/`
+   `[dsh-pet-ai-girls] v1.2.0 已部署 8 只 AI 娘桌宠 → ...\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<port>/dsh-pet-ai-girls/`
    即成功；刷新 DSH 页面后只会显示当前 1 只 AI 娘，用 `/petgirl qwen` 之类即可换人。
 
 > 也可以不装插件、只做「素材包」：把 `plugin/packs/` 下的 8 个 `*-config.json` 和 8 个 `*-animation/`
@@ -161,15 +181,22 @@ dsh-pet-ai/
 1. **拉取素材**：从 genderswapai.com 下载 8 张立绘（webp，约 893×1600）与 8 张三视图 PNG（1536×1024）。
 2. **抠图**：`tools/cutout.py` —— 从四边对近白像素做向量化 flood fill 得到背景连通域，
    生成 alpha 并 1px 内缩 + 0.9px 高斯柔化，去白边；白裙/白发角色同样干净。
-3. **动画生成**：`tools/animlib.py` —— 以脚底为锚点做仿射变换的“纸片人”引擎，
+3. **三视图拆分与归一化**：`tools/threeview.py` —— 连通域分析把 1536×1024 的三视图拆成
+   正面 / 侧面 / 背面三张透明立绘，统一角色高度（1000px）、脚底基线与旋转中心，输出到 `build/threeview/`。
+4. **2.5D 转台渲染**：`tools/animlib.py` 的 `TurnCharacter` —— 按 yaw 角在四个视角段
+   （正面 / 左侧面 / 背面 / 右侧面）之间切换，段边缘用横向压缩模拟透视，视角切换处做短交叉淡化，
+   高速旋转时对相邻 yaw 采样做**运动模糊**，地面阴影宽度随当前剪影变化。
+5. **动画生成**：`tools/animlib.py` —— 以脚底为锚点做仿射变换的“纸片人”引擎，
    每帧在 640×360 画布上合成角色 + 地面阴影 + 粒子（爱心/星星/Zzz/汗滴/彩带/思考点），
    17 个动作的 pose 曲线全部程序化生成；一次性动画首尾回到中立姿态，循环动画首尾帧姿态完全一致。
-4. **编码**：ffmpeg `libvpx-vp9`，`-pix_fmt yuva420p -auto-alt-ref 0 -metadata:s:v:0 alpha_mode=1`，
-   640×360 / 24fps，crf 36，共 136 个 webm（77.6MB）。
-5. **pet pack**：`tools/build_packs.py` 按 `tools/spec.py` 生成 8 份 dsh-pet 配置
+   其中「转圈展示 / 东张西望 / 点击回应-开心跃动 / 点击回应-害羞惊讶 / 被鼠标拖拽 / 雀跃庆祝」
+   会走 2.5D 转台渲染，其余动作用高分辨率立绘的纸片人渲染。
+6. **编码**：ffmpeg `libvpx-vp9`，`-pix_fmt yuva420p -auto-alt-ref 0 -metadata:s:v:0 alpha_mode=1`，
+   640×360 / 24fps，crf 36，共 136 个 webm。
+7. **pet pack**：`tools/build_packs.py` 按 `tools/spec.py` 生成 8 份 dsh-pet 配置
    （人设、工作状态文案、动画池、权重、位置/大小），并把 webm 平铺进 `<prefix>-animation/`。
-6. **插件**：`plugin/index.js` 在 DSH 启动时把 `packs/` 幂等部署进 dsh-pet 用户目录，
-   并注册 `/dsh-pet-ai-girls/` 图鉴路由（防目录穿越、白名单 MIME、/health）。
+8. **插件**：`plugin/index.js` 在 DSH 启动时把 `packs/` 幂等部署进 dsh-pet 用户目录，
+   并注册 `/dsh-pet-ai-girls/` 图鉴路由（防目录穿越、白名单 MIME、/health、切换 API）。
 
 ---
 
@@ -179,19 +206,30 @@ dsh-pet-ai/
   [docs/screenshots/switcher-qwen.png](docs/screenshots/switcher-qwen.png)（切换成 Qwen 娘后重建的窗口）、
   [docs/screenshots/gallery-switcher.png](docs/screenshots/gallery-switcher.png)（图鉴页顶部切换按钮组）
 - 8 角色总览：[docs/screenshots/pets-wall-all8.png](docs/screenshots/pets-wall-all8.png)（v1.0.0 全显示版，保留作动画对照）
+- **2.5D 转台证据**：[docs/screenshots/turntable-360.png](docs/screenshots/turntable-360.png)（转圈展示逐帧：正面→侧面→背面→侧面→正面）、
+  [docs/screenshots/turntable-actions.png](docs/screenshots/turntable-actions.png)（东张西望 / 点击转身 / 拖拽侧身 / 庆祝转圈）
 - 插件自测：`node tools/test_host.mjs` → **44 PASS / 0 FAIL / 0 SKIP**
 - 切换自测：`python tools/switch_pet.py qwen` / `--status`，或 `GET /dsh-pet-ai-girls/api/current`
-- 独立验证报告：[docs/verify/REPORT.md](docs/verify/REPORT.md) 与 v1.1 复验 [docs/verify/REPORT-v1.1.md](docs/verify/REPORT-v1.1.md)（PASS，P0=0 / P1=0）
+- 独立验证报告：[docs/verify/REPORT.md](docs/verify/REPORT.md)、v1.1 复验 [docs/verify/REPORT-v1.1.md](docs/verify/REPORT-v1.1.md)、
+  **v1.2 2.5D 复验 [docs/verify/REPORT-v1.2.md](docs/verify/REPORT-v1.2.md)**（PASS，P0=0 / P1=0）
+- 2.5D 定量验证（verifier 独立实现）：8 角色「转圈展示」侧身最窄剪影/正面 = **0.649–0.843**（≤0.90），
+  背面与正面剪影差异为待机基线 **2.6–8.6×**，结尾回正 0.967–1.006；200/200 条 live 动画路由 200 video/webm；
+  实机桌面仍只有 2 个宠物窗口（main + 当前角色）。详见 [docs/verify/verify_25d.json](docs/verify/verify_25d.json)
 - 切换端到端 JSON：[docs/verify/verify_switch.json](docs/verify/verify_switch.json)；自测输出：[docs/verify/test_host_output.txt](docs/verify/test_host_output.txt)
-- 本地重建的附加证据（不随仓库提交）：`build/previews/<角色>-montage.png` 动画审核图、`build/verify/framecheck.json` alpha 边界检查
+- 本地重建的附加证据（不随仓库提交）：`build/previews/<角色>-montage.png` 动画审核图、`build/verify/framecheck.json` alpha 边界检查、`build/verify/25d-montage-*.png`
 
 ## 已知限制
 
 - 同一时间只显示 **1 只** AI 娘（v1.1.0 起）；切换通过重写 pet pack 的 `display` + 调用 dsh-pet `POST /reload` 实现，
   桌面窗口立即重建，**网页里的桌宠需要刷新页面**才同步（dsh-pet 的网页 overlay 只在加载时读取配置）。
 - 原 dsh-pet 主宠物（蓝毛小女仆）独立于本插件：它仍会显示，可在 dsh-pet 设置页调整大小/位置/隐藏，两者互不影响。
-- 立绘是全身插画，程序化动画为“纸片人”级的呼吸/浮动/跳跃/粒子效果，
-  与 dsh-pet 官方逐帧 AI 视频动画在动作丰富度上不同；素材与引擎一致保证 640×360 透明播放效果。
+- **2.5D 不是真 3D**：dsh-pet 本身播放的是 2D 透明 webm；本项目用三视图的正/侧/背三张立绘做
+  “2.5D 转台”（分段视角 + 透视压缩 + 过渡运动模糊），转身时能看到侧面和背面，但没有可任意拖拽旋转的真 3D 模型。
+  非转身动画（待机/碎碎念/工作状态等）仍用高分辨率立绘的纸片人渲染，因此两类动画切换时会有 0.18s 交叉淡化。
+- **插件 host 代码版本缓存**：Node ESM 模块在 DSH 进程内不会因文件更新重新求值；本次已把 v1.2.0 文件装进 profile、
+  pet pack 已部署生效，但当前进程的 `/health version` 仍是 v1.1.0，**重启 DSH 后显示 1.2.0**（`packVersion`/图鉴数据已经是 1.2.0）。
+- 渲染依赖 Python **Pillow + numpy + scipy** 和带 libvpx-vp9 的 ffmpeg（见 `tools/requirements.txt`）；
+  `build_assets.py` 会自动先跑三视图拆分。
 - 碎碎念/对话使用 DSH 当前对话模型，会产生 token 消耗；宠物默认关闭自动碎碎念。
 - 角色形象版权归原作者（ZipZipPipe / 上善无形），CC BY-NC-SA 4.0，禁止商用。
 - 脚底阴影在视频里贴到画布底边（比 dsh-pet 内置素材的 29px 底部留白略靠下），实机显示正常，属已知细节差异。

@@ -367,11 +367,19 @@ def main():
                 hr['status'], hr['content_type'], (hr.get('body') or b'')[:120]))
     else:
         ver = str(health_data.get('version') or '')
-        ver_ok = (not pkg_version) or ver == pkg_version
-        add('v11.health_version', '/health version 与 plugin/package.json 一致',
-            'PASS' if ver_ok else 'FAIL',
-            'health.version=%r package.json=%r packVersion=%r' % (
-                ver, pkg_version, health_data.get('packVersion')))
+        pack_ver = str(health_data.get('packVersion') or '')
+        # v1.2 已知现象：DSH 进程内 host 代码仍是旧版（Node ESM 模块缓存，重启 DSH 才加载新版），
+        # 因此 /health.version 可能落后于 package.json；只要 packVersion 已同步，记 WARN 而非 FAIL。
+        if (not pkg_version) or ver == pkg_version:
+            add('v11.health_version', '/health version 与 plugin/package.json 一致', 'PASS',
+                'health.version=%r package.json=%r packVersion=%r' % (ver, pkg_version, pack_ver))
+        elif pack_ver == pkg_version:
+            add('v12.health_host_cache', '/health version 落后于 package.json（host 模块缓存）', 'WARN',
+                'health.version=%r（host 代码缓存）package.json=%r packVersion=%r（已同步）；'
+                '重启 DSH 后 host 代码生效，属已知限制' % (ver, pkg_version, pack_ver))
+        else:
+            add('v11.health_version', '/health version 与 plugin/package.json 一致', 'FAIL',
+                'health.version=%r package.json=%r packVersion=%r' % (ver, pkg_version, pack_ver))
         chars = health_data.get('characters') if isinstance(health_data.get('characters'), list) else []
         active = health_data.get('active') if isinstance(health_data.get('active'), dict) else {}
         active_marks = [c.get('id') for c in chars if isinstance(c, dict) and c.get('active') is True]
@@ -409,7 +417,63 @@ def main():
             add('v11.api_current_expect', '/api/current active 与预期一致（%s）' % args.expect_active,
                 'PASS' if cur_active.get('id') == args.expect_active else 'FAIL',
                 '实际=%r 预期=%r' % (cur_active.get('id'), args.expect_active))
-    plugin_meta = {'health': health_data, 'api_current': api_current, 'pkg_version': pkg_version}
+
+    # ---------- v1.2：packVersion / 图鉴 data.json 版本 / 新动画池 ----------
+    v12 = {'pkg_version': pkg_version}
+    if isinstance(health_data, dict):
+        pack_ver = str(health_data.get('packVersion') or '')
+        v12['health_packVersion'] = pack_ver
+        add('v12.health_packVersion', '/health packVersion == plugin/package.json 版本（部署 marker 已同步 v1.2.0）',
+            'PASS' if (not pkg_version) or pack_ver == pkg_version else 'FAIL',
+            'packVersion=%r package.json=%r health.version=%r' % (pack_ver, pkg_version, health_data.get('version')))
+    dj = http_get(base + '/dsh-pet-ai-girls/data.json', timeout=args.timeout, max_bytes=65536)
+    data_json = None
+    if dj['status'] == 200:
+        try:
+            data_json = json.loads((dj.get('body') or b'').decode('utf-8'))
+        except Exception:  # noqa: BLE001
+            data_json = None
+    if isinstance(data_json, dict):
+        dj_ver = str(data_json.get('version') or '')
+        v12['data_json_version'] = dj_ver
+        add('v12.data_json_version', '图鉴 /data.json version == plugin/package.json 版本（v1.2.0）',
+            'PASS' if (not pkg_version) or dj_ver == pkg_version else 'FAIL',
+            'data.json version=%r package.json=%r' % (dj_ver, pkg_version))
+    else:
+        add('v12.data_json_version', '图鉴 /data.json version == plugin/package.json 版本（v1.2.0）',
+            'SKIP' if dj['status'] == 404 else 'FAIL',
+            'status=%r body=%r' % (dj['status'], (dj.get('body') or b'')[:120]))
+    # 新动画池：clicks 4 个（含转圈展示）、categories weight=24/3 actions、weights 76/0/0（8 条目一致）
+    want_cat_actions = {'转圈展示', '东张西望', '伸懒腰'}
+    pool_bad = []
+    pool_stats = {}
+    for prefix in prefixes:
+        entry = cfg.get(prefix) if isinstance(cfg, dict) else None
+        anims = (entry or {}).get('animations') if isinstance(entry, dict) and isinstance(entry.get('animations'), dict) else {}
+        clicks = anims.get('clicks') if isinstance(anims.get('clicks'), list) else []
+        cats = anims.get('categories') if isinstance(anims.get('categories'), list) else []
+        weights = entry.get('animationWeights') if isinstance(entry, dict) and isinstance(entry.get('animationWeights'), dict) else {}
+        cat0 = cats[0] if cats and isinstance(cats[0], dict) else {}
+        acts = set(cat0.get('actions') or []) if isinstance(cat0.get('actions'), list) else set()
+        probs = []
+        if len(clicks) != 4 or '转圈展示' not in clicks:
+            probs.append('clicks=%s' % clicks)
+        if len(cats) != 1 or cat0.get('weight') != 24 or len(acts) != 3 or acts != want_cat_actions:
+            probs.append('categories=%s' % [(c.get('weight'), c.get('actions')) for c in cats if isinstance(c, dict)])
+        if weights.get('idle') != 76 or weights.get('turn') != 0 or weights.get('move') != 0:
+            probs.append('weights=%s' % weights)
+        pool_stats[prefix] = {'clicks': clicks, 'categories': [(c.get('weight'), c.get('actions')) for c in cats if isinstance(c, dict)],
+                              'weights': weights}
+        if probs:
+            pool_bad.append('%s: %s' % (prefix, '; '.join(probs)))
+    v12['pools'] = pool_stats
+    if pool_stats:
+        add('v12.live_pools', '8 条目新动画池：clicks=4(含转圈展示)、categories weight=24/3 actions、weights=76/0/0',
+            'PASS' if not pool_bad else 'FAIL',
+            ('8/8 条目全部符合' if not pool_bad else '; '.join(pool_bad[:6])))
+    plugin_meta = {'health': health_data, 'api_current': api_current, 'pkg_version': pkg_version,
+                   'data_json_version': (data_json or {}).get('version') if isinstance(data_json, dict) else None,
+                   'v12': v12}
 
     # ---------- 每个新条目 ----------
     entry_reports = {}

@@ -1,0 +1,7 @@
+# dsh-pet-ai-girls 渲染/打包流水线依赖（Windows, Python 3.8+）
+#
+# pip install -r tools/requirements.txt
+Pillow>=7.2
+numpy>=1.19
+scipy>=1.5          # tools/threeview.py 的三视图连通域拆分
+imageio-ffmpeg>=0.4  # 自带 libvpx-vp9 的 ffmpeg，用于 VP9-alpha webm 编码

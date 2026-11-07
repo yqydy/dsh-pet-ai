@@ -21,9 +21,10 @@
 | 🎀 同一时间只显示一只 | 8 组 pack 默认只有 **DeepSeek 娘** 的 `pets[0].display` 是 `both`，其余为 `none`；不会一启动就 8 只糊满桌面。 |
 | 🔁 自由切换 | `/petgirl <id\|名字>` 斜杠命令、图鉴页顶部「切换当前桌宠」按钮组、HTTP API 三种入口；选择持久化到 `.dsh-pet-ai-girls-active.json`，切换时自动重建桌面宠物窗口。 |
 | 🖼️ 本地图鉴页 | 注册 `/dsh-pet-ai-girls/` 前缀静态路由，提供 8 位角色的立绘、三视图、特征、17 个动画列表、灯箱切换；另有 `/dsh-pet-ai-girls/health` 健康检查与 `/api/current`、`/api/switch` 切换接口。 |
+| 🎞️ 2.5D 三视图转台 | 用三视图的 **正面 / 侧面 / 背面** 做真正的转身动画：360° 转圈展示、左右转身、点击转身/跳起转圈、拖拽侧身、庆祝转圈。视角切换处做透视压缩与运动模糊，地面阴影随剪影变化 —— 不是一张平面立绘在晃。 |
 | 🔄 刷新即生效 | pet pack 一旦落盘，dsh-pet 每次页面加载都会重新扫描 `pet/` 目录 —— **刷新页面即见宠物**，无需重启 DSH（插件本体的 host 代码只需在安装时加载一次）。 |
 
-- 8 位角色 × 17 个动画 = **136 个透明 webm**（640×360、24fps、VP9-alpha）
+- 8 位角色 × 17 个动画 = **136 个透明 webm**（640×360、24fps、VP9-alpha），其中 6 个动作是 2.5D 转台
 - 图鉴页纯本地资源，**无 CDN、无外部字体、无网络请求**
 - 失败只 `console.warn`，**绝不抛错、绝不阻塞 DSH 启动**
 
@@ -46,7 +47,7 @@
 4. **重启 DSH**（宿主代码只在启动时加载）。重启后日志会出现一行：
 
    ```text
-   [dsh-pet-ai-girls] v1.1.0 已部署 8 只 AI 娘桌宠 → C:\Users\<你>\.dsh\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<端口>/dsh-pet-ai-girls/
+   [dsh-pet-ai-girls] v1.2.0 已部署 8 只 AI 娘桌宠 → C:\Users\<你>\.dsh\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<端口>/dsh-pet-ai-girls/
    ```
 
 ### 方式 B：手工安装（等价于 `install_bundle` 的手工步骤）
@@ -121,16 +122,31 @@
 
 ## 17 个动画
 
-| 分组 | 动画名 | 触发方式 |
+| 分组 | 动画名 | 触发方式 / 说明 |
 | --- | --- | --- |
-| 待机 | 待机呼吸 / 原地漂浮 / 原地小憩 | 空闲时按权重随机循环，`原地小憩` 头顶冒 Zzz |
-| 互动 | 东张西望 / 被鼠标拖拽悬空反馈 | 转身、被拖拽时播放 |
-| 互动 | 点击回应-开心跃动 / 点击回应-害羞惊讶 / 点击回应-元气挥手 | 点击宠物时随机播放 |
+| 待机 | 待机呼吸 / 原地漂浮 / 原地小憩 | 空闲时按权重随机循环，`原地小憩` 头顶冒 Zzz（立绘纸片人渲染） |
+| 互动 · 2.5D | 东张西望 | 向左/右转身看两侧（三视图正/侧面），再转回正面 |
+| 互动 · 2.5D | 被鼠标拖拽悬空反馈 | 被拎起来时悬空摇摆，朝向在正面~侧面之间摆动 |
+| 互动 · 2.5D | 点击回应-开心跃动 | 跳起来开心地转一圈（360°，2.5D 转台） |
+| 互动 · 2.5D | 点击回应-害羞惊讶 | 害羞地转身躲开（侧身/背身）再转回来 |
+| 互动 | 点击回应-元气挥手 | 元气满满地挥手打招呼 |
 | 碎碎念 | 碎碎念-发呆碎碎念 | 开启 whisper 后碎碎念时播放 |
-| 工作状态 | 工作状态-思考冒泡 / 忙碌点按 / 清点归档 / 原地踱步张望 / 雀跃庆祝 / 垂头叹气冒汗 | 随 DSH 会话状态联动 |
-| 小动作 | 转圈展示 / 伸懒腰 | 自定义类别「小动作」，按权重随机插入 |
+| 工作状态 · 2.5D | 工作状态-雀跃庆祝 | 完成任务时跳跃庆祝并转一圈 |
+| 工作状态 | 工作状态-思考冒泡 / 忙碌点按 / 清点归档 / 原地踱步张望 / 垂头叹气冒汗 | 随 DSH 会话状态联动 |
+| 小动作 · 2.5D | 转圈展示 | **360° 三视图转台**：正面 → 侧面 → 背面 → 侧面 → 正面 |
+| 小动作 | 伸懒腰 | 自定义类别「小动作」，按权重随机插入 |
 
-每只宠物共 **17 个动画**（`girl-*-animation/` 下 17 个同名 `.webm`）。
+每只宠物共 **17 个动画**（`girl-*-animation/` 下 17 个同名 `.webm`），其中
+**6 个是 2.5D 三视图转台**（东张西望 / 拖拽 / 开心跃动 / 害羞惊讶 / 雀跃庆祝 / 转圈展示）。
+
+### 2.5D 转台是怎么做的
+
+1. `tools/threeview.py` 用连通域把 1536×1024 的三视图拆成正面 / 侧面 / 背面三张透明立绘，
+   统一角色高度、脚底基线与旋转轴；
+2. 渲染时按 yaw 角在四个视角段（正面 / 左侧面 / 背面 / 右侧面）之间切换，段边缘做横向压缩（透视），
+   视角交界处做短交叉淡化，高速旋转时对相邻 yaw 采样做**运动模糊**；
+3. 地面阴影宽度跟随当前剪影（正面/背面裙摆宽、侧面窄），增强立体感；
+4. 点击宠物时约 75% 的回应会出现 2.5D 转身/转圈；空闲时「小动作」类别（24% 权重）也会随机触发转身/360° 转台。
 
 ---
 
@@ -232,15 +248,26 @@ dsh-pet-ai-girls/                 # = plugin/ 目录（插件包根）
 ## 开发与自检
 
 ```powershell
-# 1) 从 reference/ 重新生成图鉴素材 + 图标 + data.json（Pillow 7.2 兼容）
+# 0) 渲染依赖：Pillow + numpy + scipy + imageio-ffmpeg（自带 libvpx-vp9）
+pip install -r tools/requirements.txt
+
+# 1) 三视图 → 正面/侧面/背面透明立绘 + 审核图（build/threeview/）
+python tools/threeview.py
+
+# 2) 从 reference/ 重新生成图鉴素材 + 图标 + data.json（Pillow 7.2 兼容）
 python tools/gallery_build.py
 
-# 2) 宿主半侧冒烟测试：临时 DSH_HOME + fake ctx + 本地 HTTP，
+# 3) 全量渲染 136 个透明动画（8 worker，含 2.5D 转台；自动先跑 threeview）
+python tools/build_assets.py
+
+# 4) 宿主半侧冒烟测试：临时 DSH_HOME + fake ctx + 本地 HTTP，
 #    覆盖部署、/health、图鉴首页、404、目录穿越，不碰真实用户数据
 node tools/test_host.mjs
 ```
 
+- `tools/threeview.py`：连通域拆分三视图 + 统一高度/基线/转轴，输出 `build/threeview/<id>-{front,side,back}.png`（需要 scipy）。
 - `tools/gallery_build.py`：`reference/portrait-<id>.webp` → `visual/portraits/`；`reference/turnaround-<id>.png` → `visual/turnarounds/`；生成 `plugin/icon.png` 与 `visual/data.json`，并把数据注入 `visual/index.html`。
+- `tools/animlib.py`：纸片人引擎 + `TurnCharacter` 2.5D 转台渲染；`tools/spin_review.py` 可生成转台动画逐帧审核图。
 - `tools/build_packs.py`（产线脚本）：把 `build/webm/` 的 8×17 动画组装成 `plugin/packs/`。
 - 本插件是纯文件插件，**不需要任何构建步骤**：改完直接复制进 profile 重启即可。
 
