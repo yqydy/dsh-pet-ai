@@ -305,6 +305,61 @@ def face_crop(img, char):
     return img.crop((x0, y0, x0 + side, y0 + side))
 
 
+def build_chibi_images():
+    """Q版 (chibi) previews: per-character front image + an 8-character lineup."""
+    import numpy as np  # noqa: F401  (kept for parity with other helpers)
+
+    chibi_dir = os.path.join(VISUAL_DIR, 'chibi')
+    thumb_dir = os.path.join(chibi_dir, 'thumbs')
+    os.makedirs(chibi_dir, exist_ok=True)
+    os.makedirs(thumb_dir, exist_ok=True)
+    src_dir = os.path.join(ROOT, 'build', 'chibi')
+    report = []
+    for char in CHARACTERS:
+        src = os.path.join(src_dir, '%s-portrait.png' % char['id'])
+        if not os.path.isfile(src):
+            raise SystemExit('缺少 Q 版素材：%s（先跑 tools/sheets.py + tools/chibi.py）' % src)
+        img = Image.open(src).convert('RGBA')
+        h = 760
+        img_s = img.resize((max(1, int(round(img.width * h / img.height))), h), Image.LANCZOS)
+        out = os.path.join(chibi_dir, char['id'] + '.webp')
+        img_s.save(out, 'WEBP', quality=90, method=6)
+        out_t = os.path.join(thumb_dir, char['id'] + '.webp')
+        th = 420
+        img_t = img.resize((max(1, int(round(img.width * th / img.height))), th), Image.LANCZOS)
+        img_t.save(out_t, 'WEBP', quality=82, method=6)
+        report.append((char['id'], os.path.getsize(out), os.path.getsize(out_t)))
+    lineup = os.path.join(src_dir, 'lineup.png')
+    if os.path.isfile(lineup):
+        im = Image.open(lineup).convert('RGB')
+        im = resize_to_width(im, 1600)
+        save_webp(im, os.path.join(chibi_dir, 'lineup.webp'), 88)
+    return report
+
+
+def chibi_face(path, char):
+    """Q版头像：从透明 Q 版立绘里裁出头部，衬一个角色主色浅底圆。"""
+    img = Image.open(path).convert('RGBA')
+    bbox = img.getbbox()
+    if not bbox:
+        return Image.new('RGB', (128, 128), (40, 46, 70))
+    x0, y0, x1, y1 = bbox
+    h = y1 - y0
+    side = max(1, int(round(h * 0.56)))
+    cx = (x0 + x1) // 2
+    sx = max(0, cx - side // 2)
+    sy = max(0, y0 - int(round(h * 0.015)))
+    crop = img.crop((sx, sy, min(img.width, sx + side), min(img.height, sy + side)))
+    accent = char.get('accent') or '#7c8cff'
+    color = tuple(int(accent[i:i + 2], 16) for i in (1, 3, 5))
+    tint = tuple(min(255, c + 178) for c in color)
+    bg = Image.new('RGBA', (crop.width, crop.height), tint + (255,))
+    d = ImageDraw.Draw(bg)
+    d.ellipse([0, 0, crop.width - 1, crop.height - 1], fill=tint + (255,))
+    bg.alpha_composite(crop, (0, 0))
+    return bg.convert('RGB')
+
+
 def build_icon():
     import numpy as np
 
@@ -356,7 +411,7 @@ def build_icon():
     tw, th = text_size(draw, 'AI 娘', font_title)
     draw.text(((size - tw) // 2, 12), 'AI 娘', font=font_title, fill=(238, 243, 255))
 
-    # 8 个头像：4 列 × 2 行
+    # 8 个头像：4 列 × 2 行（v1.3 起用 Q 版大头头像）
     tile, gap = 52, 8
     col_x = [12 + i * (tile + gap) for i in range(4)]
     row_y = [74, 134]
@@ -364,8 +419,12 @@ def build_icon():
     for idx, char in enumerate(CHARACTERS):
         cx = col_x[idx % 4]
         cy = row_y[idx // 4]
-        src = os.path.join(REF_DIR, 'portrait-%s.webp' % char['id'])
-        face = face_crop(open_rgb(src), char).resize((tile, tile), Image.LANCZOS)
+        chibi_src = os.path.join(ROOT, 'build', 'chibi', '%s-portrait.png' % char['id'])
+        if os.path.isfile(chibi_src):
+            face = chibi_face(chibi_src, char).resize((tile, tile), Image.LANCZOS)
+        else:
+            src = os.path.join(REF_DIR, 'portrait-%s.webp' % char['id'])
+            face = face_crop(open_rgb(src), char).resize((tile, tile), Image.LANCZOS)
         canvas.paste(face, (cx, cy), av_mask)
         accent = char['accent']
         color = tuple(int(accent[i:i + 2], 16) for i in (1, 3, 5))
@@ -397,8 +456,9 @@ def build_data():
         'plugin': 'dsh-pet-ai-girls',
         'version': PLUGIN_VERSION,
         'title': 'AI 娘桌宠图鉴',
-        'subtitle': 'dsh-pet-ai-girls · 8 位 AI 拟人角色 · 透明动画桌面宠物',
+        'subtitle': 'dsh-pet-ai-girls · 8 位 AI 拟人角色 · Q版透明动画桌面宠物',
         'generatedAt': datetime.datetime.now().isoformat(timespec='seconds'),
+        'chibiLineup': 'chibi/lineup.webp',
         'animationGroups': [{'group': g, 'names': names} for g, names in ANIMATION_GROUPS],
         'animationCount': len(ANIM_NAMES),
         'credit': CREDIT,
@@ -410,6 +470,8 @@ def build_data():
         item['portraitThumb'] = 'portraits/thumbs/%s.webp' % char['id']
         item['turnaround'] = 'turnarounds/%s.webp' % char['id']
         item['turnaroundThumb'] = 'turnarounds/thumbs/%s.webp' % char['id']
+        item['chibi'] = 'chibi/%s.webp' % char['id']
+        item['chibiThumb'] = 'chibi/thumbs/%s.webp' % char['id']
         item['animationCount'] = len(ANIM_NAMES)
         item['animations'] = ANIM_NAMES
         data['characters'].append(item)
@@ -460,6 +522,9 @@ def main():
         log('%-9s 立绘 %7s · 缩略 %6s · 三视图 %7s · 缩略 %6s'
             % (cid, human(p), human(pt), human(t), human(tt)))
     log('图片合计：%s' % human(total))
+    chibi_rows = build_chibi_images()
+    for cid, c, ct in chibi_rows:
+        log('%-9s Q版 %7s · 缩略 %6s' % (cid, human(c), human(ct)))
     icon = build_icon()
     log('icon.png：%s（上限 256 KiB）' % human(os.path.getsize(icon)))
     data_path, data = build_data()

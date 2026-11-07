@@ -1,7 +1,7 @@
 {
   "name": "dsh-pet-ai-girls",
-  "version": "1.2.0",
-  "description": "8 位 AI 娘桌宠素材包：同一时间只显示一只、可自由切换；三视图 2.5D 转台动画（转身/转圈）；自动为 dsh-pet 部署透明动画宠物 + 立绘/三视图图鉴",
+  "version": "1.3.0",
+  "description": "8 位 AI 娘桌宠素材包：Q版（大头短身）透明动画宠物，同一时间只显示一只、可自由切换；三视图 2.5D 转台动画（转身/转圈）；自动为 dsh-pet 部署 + 立绘/三视图/Q版图鉴",
   "type": "module",
   "main": "./index.js",
   "icon": "./icon.png",

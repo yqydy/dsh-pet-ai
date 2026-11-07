@@ -1,0 +1,17 @@
+feat: v1.3.0 Q 版（chibi）桌宠 —— 全部 8 只改成 Q 版，用 ai-chan-sheets 完整设定图
+
+- 采用 lmy414/ai-chan-sheets 的完整角色设定图（三视图补全，CC BY-NC-SA 4.0）
+- 新增 tools/sheets.py：自动识别设定板三张卡片，去标题/页脚/边框，抠出正面/侧面/背面，
+  统一角色高度、脚底基线与旋转轴
+- 新增 tools/chibi.py：连续「大头短身」变形（头顶 ~1.7 倍平滑衰减到脚底 ~0.5 倍）→ Q 版三视图、
+  Q 版正面头像与 8 人 lineup；无拼接缝，长发/尾巴/道具一起变形
+- animlib/build_assets 切换到 Q 版素材：17 个动画全部 Q 版渲染，6 个 2.5D 转台动作继续保留
+- 136 个 webm 全量重渲（66.72 MiB，640×360/24fps/VP9-alpha，136/136 校验 PASS），已部署到 dsh-pet
+  并实机抓帧确认 Q 版 360° 转身
+- 图鉴页新增「Q 版桌宠形象」区（chibi/ 预览 + 8 人 lineup）、插件图标换成 8 个 Q 版大头头像；
+  版本 1.3.0，data.json 增加 chibi/chibiThumb/chibiLineup 字段
+- 文档：README/插件 README/NOTICE 更新 Q 版说明与 ai-chan-sheets 署名；新增 Q 版截图
+  （chibi-lineup / turntable-360 / turntable-actions / live-2.5d-spin 全部换成 Q 版证据）
+- 自测：test_host 44 PASS / 0 FAIL，verify_pack PASS=111 / 0 FAIL；部署 marker=1.3.0
+- 已知：DSH 进程内 host 模块缓存，/health version 仍显示 1.1.0（重启后 1.3.0）；
+  packVersion=1.3.0、图鉴数据=1.3.0、宠物动画已实时生效

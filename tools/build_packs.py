@@ -140,7 +140,7 @@ def deploy(plugin_dir):
             shutil.copyfile(src, dst)
         n += 1
     marker = {
-        'version': '1.2.0',
+        'version': '1.3.0',
         'installedAt': __import__('datetime').datetime.now().isoformat(timespec='seconds'),
         'chars': [c['prefix'] for c in spec.CHARACTERS],
         'source': 'dsh-pet-ai-girls',
