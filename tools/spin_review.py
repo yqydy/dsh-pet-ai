@@ -77,7 +77,5 @@ if __name__ == '__main__':
              '被鼠标拖拽悬空反馈', '工作状态-雀跃庆祝']
     for n in names:
         p = os.path.join(TEST_DIR, char, '%s.webm' % n)
-        if not os.path.exists(p):
-            p = os.path.join(ROOT, 'build', 'anim_test', '%s-%s.webm' % (char, n))
         if os.path.exists(p):
             sheet(p, '%s-%s' % (char, n), 10)

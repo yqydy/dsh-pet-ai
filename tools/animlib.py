@@ -23,10 +23,9 @@ MAX_W = 600
 FEET_PAD = 6            # cutout.py pads 6px below the feet
 
 # ---------------------------------------------------------------------------
-# Q版 (chibi) 2.5D turntable assets
+# three-view (2.5D turntable) assets
 # ---------------------------------------------------------------------------
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CHIBI_DIR = os.path.join(ROOT_DIR, 'build', 'chibi')
 THREEVIEW_DIR = os.path.join(ROOT_DIR, 'build', 'threeview')
 TV_CHAR_H = 1000.0      # character height inside the normalised three-view canvas
 TV_FEET_Y = 1060.0      # feet baseline inside the normalised three-view canvas
@@ -144,13 +143,11 @@ class TurnCharacter:
     """
 
     def __init__(self, name):
-        # Q版 chibi three-views are the default; fall back to the old set.
-        base = CHIBI_DIR if os.path.exists(os.path.join(CHIBI_DIR, '%s-front.png' % name)) else THREEVIEW_DIR
-        if not os.path.isdir(base):
-            raise RuntimeError('Q版 three-view assets missing: ' + base +
-                               '  (run: python tools/sheets.py && python tools/chibi.py)')
+        if not os.path.isdir(THREEVIEW_DIR):
+            raise RuntimeError('three-view assets missing: ' + THREEVIEW_DIR +
+                               '  (run: python tools/threeview.py)')
         def load(label):
-            return Image.open(os.path.join(base, '%s-%s.png' % (name, label))).convert('RGBA')
+            return Image.open(os.path.join(THREEVIEW_DIR, '%s-%s.png' % (name, label))).convert('RGBA')
         self.name = name
         self.views = {
             'front': load('front'),
@@ -1036,11 +1033,8 @@ if __name__ == '__main__':
     out_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                            'build', 'anim_test')
     os.makedirs(out_dir, exist_ok=True)
-    portrait = os.path.join(CHIBI_DIR, '%s-portrait.png' % char_name)
-    if not os.path.exists(portrait):
-        portrait = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                'build', 'cutouts', 'portrait-%s.png' % char_name)
-    char = Character(portrait)
+    char = Character(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                  'build', 'cutouts', 'portrait-%s.png' % char_name))
     turn = None
     try:
         turn = TurnCharacter(char_name)

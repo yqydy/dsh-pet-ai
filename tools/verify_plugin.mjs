@@ -24,7 +24,6 @@ import { readFileSync, writeFileSync, existsSync, statSync, readdirSync, mkdirSy
 import { join, dirname, resolve, relative, extname, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
 
 const PROJECT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PLUGIN = join(PROJECT, 'plugin');
@@ -176,9 +175,9 @@ async function main() {
       `name=${JSON.stringify(pkg.name)}（期望 dsh-pet-ai-girls）`);
     add('pkg.version', 'package.json version', /^\d+\.\d+\.\d+([-+][0-9A-Za-z.-]+)?$/.test(String(pkg.version)) ? 'PASS' : 'WARN',
       `version=${JSON.stringify(pkg.version)}`);
-    add('pkg.version.v13', 'package.json version=1.3.0（全部 Q 版 chibi）',
-      String(pkg.version) === '1.3.0' ? 'PASS' : 'WARN',
-      `version=${JSON.stringify(pkg.version)}（v1.3 复验期望 1.3.0）`);
+    add('pkg.version.v12', 'package.json version=1.2.0（三视图 2.5D 转台）',
+      String(pkg.version) === '1.2.0' ? 'PASS' : 'WARN',
+      `version=${JSON.stringify(pkg.version)}（v1.2 复验期望 1.2.0）`);
     add('pkg.type', 'package.json type=module', pkg.type === 'module' ? 'PASS' : 'FAIL',
       `type=${JSON.stringify(pkg.type)}`);
     const mainRel = typeof pkg.main === 'string' ? pkg.main : '';
@@ -205,10 +204,7 @@ async function main() {
       if (info && okSize) {
         add('pkg.icon', 'icon.png 合法 PNG 且 ≤256KiB', 'PASS',
           `${iconRel} ${info.width}x${info.height} ${size}B (${(size / 1024).toFixed(1)}KiB)`);
-        const iconSha = createHash('sha256').update(buf).digest('hex');
-        add('pkg.icon_q', 'icon.png 已更新（v1.3 Q版大头；记录 sha256 供版本比对）',
-          'PASS', `sha256=${iconSha.slice(0, 16)}… size=${size}B（v1.2 为 60,724B 不同）`);
-        details.icon = { path: iconRel, size, width: info.width, height: info.height, sha256: iconSha };
+        details.icon = { path: iconRel, size, width: info.width, height: info.height };
       } else {
         add('pkg.icon', 'icon.png 合法 PNG 且 ≤256KiB', 'FAIL',
           `${iconRel} PNG=${!!info} size=${size}B 超限=${!okSize}`);
@@ -407,38 +403,6 @@ async function main() {
     } else {
       add('visual.data_json', 'visual/data.json 可解析且图片引用存在', 'SKIP', 'data.json 不存在（页面只用内嵌数据）');
     }
-    // ---------- v1.3：图鉴「Q 版桌宠形象」资源与数据字段 ----------
-    const chibiDir = join(PLUGIN, 'visual', 'chibi');
-    const chibiIds = ['deepseek', 'gpt', 'claude', 'grok', 'gemini', 'kimi', 'glm', 'qwen'];
-    const missChibi = chibiIds.filter((id) => !existsSync(join(chibiDir, `${id}.webp`)));
-    const hasLineup = existsSync(join(chibiDir, 'lineup.webp'));
-    add('v13.chibi_assets', '图鉴 Q版头像 8 webp + lineup.webp 存在',
-      missChibi.length || !hasLineup ? 'FAIL' : 'PASS',
-      missChibi.length || !hasLineup ? `缺少: ${missChibi.join(', ')}${hasLineup ? '' : ' + lineup.webp'}`
-        : `8/8 + lineup.webp（${statSync(join(chibiDir, 'lineup.webp')).size}B）`);
-    try {
-      const vhtml2 = readText(join(PLUGIN, 'visual', 'index.html'));
-      const gdm2 = vhtml2.match(/<script[^>]*id=["']gallery-data["'][^>]*>([\s\S]*?)<\/script>/i);
-      if (gdm2) {
-        const gd2 = JSON.parse(gdm2[1]);
-        const chars = Array.isArray(gd2.characters) ? gd2.characters : [];
-        const badFields = chars.filter((c) => !c || typeof c.chibi !== 'string' || typeof c.chibiThumb !== 'string');
-        const missingFiles = chars.flatMap((c) => {
-          const list = [];
-          for (const f of [c.chibi, c.chibiThumb]) {
-            if (f && !existsSync(join(PLUGIN, 'visual', f))) list.push(f);
-          }
-          return list;
-        });
-        add('v13.gallery_chibi_data', '图鉴数据含 chibi/chibiThumb 字段且文件存在（8/8）',
-          chars.length === 8 && !badFields.length && !missingFiles.length ? 'PASS' : 'FAIL',
-          `characters=${chars.length} 缺字段=${badFields.length} 缺文件=${missingFiles.slice(0, 5).join(',') || '无'}`);
-      } else {
-        add('v13.gallery_chibi_data', '图鉴数据含 chibi/chibiThumb 字段且文件存在（8/8）', 'WARN', '未找到 gallery-data');
-      }
-    } catch (e) {
-      add('v13.gallery_chibi_data', '图鉴数据含 chibi/chibiThumb 字段且文件存在（8/8）', 'WARN', String(e.message));
-    }
   }
 
   // ---------- plugin/packs 轻量检查 ----------
@@ -459,8 +423,7 @@ async function main() {
     'docs/screenshots/turntable-360.png',
     'docs/screenshots/turntable-actions.png',
     'docs/screenshots/live-2.5d-spin.png',
-    'docs/screenshots/chibi-lineup.png',
-    'build/shots/live-anim-q-deepseek-montage.png',
+    'build/shots/live-anim-deepseek-montage.png',
   ];
   const missingDocs = v12DocFiles.filter((f) => !existsSync(join(PROJECT, f)));
   add('v12.docs_screenshots', 'v1.2 文档/证据截图存在（turntable-360/actions、live-2.5d-spin、live montage）',

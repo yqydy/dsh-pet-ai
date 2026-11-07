@@ -13,20 +13,18 @@
 
 ## 它是什么
 
-**8 只 Q 版（大头短身）AI 娘桌宠**：这是由 [lmy414/ai-chan-sheets](https://github.com/lmy414/ai-chan-sheets)
-完整设定图的三视图程序化 chibi 化后、重新渲染成 dsh-pet 透明动画素材的 **host-only 纯文件插件**
-（没有浏览器半边、无需构建、零依赖）：
+这是一个 **host-only 的纯文件插件**（没有浏览器半边、无需构建、零依赖）：
 
 | 职责 | 说明 |
 | --- | --- |
 | 🐾 自动部署 pet pack | DSH 宿主启动时，把包内 `packs/` 的 8 组 `girl-<id>-config.json` + `girl-<id>-animation/*.webm` **幂等**复制进 dsh-pet 的用户数据目录 `%USERPROFILE%\.dsh\dsh-pet\pet\`（或 `$DSH_HOME/dsh-pet/pet/`），并写版本 marker `.dsh-pet-ai-girls.json`。 |
 | 🎀 同一时间只显示一只 | 8 组 pack 默认只有 **DeepSeek 娘** 的 `pets[0].display` 是 `both`，其余为 `none`；不会一启动就 8 只糊满桌面。 |
 | 🔁 自由切换 | `/petgirl <id\|名字>` 斜杠命令、图鉴页顶部「切换当前桌宠」按钮组、HTTP API 三种入口；选择持久化到 `.dsh-pet-ai-girls-active.json`，切换时自动重建桌面宠物窗口。 |
-| 🖼️ 本地图鉴页 | 注册 `/dsh-pet-ai-girls/` 前缀静态路由，提供 8 位角色的立绘、三视图、Q 版形象、特征、17 个动画列表、灯箱切换；另有 `/dsh-pet-ai-girls/health` 健康检查与 `/api/current`、`/api/switch` 切换接口。 |
-| 🎞️ Q 版 + 2.5D 三视图转台 | v1.3.0 起 8 只全部是 Q 版（大头、短身、短腿）。用 Q 版三视图的 **正面 / 侧面 / 背面** 做真正的转身动画：360° 转圈展示、左右转身、点击转身/跳起转圈、拖拽侧身、庆祝转圈。视角切换处做透视压缩与运动模糊，地面阴影随剪影变化 —— 不是一张平面立绘在晃。 |
+| 🖼️ 本地图鉴页 | 注册 `/dsh-pet-ai-girls/` 前缀静态路由，提供 8 位角色的立绘、三视图、特征、17 个动画列表、灯箱切换；另有 `/dsh-pet-ai-girls/health` 健康检查与 `/api/current`、`/api/switch` 切换接口。 |
+| 🎞️ 2.5D 三视图转台 | 用三视图的 **正面 / 侧面 / 背面** 做真正的转身动画：360° 转圈展示、左右转身、点击转身/跳起转圈、拖拽侧身、庆祝转圈。视角切换处做透视压缩与运动模糊，地面阴影随剪影变化 —— 不是一张平面立绘在晃。 |
 | 🔄 刷新即生效 | pet pack 一旦落盘，dsh-pet 每次页面加载都会重新扫描 `pet/` 目录 —— **刷新页面即见宠物**，无需重启 DSH（插件本体的 host 代码只需在安装时加载一次）。 |
 
-- 8 位角色 × 17 个 Q 版动画 = **136 个透明 webm**（640×360、24fps、VP9-alpha，约 66.7MB），其中 6 个动作是 2.5D 转台
+- 8 位角色 × 17 个动画 = **136 个透明 webm**（640×360、24fps、VP9-alpha），其中 6 个动作是 2.5D 转台
 - 图鉴页纯本地资源，**无 CDN、无外部字体、无网络请求**
 - 失败只 `console.warn`，**绝不抛错、绝不阻塞 DSH 启动**
 
@@ -49,7 +47,7 @@
 4. **重启 DSH**（宿主代码只在启动时加载）。重启后日志会出现一行：
 
    ```text
-   [dsh-pet-ai-girls] v1.3.0 已部署 8 只 AI 娘桌宠 → C:\Users\<你>\.dsh\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<端口>/dsh-pet-ai-girls/
+   [dsh-pet-ai-girls] v1.2.0 已部署 8 只 AI 娘桌宠 → C:\Users\<你>\.dsh\dsh-pet\pet（144 个文件） · 当前显示：DeepSeek 娘（/petgirl 切换） · 图鉴：http://127.0.0.1:<端口>/dsh-pet-ai-girls/
    ```
 
 ### 方式 B：手工安装（等价于 `install_bundle` 的手工步骤）
@@ -138,7 +136,7 @@
 | 小动作 · 2.5D | 转圈展示 | **360° 三视图转台**：正面 → 侧面 → 背面 → 侧面 → 正面 |
 | 小动作 | 伸懒腰 | 自定义类别「小动作」，按权重随机插入 |
 
-每只宠物共 **17 个 Q 版动画**（`girl-*-animation/` 下 17 个同名 `.webm`，全部是 v1.3.0 重新 Q 版化渲染的），其中
+每只宠物共 **17 个动画**（`girl-*-animation/` 下 17 个同名 `.webm`），其中
 **6 个是 2.5D 三视图转台**（东张西望 / 拖拽 / 开心跃动 / 害羞惊讶 / 雀跃庆祝 / 转圈展示）。
 
 ### 2.5D 转台是怎么做的
@@ -253,27 +251,23 @@ dsh-pet-ai-girls/                 # = plugin/ 目录（插件包根）
 # 0) 渲染依赖：Pillow + numpy + scipy + imageio-ffmpeg（自带 libvpx-vp9）
 pip install -r tools/requirements.txt
 
-# 1) 完整设定图三视图 → 正面/侧面/背面透明视图（build/sheets/）
-python tools/sheets.py
+# 1) 三视图 → 正面/侧面/背面透明立绘 + 审核图（build/threeview/）
+python tools/threeview.py
 
-# 2) Q 版化：连续大头短身变形 → build/chibi/（含头像与 8 人 lineup）
-python tools/chibi.py
-
-# 3) 从 reference/ 重新生成图鉴素材 + Q 版预览 + 图标 + data.json
+# 2) 从 reference/ 重新生成图鉴素材 + 图标 + data.json（Pillow 7.2 兼容）
 python tools/gallery_build.py
 
-# 4) 全量渲染 136 个 Q 版透明动画（8 worker，含 2.5D 转台；自动检查/重跑 sheets+chibi）
+# 3) 全量渲染 136 个透明动画（8 worker，含 2.5D 转台；自动先跑 threeview）
 python tools/build_assets.py
 
-# 5) 宿主半侧冒烟测试：临时 DSH_HOME + fake ctx + 本地 HTTP，
+# 4) 宿主半侧冒烟测试：临时 DSH_HOME + fake ctx + 本地 HTTP，
 #    覆盖部署、/health、图鉴首页、404、目录穿越，不碰真实用户数据
 node tools/test_host.mjs
 ```
 
-- `tools/sheets.py`：识别 ai-chan-sheets 设定板的三张卡片 → 去掉标题/页脚/边框 → 取正面/侧面/背面并统一高度/基线/转轴（需要 scipy）。
-- `tools/chibi.py`：对三视图做连续的「大头短身」变形（头顶 ~1.7 倍 → 脚底 ~0.5 倍）输出 Q 版三视图 + Q 版正面头像。
-- `tools/gallery_build.py`：立绘 / 三视图 / Q 版预览 → `visual/`；生成 Q 版大头图标与 `visual/data.json`，并把数据注入 `visual/index.html`。
-- `tools/animlib.py`：Q 版纸片人引擎 + `TurnCharacter` 2.5D 转台渲染；`tools/spin_review.py` 可生成转台动画逐帧审核图。
+- `tools/threeview.py`：连通域拆分三视图 + 统一高度/基线/转轴，输出 `build/threeview/<id>-{front,side,back}.png`（需要 scipy）。
+- `tools/gallery_build.py`：`reference/portrait-<id>.webp` → `visual/portraits/`；`reference/turnaround-<id>.png` → `visual/turnarounds/`；生成 `plugin/icon.png` 与 `visual/data.json`，并把数据注入 `visual/index.html`。
+- `tools/animlib.py`：纸片人引擎 + `TurnCharacter` 2.5D 转台渲染；`tools/spin_review.py` 可生成转台动画逐帧审核图。
 - `tools/build_packs.py`（产线脚本）：把 `build/webm/` 的 8×17 动画组装成 `plugin/packs/`。
 - 本插件是纯文件插件，**不需要任何构建步骤**：改完直接复制进 profile 重启即可。
 
@@ -283,8 +277,6 @@ node tools/test_host.mjs
 
 - **角色原案 / 立绘 / 三视图**：**ZipZipPipe（上善无形 / DeepSeek）**，来源
   [genderswapai.com · AI 拟人角色图鉴](https://genderswapai.com/zh-TW/ai-gijinka)。
-  本插件使用的完整设定图（三视图补全）来自 [**lmy414/ai-chan-sheets**](https://github.com/lmy414/ai-chan-sheets)，
-  Q 版形象由本项目脚本对该设定图做程序化 chibi 化生成。
   素材以 [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/) 授权：
   需署名原作者、**不得用于商业用途**、修改/再分发需以相同协议共享。
 - 本项目为**非官方同人**桌宠素材包，与上述 AI 厂商及原作者无隶属关系；角色原案版权归原作者所有。

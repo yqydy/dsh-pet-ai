@@ -67,9 +67,6 @@ ANIM_CLASSES = [
 WEBM_DIR = os.path.join(ROOT, 'build', 'webm')
 PREVIEW_DIR = os.path.join(ROOT, 'build', 'previews')
 CUTOUT_DIR = os.path.join(ROOT, 'build', 'cutouts')
-CHIBI_DIR = os.path.join(ROOT, 'build', 'chibi')
-SHEETS_DIR = os.path.join(ROOT, 'build', 'sheets')
-REF_SHEETS_DIR = os.path.join(ROOT, 'reference', 'sheets')
 
 MAX_DURATION_ERR = 0.15       # seconds, acceptance tolerance
 MIN_TRANSPARENT = 0.02        # first frame must have >=2% fully transparent px
@@ -94,9 +91,7 @@ def build_char(task):
     """Render all animations of one character.  Runs inside a worker process."""
     cid, crf = task
     t0 = time.time()
-    # Q版 (chibi) front view for the flat paper-doll animations, chibi
-    # front/side/back for the 2.5D turntable animations.
-    char = animlib.Character(os.path.join(CHIBI_DIR, '%s-portrait.png' % cid))
+    char = animlib.Character(os.path.join(CUTOUT_DIR, 'portrait-%s.png' % cid))
     turn = animlib.TurnCharacter(cid)
     out_dir = os.path.join(WEBM_DIR, cid)
     os.makedirs(out_dir, exist_ok=True)
@@ -550,23 +545,17 @@ def main(argv=None):
     os.makedirs(WEBM_DIR, exist_ok=True)
     os.makedirs(PREVIEW_DIR, exist_ok=True)
 
-    # --- phase 0: Q版 assets (canonical three-view sheets -> chibi) -----------
+    # --- phase 0: make sure the three-view (2.5D turntable) assets exist ------
     if not args.finalize_only:
-        missing_src = [c for c in chars
-                       if not any(os.path.exists(os.path.join(REF_SHEETS_DIR, '%s-threeview.%s' % (c, ext)))
-                                  for ext in ('webp', 'png'))]
-        if missing_src:
-            sys.exit('missing reference/sheets/*-threeview.(webp|png) for: %s\n'
-                     'these are extracted from lmy414/ai-chan-sheets (CC BY-NC-SA 4.0); '
-                     'see README「Q版形象」' % ', '.join(missing_src))
-        if not all(os.path.exists(os.path.join(SHEETS_DIR, '%s-front.png' % c)) for c in chars):
-            print('extracting canonical front/side/back views from reference sheets ...', flush=True)
-            subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'sheets.py')] + chars,
-                           check=True)
-        if not all(os.path.exists(os.path.join(CHIBI_DIR, '%s-front.png' % c)) for c in chars):
-            print('building Q版 (chibi) views ...', flush=True)
-            subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'chibi.py')] + chars,
-                           check=True)
+        threeview_dir = os.path.join(ROOT, 'build', 'threeview')
+        needed = [os.path.join(threeview_dir, '%s-front.png' % c) for c in chars]
+        if not all(os.path.exists(p) for p in needed):
+            print('generating three-view turntable assets (front/side/back) ...', flush=True)
+            try:
+                subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'threeview.py')] + chars,
+                               check=True)
+            except subprocess.CalledProcessError as e:
+                sys.exit('threeview.py failed (%s); 2.5D animations need Pillow+numpy+scipy' % e)
 
     entries_by_char = {}
     build_times = {}

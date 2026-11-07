@@ -48,21 +48,14 @@ def actions_sheet():
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    # 360° turntable frame strip (Q版)
+    # 360° turntable frame strip
     src = os.path.join(REVIEW, 'deepseek-转圈展示.png')
     im = Image.open(src).convert('RGB')
     im.save(os.path.join(OUT, 'turntable-360.png'))
     print('saved turntable-360.png', im.size)
     actions_sheet()
-    # Q版 lineup
-    lineup = os.path.join(ROOT, 'build', 'chibi', 'lineup.png')
-    if os.path.exists(lineup):
-        Image.open(lineup).convert('RGB').save(os.path.join(OUT, 'chibi-lineup.png'))
-        print('saved chibi-lineup.png')
-    # live desktop capture during a Q版 spin
-    live = os.path.join(ROOT, 'build', 'shots', 'live-anim-q-deepseek-montage.png')
-    if not os.path.exists(live):
-        live = os.path.join(ROOT, 'build', 'shots', 'live-anim-deepseek-montage.png')
+    # live desktop capture during a spin
+    live = os.path.join(ROOT, 'build', 'shots', 'live-anim-deepseek-montage.png')
     if os.path.exists(live):
         Image.open(live).convert('RGB').save(os.path.join(OUT, 'live-2.5d-spin.png'))
         print('saved live-2.5d-spin.png')
