@@ -31,10 +31,9 @@ TV_CHAR_H = 1000.0      # character height inside the normalised three-view canv
 TV_FEET_Y = 1060.0      # feet baseline inside the normalised three-view canvas
 TV_SCALE = MAX_H / TV_CHAR_H
 
-FFMPEG = os.environ.get(
-    'PET_FFMPEG',
-    r'C:\Users\20862\AppData\Roaming\Python\Python38\site-packages\imageio_ffmpeg\binaries\ffmpeg-win64-v4.2.2.exe',
-)
+from media_tools import find_ffmpeg
+
+FFMPEG = find_ffmpeg()
 
 
 # ----------------------------------------------------------------------------

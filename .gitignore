@@ -19,3 +19,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# AI video originals, local media tools and review intermediates
+video/
+.tools/

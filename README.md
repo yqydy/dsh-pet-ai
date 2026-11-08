@@ -1,5 +1,22 @@
 # AI 娘桌宠 · dsh-pet-ai-girls
 
+## Q版素材与AI视频制作（2026-11-08）
+
+已制作 **8个角色的单人透明Q版立绘、正侧背三视图和16张绿幕首帧**，并保存 **136条逐角色动作提示词**。
+后续你只需用视频模型生成动作，再通过新工具导入、抠像、归一化、验收和打包。
+
+![8角色Q版定稿](docs/screenshots/chibi-all8.png)
+
+- [从零制作与视频导入指南](docs/MAKE-CHIBI-PET.md)
+- [每个角色的17条完整提示词](prompts/chibi/README.md)
+- [136条结构化生成任务](prompts/chibi/jobs.json)
+- [Q版立绘、三视图、视频首帧](reference/chibi/)
+- [全部136条提示词合集](prompts/chibi/ALL-PROMPTS.md)
+
+当前发布在plugin/packs内的136条动画仍是原程序化版本；新的Q版AI动作视频等待生成后再导入。
+Q版素材独立保存，原始参考图保留，角色切换和现有插件不受影响。
+
+
 把 [GenderSwapAI · AI 拟人角色图鉴](https://genderswapai.com/zh-TW/ai-gijinka) 里 8 位 AI 娘的立绘，做成了
 **dsh-pet 透明动画桌面宠物**，并打包成一个可安装的 DSH 插件。
 
@@ -51,7 +68,9 @@
 
 ---
 
-## 当前机器上的安装状态（Windows / DeepSeek Harness 桌面版）
+## 历史安装记录（原作者的Windows环境）
+
+以下是此前实机记录，不表示当前下载本仓库的电脑已经安装。
 
 | 项目 | 状态 |
 | --- | --- |
@@ -151,7 +170,7 @@ dsh-pet-ai/
 
 ---
 
-## 安装（本机已装好；换机器/重装时）
+## 安装（新机器或重新安装）
 
 前置：已安装 **dsh-pet v0.3.7+**（本插件依赖它渲染桌宠）。
 
@@ -176,7 +195,9 @@ dsh-pet-ai/
 
 ---
 
-## 技术实现（可复现）
+## 原立绘程序化路线（可复现）
+
+AI视频路线见[Q版制作指南](docs/MAKE-CHIBI-PET.md)。
 
 1. **拉取素材**：从 genderswapai.com 下载 8 张立绘（webp，约 893×1600）与 8 张三视图 PNG（1536×1024）。
 2. **抠图**：`tools/cutout.py` —— 从四边对近白像素做向量化 flood fill 得到背景连通域，

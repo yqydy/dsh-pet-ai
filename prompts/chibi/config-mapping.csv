@@ -1,0 +1,137 @@
+﻿character_id,animation_name,config_fields,source_video,output
+deepseek,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/deepseek/待机呼吸.mp4,plugin/packs/girl-deepseek-animation/待机呼吸.webm
+deepseek,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/deepseek/原地漂浮.mp4,plugin/packs/girl-deepseek-animation/原地漂浮.webm
+deepseek,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/deepseek/原地小憩.mp4,plugin/packs/girl-deepseek-animation/原地小憩.webm
+deepseek,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/deepseek/东张西望.mp4,plugin/packs/girl-deepseek-animation/东张西望.webm
+deepseek,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/deepseek/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-deepseek-animation/被鼠标拖拽悬空反馈.webm
+deepseek,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/deepseek/点击回应-开心跃动.mp4,plugin/packs/girl-deepseek-animation/点击回应-开心跃动.webm
+deepseek,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/deepseek/点击回应-害羞惊讶.mp4,plugin/packs/girl-deepseek-animation/点击回应-害羞惊讶.webm
+deepseek,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/deepseek/点击回应-元气挥手.mp4,plugin/packs/girl-deepseek-animation/点击回应-元气挥手.webm
+deepseek,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/deepseek/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-deepseek-animation/碎碎念-发呆碎碎念.webm
+deepseek,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/deepseek/工作状态-思考冒泡.mp4,plugin/packs/girl-deepseek-animation/工作状态-思考冒泡.webm
+deepseek,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/deepseek/工作状态-忙碌点按.mp4,plugin/packs/girl-deepseek-animation/工作状态-忙碌点按.webm
+deepseek,工作状态-清点归档,animations.events.workStatus[2],video/chibi/deepseek/工作状态-清点归档.mp4,plugin/packs/girl-deepseek-animation/工作状态-清点归档.webm
+deepseek,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/deepseek/工作状态-原地踱步张望.mp4,plugin/packs/girl-deepseek-animation/工作状态-原地踱步张望.webm
+deepseek,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/deepseek/工作状态-雀跃庆祝.mp4,plugin/packs/girl-deepseek-animation/工作状态-雀跃庆祝.webm
+deepseek,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/deepseek/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-deepseek-animation/工作状态-垂头叹气冒汗.webm
+deepseek,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/deepseek/转圈展示.mp4,plugin/packs/girl-deepseek-animation/转圈展示.webm
+deepseek,伸懒腰,animations.categories[0].actions[2],video/chibi/deepseek/伸懒腰.mp4,plugin/packs/girl-deepseek-animation/伸懒腰.webm
+gpt,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/gpt/待机呼吸.mp4,plugin/packs/girl-gpt-animation/待机呼吸.webm
+gpt,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/gpt/原地漂浮.mp4,plugin/packs/girl-gpt-animation/原地漂浮.webm
+gpt,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/gpt/原地小憩.mp4,plugin/packs/girl-gpt-animation/原地小憩.webm
+gpt,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/gpt/东张西望.mp4,plugin/packs/girl-gpt-animation/东张西望.webm
+gpt,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/gpt/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-gpt-animation/被鼠标拖拽悬空反馈.webm
+gpt,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/gpt/点击回应-开心跃动.mp4,plugin/packs/girl-gpt-animation/点击回应-开心跃动.webm
+gpt,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/gpt/点击回应-害羞惊讶.mp4,plugin/packs/girl-gpt-animation/点击回应-害羞惊讶.webm
+gpt,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/gpt/点击回应-元气挥手.mp4,plugin/packs/girl-gpt-animation/点击回应-元气挥手.webm
+gpt,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/gpt/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-gpt-animation/碎碎念-发呆碎碎念.webm
+gpt,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/gpt/工作状态-思考冒泡.mp4,plugin/packs/girl-gpt-animation/工作状态-思考冒泡.webm
+gpt,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/gpt/工作状态-忙碌点按.mp4,plugin/packs/girl-gpt-animation/工作状态-忙碌点按.webm
+gpt,工作状态-清点归档,animations.events.workStatus[2],video/chibi/gpt/工作状态-清点归档.mp4,plugin/packs/girl-gpt-animation/工作状态-清点归档.webm
+gpt,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/gpt/工作状态-原地踱步张望.mp4,plugin/packs/girl-gpt-animation/工作状态-原地踱步张望.webm
+gpt,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/gpt/工作状态-雀跃庆祝.mp4,plugin/packs/girl-gpt-animation/工作状态-雀跃庆祝.webm
+gpt,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/gpt/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-gpt-animation/工作状态-垂头叹气冒汗.webm
+gpt,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/gpt/转圈展示.mp4,plugin/packs/girl-gpt-animation/转圈展示.webm
+gpt,伸懒腰,animations.categories[0].actions[2],video/chibi/gpt/伸懒腰.mp4,plugin/packs/girl-gpt-animation/伸懒腰.webm
+claude,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/claude/待机呼吸.mp4,plugin/packs/girl-claude-animation/待机呼吸.webm
+claude,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/claude/原地漂浮.mp4,plugin/packs/girl-claude-animation/原地漂浮.webm
+claude,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/claude/原地小憩.mp4,plugin/packs/girl-claude-animation/原地小憩.webm
+claude,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/claude/东张西望.mp4,plugin/packs/girl-claude-animation/东张西望.webm
+claude,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/claude/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-claude-animation/被鼠标拖拽悬空反馈.webm
+claude,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/claude/点击回应-开心跃动.mp4,plugin/packs/girl-claude-animation/点击回应-开心跃动.webm
+claude,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/claude/点击回应-害羞惊讶.mp4,plugin/packs/girl-claude-animation/点击回应-害羞惊讶.webm
+claude,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/claude/点击回应-元气挥手.mp4,plugin/packs/girl-claude-animation/点击回应-元气挥手.webm
+claude,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/claude/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-claude-animation/碎碎念-发呆碎碎念.webm
+claude,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/claude/工作状态-思考冒泡.mp4,plugin/packs/girl-claude-animation/工作状态-思考冒泡.webm
+claude,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/claude/工作状态-忙碌点按.mp4,plugin/packs/girl-claude-animation/工作状态-忙碌点按.webm
+claude,工作状态-清点归档,animations.events.workStatus[2],video/chibi/claude/工作状态-清点归档.mp4,plugin/packs/girl-claude-animation/工作状态-清点归档.webm
+claude,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/claude/工作状态-原地踱步张望.mp4,plugin/packs/girl-claude-animation/工作状态-原地踱步张望.webm
+claude,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/claude/工作状态-雀跃庆祝.mp4,plugin/packs/girl-claude-animation/工作状态-雀跃庆祝.webm
+claude,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/claude/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-claude-animation/工作状态-垂头叹气冒汗.webm
+claude,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/claude/转圈展示.mp4,plugin/packs/girl-claude-animation/转圈展示.webm
+claude,伸懒腰,animations.categories[0].actions[2],video/chibi/claude/伸懒腰.mp4,plugin/packs/girl-claude-animation/伸懒腰.webm
+grok,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/grok/待机呼吸.mp4,plugin/packs/girl-grok-animation/待机呼吸.webm
+grok,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/grok/原地漂浮.mp4,plugin/packs/girl-grok-animation/原地漂浮.webm
+grok,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/grok/原地小憩.mp4,plugin/packs/girl-grok-animation/原地小憩.webm
+grok,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/grok/东张西望.mp4,plugin/packs/girl-grok-animation/东张西望.webm
+grok,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/grok/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-grok-animation/被鼠标拖拽悬空反馈.webm
+grok,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/grok/点击回应-开心跃动.mp4,plugin/packs/girl-grok-animation/点击回应-开心跃动.webm
+grok,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/grok/点击回应-害羞惊讶.mp4,plugin/packs/girl-grok-animation/点击回应-害羞惊讶.webm
+grok,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/grok/点击回应-元气挥手.mp4,plugin/packs/girl-grok-animation/点击回应-元气挥手.webm
+grok,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/grok/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-grok-animation/碎碎念-发呆碎碎念.webm
+grok,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/grok/工作状态-思考冒泡.mp4,plugin/packs/girl-grok-animation/工作状态-思考冒泡.webm
+grok,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/grok/工作状态-忙碌点按.mp4,plugin/packs/girl-grok-animation/工作状态-忙碌点按.webm
+grok,工作状态-清点归档,animations.events.workStatus[2],video/chibi/grok/工作状态-清点归档.mp4,plugin/packs/girl-grok-animation/工作状态-清点归档.webm
+grok,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/grok/工作状态-原地踱步张望.mp4,plugin/packs/girl-grok-animation/工作状态-原地踱步张望.webm
+grok,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/grok/工作状态-雀跃庆祝.mp4,plugin/packs/girl-grok-animation/工作状态-雀跃庆祝.webm
+grok,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/grok/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-grok-animation/工作状态-垂头叹气冒汗.webm
+grok,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/grok/转圈展示.mp4,plugin/packs/girl-grok-animation/转圈展示.webm
+grok,伸懒腰,animations.categories[0].actions[2],video/chibi/grok/伸懒腰.mp4,plugin/packs/girl-grok-animation/伸懒腰.webm
+gemini,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/gemini/待机呼吸.mp4,plugin/packs/girl-gemini-animation/待机呼吸.webm
+gemini,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/gemini/原地漂浮.mp4,plugin/packs/girl-gemini-animation/原地漂浮.webm
+gemini,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/gemini/原地小憩.mp4,plugin/packs/girl-gemini-animation/原地小憩.webm
+gemini,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/gemini/东张西望.mp4,plugin/packs/girl-gemini-animation/东张西望.webm
+gemini,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/gemini/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-gemini-animation/被鼠标拖拽悬空反馈.webm
+gemini,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/gemini/点击回应-开心跃动.mp4,plugin/packs/girl-gemini-animation/点击回应-开心跃动.webm
+gemini,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/gemini/点击回应-害羞惊讶.mp4,plugin/packs/girl-gemini-animation/点击回应-害羞惊讶.webm
+gemini,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/gemini/点击回应-元气挥手.mp4,plugin/packs/girl-gemini-animation/点击回应-元气挥手.webm
+gemini,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/gemini/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-gemini-animation/碎碎念-发呆碎碎念.webm
+gemini,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/gemini/工作状态-思考冒泡.mp4,plugin/packs/girl-gemini-animation/工作状态-思考冒泡.webm
+gemini,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/gemini/工作状态-忙碌点按.mp4,plugin/packs/girl-gemini-animation/工作状态-忙碌点按.webm
+gemini,工作状态-清点归档,animations.events.workStatus[2],video/chibi/gemini/工作状态-清点归档.mp4,plugin/packs/girl-gemini-animation/工作状态-清点归档.webm
+gemini,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/gemini/工作状态-原地踱步张望.mp4,plugin/packs/girl-gemini-animation/工作状态-原地踱步张望.webm
+gemini,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/gemini/工作状态-雀跃庆祝.mp4,plugin/packs/girl-gemini-animation/工作状态-雀跃庆祝.webm
+gemini,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/gemini/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-gemini-animation/工作状态-垂头叹气冒汗.webm
+gemini,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/gemini/转圈展示.mp4,plugin/packs/girl-gemini-animation/转圈展示.webm
+gemini,伸懒腰,animations.categories[0].actions[2],video/chibi/gemini/伸懒腰.mp4,plugin/packs/girl-gemini-animation/伸懒腰.webm
+kimi,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/kimi/待机呼吸.mp4,plugin/packs/girl-kimi-animation/待机呼吸.webm
+kimi,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/kimi/原地漂浮.mp4,plugin/packs/girl-kimi-animation/原地漂浮.webm
+kimi,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/kimi/原地小憩.mp4,plugin/packs/girl-kimi-animation/原地小憩.webm
+kimi,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/kimi/东张西望.mp4,plugin/packs/girl-kimi-animation/东张西望.webm
+kimi,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/kimi/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-kimi-animation/被鼠标拖拽悬空反馈.webm
+kimi,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/kimi/点击回应-开心跃动.mp4,plugin/packs/girl-kimi-animation/点击回应-开心跃动.webm
+kimi,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/kimi/点击回应-害羞惊讶.mp4,plugin/packs/girl-kimi-animation/点击回应-害羞惊讶.webm
+kimi,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/kimi/点击回应-元气挥手.mp4,plugin/packs/girl-kimi-animation/点击回应-元气挥手.webm
+kimi,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/kimi/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-kimi-animation/碎碎念-发呆碎碎念.webm
+kimi,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/kimi/工作状态-思考冒泡.mp4,plugin/packs/girl-kimi-animation/工作状态-思考冒泡.webm
+kimi,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/kimi/工作状态-忙碌点按.mp4,plugin/packs/girl-kimi-animation/工作状态-忙碌点按.webm
+kimi,工作状态-清点归档,animations.events.workStatus[2],video/chibi/kimi/工作状态-清点归档.mp4,plugin/packs/girl-kimi-animation/工作状态-清点归档.webm
+kimi,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/kimi/工作状态-原地踱步张望.mp4,plugin/packs/girl-kimi-animation/工作状态-原地踱步张望.webm
+kimi,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/kimi/工作状态-雀跃庆祝.mp4,plugin/packs/girl-kimi-animation/工作状态-雀跃庆祝.webm
+kimi,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/kimi/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-kimi-animation/工作状态-垂头叹气冒汗.webm
+kimi,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/kimi/转圈展示.mp4,plugin/packs/girl-kimi-animation/转圈展示.webm
+kimi,伸懒腰,animations.categories[0].actions[2],video/chibi/kimi/伸懒腰.mp4,plugin/packs/girl-kimi-animation/伸懒腰.webm
+glm,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/glm/待机呼吸.mp4,plugin/packs/girl-glm-animation/待机呼吸.webm
+glm,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/glm/原地漂浮.mp4,plugin/packs/girl-glm-animation/原地漂浮.webm
+glm,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/glm/原地小憩.mp4,plugin/packs/girl-glm-animation/原地小憩.webm
+glm,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/glm/东张西望.mp4,plugin/packs/girl-glm-animation/东张西望.webm
+glm,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/glm/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-glm-animation/被鼠标拖拽悬空反馈.webm
+glm,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/glm/点击回应-开心跃动.mp4,plugin/packs/girl-glm-animation/点击回应-开心跃动.webm
+glm,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/glm/点击回应-害羞惊讶.mp4,plugin/packs/girl-glm-animation/点击回应-害羞惊讶.webm
+glm,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/glm/点击回应-元气挥手.mp4,plugin/packs/girl-glm-animation/点击回应-元气挥手.webm
+glm,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/glm/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-glm-animation/碎碎念-发呆碎碎念.webm
+glm,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/glm/工作状态-思考冒泡.mp4,plugin/packs/girl-glm-animation/工作状态-思考冒泡.webm
+glm,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/glm/工作状态-忙碌点按.mp4,plugin/packs/girl-glm-animation/工作状态-忙碌点按.webm
+glm,工作状态-清点归档,animations.events.workStatus[2],video/chibi/glm/工作状态-清点归档.mp4,plugin/packs/girl-glm-animation/工作状态-清点归档.webm
+glm,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/glm/工作状态-原地踱步张望.mp4,plugin/packs/girl-glm-animation/工作状态-原地踱步张望.webm
+glm,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/glm/工作状态-雀跃庆祝.mp4,plugin/packs/girl-glm-animation/工作状态-雀跃庆祝.webm
+glm,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/glm/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-glm-animation/工作状态-垂头叹气冒汗.webm
+glm,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/glm/转圈展示.mp4,plugin/packs/girl-glm-animation/转圈展示.webm
+glm,伸懒腰,animations.categories[0].actions[2],video/chibi/glm/伸懒腰.mp4,plugin/packs/girl-glm-animation/伸懒腰.webm
+qwen,待机呼吸,animations.idle[0]; animations.events.balance[0],video/chibi/qwen/待机呼吸.mp4,plugin/packs/girl-qwen-animation/待机呼吸.webm
+qwen,原地漂浮,animations.idle[1]; animations.events.balance[1],video/chibi/qwen/原地漂浮.mp4,plugin/packs/girl-qwen-animation/原地漂浮.webm
+qwen,原地小憩,animations.idle[2]; animations.events.balance[2],video/chibi/qwen/原地小憩.mp4,plugin/packs/girl-qwen-animation/原地小憩.webm
+qwen,东张西望,animations.turn[0]; animations.categories[0].actions[1],video/chibi/qwen/东张西望.mp4,plugin/packs/girl-qwen-animation/东张西望.webm
+qwen,被鼠标拖拽悬空反馈,animations.drag[0],video/chibi/qwen/被鼠标拖拽悬空反馈.mp4,plugin/packs/girl-qwen-animation/被鼠标拖拽悬空反馈.webm
+qwen,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],video/chibi/qwen/点击回应-开心跃动.mp4,plugin/packs/girl-qwen-animation/点击回应-开心跃动.webm
+qwen,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],video/chibi/qwen/点击回应-害羞惊讶.mp4,plugin/packs/girl-qwen-animation/点击回应-害羞惊讶.webm
+qwen,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],video/chibi/qwen/点击回应-元气挥手.mp4,plugin/packs/girl-qwen-animation/点击回应-元气挥手.webm
+qwen,碎碎念-发呆碎碎念,animations.events.whisper[0],video/chibi/qwen/碎碎念-发呆碎碎念.mp4,plugin/packs/girl-qwen-animation/碎碎念-发呆碎碎念.webm
+qwen,工作状态-思考冒泡,animations.events.workStatus[0],video/chibi/qwen/工作状态-思考冒泡.mp4,plugin/packs/girl-qwen-animation/工作状态-思考冒泡.webm
+qwen,工作状态-忙碌点按,animations.events.workStatus[1],video/chibi/qwen/工作状态-忙碌点按.mp4,plugin/packs/girl-qwen-animation/工作状态-忙碌点按.webm
+qwen,工作状态-清点归档,animations.events.workStatus[2],video/chibi/qwen/工作状态-清点归档.mp4,plugin/packs/girl-qwen-animation/工作状态-清点归档.webm
+qwen,工作状态-原地踱步张望,animations.events.workStatus[3],video/chibi/qwen/工作状态-原地踱步张望.mp4,plugin/packs/girl-qwen-animation/工作状态-原地踱步张望.webm
+qwen,工作状态-雀跃庆祝,animations.events.workStatus[4],video/chibi/qwen/工作状态-雀跃庆祝.mp4,plugin/packs/girl-qwen-animation/工作状态-雀跃庆祝.webm
+qwen,工作状态-垂头叹气冒汗,animations.events.workStatus[5],video/chibi/qwen/工作状态-垂头叹气冒汗.mp4,plugin/packs/girl-qwen-animation/工作状态-垂头叹气冒汗.webm
+qwen,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],video/chibi/qwen/转圈展示.mp4,plugin/packs/girl-qwen-animation/转圈展示.webm
+qwen,伸懒腰,animations.categories[0].actions[2],video/chibi/qwen/伸懒腰.mp4,plugin/packs/girl-qwen-animation/伸懒腰.webm

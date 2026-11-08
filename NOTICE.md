@@ -22,3 +22,8 @@
 
 本项目自行编写的代码（`tools/`、`plugin/index.js`、`plugin/visual/` 页面代码等）
 以 MIT 许可证发布，详见 `LICENSE`。
+
+
+## Q版衍生素材（2026-11-08）
+
+reference/chibi/为基于上述原角色及三视图、使用内置imagegen制作的Q版二创，原角色署名和CC BY-NC-SA 4.0说明继续适用。prompts/chibi/image-generation.json记录生成提示词与参考输入。缩放、拆分和绿幕首帧由tools/prepare_chibi.py导出，未把原角色设计声明为本项目原创。

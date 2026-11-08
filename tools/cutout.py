@@ -55,7 +55,15 @@ def flood_background(rgb):
 
 
 def cutout(src_path, dst_path, erode=1, blur=0.9, pad=6):
-    im = Image.open(src_path).convert('RGB')
+    source = Image.open(src_path).convert('RGBA')
+    if np.min(np.asarray(source)[:, :, 3]) < 255:
+        bounds = source.getchannel('A').getbbox()
+        if not bounds:
+            raise RuntimeError('no foreground found: ' + src_path)
+        source = source.crop(bounds)
+        source.save(dst_path)
+        return source
+    im = source.convert('RGB')
     rgb = np.asarray(im).astype(np.uint8)
     h, w, _ = rgb.shape
     bg = flood_background(rgb)
@@ -101,8 +109,9 @@ def checker_preview(rgba, bg1=200, bg2=120, tile=24):
 
 
 if __name__ == '__main__':
-    ref = r'F:\ceshi\dsh-pet-ai-girls\reference'
-    out = r'F:\ceshi\dsh-pet-ai-girls\build\cutouts'
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ref = os.path.join(root, 'reference')
+    out = os.path.join(root, 'build', 'cutouts')
     os.makedirs(out, exist_ok=True)
     names = sys.argv[1:] or ['deepseek', 'gpt', 'claude', 'grok', 'gemini', 'kimi', 'glm', 'qwen']
     for n in names:
