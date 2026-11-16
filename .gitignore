@@ -23,3 +23,6 @@ desktop.ini
 # AI video originals, local media tools and review intermediates
 video/
 .tools/
+
+# Local working scripts, analysis captures and disposable evidence
+work/

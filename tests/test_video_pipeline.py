@@ -32,7 +32,7 @@ class ReferenceAndPromptTests(unittest.TestCase):
             self.assertEqual(job["status"], "awaiting_video_generation")
 
     def test_all_prepared_references_have_real_alpha_and_shared_s_h_geometry(self):
-        manifest = json.loads((ROOT / "reference/chibi/manifest.json").read_text(encoding="utf-8"))
+        manifest = json.loads((ROOT / "reference/chibi-v2/manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(len(manifest["characters"]), 8)
         for cid, entry in manifest["characters"].items():
             raw = (ROOT / entry["source"]).read_bytes()
@@ -54,7 +54,7 @@ class ReferenceAndPromptTests(unittest.TestCase):
                 boxes.append(pipeline.bounds(pipeline.key_green(frame)))
             self.assertAlmostEqual(boxes[0][3] - boxes[1][3], 22, delta=1)
             self.assertAlmostEqual(boxes[0][3] - boxes[0][1], 468, delta=2)
-            self.assertAlmostEqual(boxes[1][3] - boxes[1][1], 468, delta=2)
+            self.assertAlmostEqual(boxes[1][3] - boxes[1][1], entry["drag_source_height"], delta=2)
 
     def test_alpha_cutout_keeps_white_foreground(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -91,7 +91,7 @@ class RealFFmpegTests(unittest.TestCase):
         cls.ffmpeg = find_ffmpeg()
 
     def make_source(self, folder, cid="gpt", drag=False, transparent=False, bad_end=False):
-        reference = ROOT / "reference/chibi/firstframes" / (cid + ("-drag.png" if drag else ".png"))
+        reference = ROOT / "reference/chibi-v2/firstframes" / (cid + ("-drag.png" if drag else ".png"))
         frame = np.asarray(Image.open(reference).convert("RGBA")).copy()
         if transparent:
             frame = pipeline.key_green(frame)

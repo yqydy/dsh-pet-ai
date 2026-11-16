@@ -18,7 +18,7 @@ import spec
 from media_tools import find_ffmpeg
 
 ROOT = Path(__file__).resolve().parents[1]
-WORK = ROOT / "build" / "video" / "chibi"
+WORK = ROOT / "build" / "video" / "chibi-v2"
 OUTPUT = WORK / "step04"
 FPS = 24
 SIZE = (640, 360)
@@ -137,7 +137,7 @@ def endpoint_difference(first, last):
     b[:, :, :3] *= b[:, :, 3:4]
     return float(np.mean(np.abs(a[union] - b[union])))
 
-def verify_video(path, ffmpeg, action, write_report=True):
+def verify_video(path, ffmpeg, action, write_report=True, cid=None):
     path = Path(path)
     errors = []
     info = video_info(path, ffmpeg)
@@ -187,10 +187,15 @@ def verify_video(path, ffmpeg, action, write_report=True):
             pivot = (xx[band].min() + xx[band].max()) / 2.0
             if abs(pivot - 320) > 9:
                 errors.append('First/last horizontal shoe anchor differs from S/H')
+        expected_height = 900 * 360.0 / 1215
+        if action == DRAG and cid in IDS:
+            manifest = json.loads((ROOT / "reference/chibi-v2/manifest.json").read_text(encoding="utf-8"))
+            source_height = manifest["characters"][cid]["drag_source_height"]
+            expected_height *= source_height / 468.0
         for name, box in (("first", first_box), ("last", last_box)):
             if abs(box[3] - expected_feet) > 9:
                 errors.append(name + " frame is not at S/H baseline")
-            if abs((box[3] - box[1]) - 900 * 360.0 / 1215) > 14:
+            if abs((box[3] - box[1]) - expected_height) > 14:
                 errors.append(name + " frame does not retain canonical character height")
     report = {
         "status": "pass" if not errors else "fail", "errors": sorted(set(errors)),
@@ -245,7 +250,7 @@ def import_video(source, cid, action, ffmpeg, background="green", output_root=OU
             if temp.exists():
                 temp.unlink()
             raise
-    report = verify_video(temp, ffmpeg, action)
+    report = verify_video(temp, ffmpeg, action, cid=cid)
     if report['status'] == 'pass':
         temp.replace(target)
     else:
@@ -260,7 +265,7 @@ def import_video(source, cid, action, ffmpeg, background="green", output_root=OU
 
 def find_source(cid, action):
     for ext in (".mp4", ".mov", ".webm"):
-        path = ROOT / "video" / "chibi" / cid / (action + ext)
+        path = ROOT / "video" / "chibi-v2" / cid / (action + ext)
         if path.exists():
             return path
     return None
@@ -273,9 +278,9 @@ def plan():
             target = output_path(char["id"], action)
             entries.append({
                 "character": char["id"], "action": action,
-                "expected_source": "video/chibi/" + char["id"] + "/" + action + ".mp4",
+                "expected_source": "video/chibi-v2/" + char["id"] + "/" + action + ".mp4",
                 "source_exists": bool(source), "output_exists": target.exists(),
-                "reference": "reference/chibi/firstframes/" + char["id"] + ("-drag.png" if action == DRAG else ".png")
+                "reference": "reference/chibi-v2/firstframes/" + char["id"] + ("-drag.png" if action == DRAG else ".png")
             })
     return {"expected": 136, "sources_present": sum(e["source_exists"] for e in entries), "entries": entries}
 
@@ -287,7 +292,7 @@ def pack(ffmpeg, write_plugin=False, output_root=OUTPUT):
         raise ValueError("Incomplete set: missing %d/136 videos. First missing: %s" % (len(missing), missing[0]))
     for cid in IDS:
         for name in NAMES:
-            report = verify_video(output_path(cid, name, output_root), ffmpeg, name)
+            report = verify_video(output_path(cid, name, output_root), ffmpeg, name, cid=cid)
             if report["status"] != "pass":
                 raise ValueError("Verification failed: " + cid + "/" + name + ": " + "; ".join(report["errors"]))
     staged = WORK / "plugin" / "packs"
@@ -354,7 +359,7 @@ def main(argv=None):
             raise ValueError("Source video missing; see video_pipeline.py plan")
         report = import_video(source, args.character, args.action, ffmpeg, args.background)
     else:
-        report = verify_video(output_path(args.character, args.action), ffmpeg, args.action)
+        report = verify_video(output_path(args.character, args.action), ffmpeg, args.action, cid=args.character)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0 if report["status"] == "pass" else 1
 

@@ -1,20 +1,38 @@
-# Q版角色动画提示词
+# 两头身桌宠：136条优化动作提示词（v2）
 
-已保存8个角色单人透明立绘、正侧背三视图、站立首帧S和悬空首帧H。本目录的136条提示词均已展开，可独立复制；每次给视频模型上传对应角色的单人首帧。
 
-普通动作首尾用同一张S；拖拽首尾用同一张H。转身再补充三视图。10秒是源视频方案，后续可按交互需求剪短；不支持10秒的平台可按比例压缩时间分段。
+先用对应角色的**单人绿幕首帧**图生视频。默认10秒、16:9、固定镜头；支持首尾帧时，两端上传同一张S（站姿）或H（悬空）。
 
-源视频按 video/chibi/<角色id>/<原动画名>.mp4 保存，再依照[制作指南](../../docs/MAKE-CHIBI-PET.md)导入。
+每条先复制「精简投喂版」；「详细分镜版」是替代稿，二选一。图形画不好时用「无叠加图形版」，后期再加图标，归档保留必要纸卡。
 
-| 角色 | 17条提示词 | 立绘 | 三视图 | S | H |
-| --- | --- | --- | --- | --- | --- |
-| DeepSeek 娘 | [打开](roles/deepseek.md) | [PNG](../../reference/chibi/portraits/deepseek.png) | [PNG](../../reference/chibi/turnarounds/deepseek.png) | [站立](../../reference/chibi/firstframes/deepseek.png) | [悬空](../../reference/chibi/firstframes/deepseek-drag.png) |
-| GPT 娘 | [打开](roles/gpt.md) | [PNG](../../reference/chibi/portraits/gpt.png) | [PNG](../../reference/chibi/turnarounds/gpt.png) | [站立](../../reference/chibi/firstframes/gpt.png) | [悬空](../../reference/chibi/firstframes/gpt-drag.png) |
-| Claude 娘 | [打开](roles/claude.md) | [PNG](../../reference/chibi/portraits/claude.png) | [PNG](../../reference/chibi/turnarounds/claude.png) | [站立](../../reference/chibi/firstframes/claude.png) | [悬空](../../reference/chibi/firstframes/claude-drag.png) |
-| Grok 娘 | [打开](roles/grok.md) | [PNG](../../reference/chibi/portraits/grok.png) | [PNG](../../reference/chibi/turnarounds/grok.png) | [站立](../../reference/chibi/firstframes/grok.png) | [悬空](../../reference/chibi/firstframes/grok-drag.png) |
-| Gemini 娘 | [打开](roles/gemini.md) | [PNG](../../reference/chibi/portraits/gemini.png) | [PNG](../../reference/chibi/turnarounds/gemini.png) | [站立](../../reference/chibi/firstframes/gemini.png) | [悬空](../../reference/chibi/firstframes/gemini-drag.png) |
-| Kimi 娘 | [打开](roles/kimi.md) | [PNG](../../reference/chibi/portraits/kimi.png) | [PNG](../../reference/chibi/turnarounds/kimi.png) | [站立](../../reference/chibi/firstframes/kimi.png) | [悬空](../../reference/chibi/firstframes/kimi-drag.png) |
-| GLM 娘 | [打开](roles/glm.md) | [PNG](../../reference/chibi/portraits/glm.png) | [PNG](../../reference/chibi/turnarounds/glm.png) | [站立](../../reference/chibi/firstframes/glm.png) | [悬空](../../reference/chibi/firstframes/glm-drag.png) |
-| Qwen 娘 | [打开](roles/qwen.md) | [PNG](../../reference/chibi/portraits/qwen.png) | [PNG](../../reference/chibi/turnarounds/qwen.png) | [站立](../../reference/chibi/firstframes/qwen.png) | [悬空](../../reference/chibi/firstframes/qwen-drag.png) |
+三视图仅作外观辅助；不要把三人/四姿势图直接当首帧，否则容易生成多个人。只有转圈必须加三视图。
 
-jobs.json是厂商无关的任务清单，不是某个平台的直接API请求格式。当前Q版AI动作视频尚待生成；仓库原有plugin/packs动画保持可用。
+第一轮先做DeepSeek的待机、挥手、跳跃、忙碌点按、悬空5条，通过后再扩展其余角色。建议先做没有转身的动作。
+
+上游并非只靠提示词：其成片使用PR手工抠像，再统一大小/足线并编码。提示词无法保证消除绿边或让任意模型逐帧复现。
+
+
+[重绘与上游对照](../../docs/CHIBI-V2-REVISION.md) · [制作与导入](../../docs/MAKE-CHIBI-PET.md)
+
+
+|角色|17条优化提示词|S|H|三视图|
+
+|---|---|---|---|---|
+
+|DeepSeek 娘|[打开](roles/deepseek.md)|[PNG](../../reference/chibi-v2/firstframes/deepseek.png)|[PNG](../../reference/chibi-v2/firstframes/deepseek-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/deepseek.png)|
+
+|GPT 娘|[打开](roles/gpt.md)|[PNG](../../reference/chibi-v2/firstframes/gpt.png)|[PNG](../../reference/chibi-v2/firstframes/gpt-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/gpt.png)|
+
+|Claude 娘|[打开](roles/claude.md)|[PNG](../../reference/chibi-v2/firstframes/claude.png)|[PNG](../../reference/chibi-v2/firstframes/claude-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/claude.png)|
+
+|Grok 娘|[打开](roles/grok.md)|[PNG](../../reference/chibi-v2/firstframes/grok.png)|[PNG](../../reference/chibi-v2/firstframes/grok-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/grok.png)|
+
+|Gemini 娘|[打开](roles/gemini.md)|[PNG](../../reference/chibi-v2/firstframes/gemini.png)|[PNG](../../reference/chibi-v2/firstframes/gemini-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/gemini.png)|
+
+|Kimi 娘|[打开](roles/kimi.md)|[PNG](../../reference/chibi-v2/firstframes/kimi.png)|[PNG](../../reference/chibi-v2/firstframes/kimi-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/kimi.png)|
+
+|GLM 娘|[打开](roles/glm.md)|[PNG](../../reference/chibi-v2/firstframes/glm.png)|[PNG](../../reference/chibi-v2/firstframes/glm-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/glm.png)|
+
+|Qwen 娘|[打开](roles/qwen.md)|[PNG](../../reference/chibi-v2/firstframes/qwen.png)|[PNG](../../reference/chibi-v2/firstframes/qwen-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/qwen.png)|
+
+Q版AI动作视频尚待生成；当前plugin/packs是旧程序动画。v1图片在reference/chibi保留，新任务只使用reference/chibi-v2。

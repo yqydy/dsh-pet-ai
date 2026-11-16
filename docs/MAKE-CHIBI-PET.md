@@ -1,147 +1,168 @@
-# 从零制作 Q 版桌宠：图片 → 视频 → 透明动画 → 角色包
+# 从零制作两头身桌宠：v2图片 → 视频 → 透明动画 → 角色包
 
-## 本次仓库检查结论
+当前推荐版本为2026-11-17的两头身v2。8个角色参考图与136条动作任务已经准备；**AI动作视频尚待生成**，plugin/packs中的动画仍是旧程序化版本。重绘原因、上游逐项映射与例外见[修订说明](CHIBI-V2-REVISION.md)。
 
-原仓库的可复现路线是：白底立绘抠图 → 正侧背拆分 → Python 程序化姿态/粒子/转台 → 透明WebM → pet pack。
-它能运行，但不等于上游的“AI绿幕视频逐动作生成”路线。旧代码还包含原作者电脑上的固定路径。
-本次新增独立的AI视频路线，修复路径依赖及透明PNG处理，并保留原程序化路线供对照。
+![v2八角色](screenshots/chibi-v2-all8.png)
 
-已完成：8张Q版透明三视图、8张单人透明立绘、24张归一化视角、8张站立首帧S、8张悬空首帧H、136条逐角色动作提示词。
-尚待你用视频模型生成：136条Q版动作视频。
-现有plugin/packs仍是原版程序化动画；本次没有把静态图冒充新动作视频，也没有修改你的本机DSH安装。
+## 1. 使用正确的参考图
 
-![8角色Q版定稿](screenshots/chibi-all8.png)
+|文件|用途|
+|---|---|
+|reference/chibi-v2/portraits/<id>.png|单人透明立绘|
+|reference/chibi-v2/turnarounds/<id>.png|正侧背外观辅助；不要直接当视频首帧|
+|reference/chibi-v2/views/<id>-front、-side、-back、-drag.png|各姿势单独查看|
+|reference/chibi-v2/firstframes/<id>.png|站姿S，1280×720纯绿幕|
+|reference/chibi-v2/firstframes/<id>-drag.png|真实画出的悬空H，1280×720纯绿幕|
+|reference/chibi-v2/firstframes/<id>-white.png、<id>-drag-white.png|白底外观核对；正式绿幕视频优先使用绿底版|
+|reference/chibi-v2/sheets/<id>.png|原始四姿势生成图；不直接投喂为首帧|
+|reference/chibi-v2/manifest.json|源图SHA256、路径、站姿与悬空几何参数|
 
-## 1. 使用已经制作好的Q版参考
+S身高468像素、脚底y=612。H使用独立悬空姿势，保持与S相同的原始像素缩放，脚底y=590；姿势屈曲造成的自然身高变化记录在manifest中，不强行拉高至468。
+v1图仍在reference/chibi，仅作历史对照。重新导出v2：
 
-- reference/chibi/turnarounds/<id>.png：每角色一张正面/侧面/背面原始生成图，带真实alpha。
-- reference/chibi/portraits/<id>.png：单人透明定稿。
-- reference/chibi/views/<id>-front.png、-side.png、-back.png：拆分、归一化后的视角。
-- reference/chibi/firstframes/<id>.png：站立首帧S，1280×720纯绿幕。
-- reference/chibi/firstframes/<id>-drag.png：悬空首帧H，与S使用相同缩放和水平锚点。
-- reference/chibi/manifest.json：图像路径、源文件校验值、画布与足线参数。
-- prompts/chibi/image-generation.json：8张三视图实际使用的内置imagegen提示词；原角色与风格参考一并保留。
-
-这些图用于后续图生视频。不要再用旧版高挑立绘生成Q版视频，也不要把八人总览图当单人首帧。
-每张AI三视图已检查正侧背、服装分区及耳角翼尾；它仍是二维参考，不代表存在可驱动的三维模型。
-
-重新导出单人图与首帧：
 ~~~powershell
-python tools/prepare_chibi.py
+python tools/prepare_chibi_v2.py
 python tools/build_video_prompts.py
 ~~~
 
-## 2. 安装制作依赖
+## 2. 准备依赖
 
-在仓库根目录运行：
 ~~~powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r tools/requirements.txt
 ~~~
-Python 3.8+。FFmpeg依次使用显式 --ffmpeg 参数、PET_FFMPEG / FFMPEG_BIN、PATH、项目.tools路径、imageio-ffmpeg。
-若显式配置的路径无效，会直接报错。新流水线工具、cutout入口和动画引擎使用项目相对路径，不依赖F盘旧目录。
-原来的程序化动画引擎也改为通过同一FFmpeg查找逻辑工作。
 
-## 3. 把提示词交给视频模型
+Python3.8+；FFmpeg查找顺序：命令行--ffmpeg、PET_FFMPEG或FFMPEG_BIN、PATH、项目.tools目录、imageio-ffmpeg。
+显式配置错误路径时会报错，不静默改用别的程序。
 
-打开[prompts/chibi](../prompts/chibi/README.md)，选择角色；每个角色文件都有17条完整提示词及首帧链接。
-每条包含外观锁定、角色专属动作、0—10秒时间分段、负面词、源文件名、目标动画名及配置引用。
+## 3. 逐动作生成视频
 
-普通动作：上传对应S。支持首尾帧控制时，两端都使用同一张S。
-拖拽：上传H，首尾维持悬空，不加落地过程。
-转圈、侧身等动作：再附本角色Q版三视图，检查背面和配件连接。
-建议先用DeepSeek的待机呼吸、元气挥手、拖拽、转圈展示验证模型效果，再生成全量。
-模型不支持10秒时可按比例压缩分段。宿主不强制10秒，点击回应通常应剪成较短片段；不要机械地把10秒整段加速成1秒。
+打开[136条提示词索引](../prompts/chibi/README.md)，先生成DeepSeek的待机、挥手、单次跳跃、点按、悬空五段。
 
-绿幕要求：16:9，背景#00FF00，无地面/阴影/绿光；原始视频可高分辨率，导入时统一1280×720与24fps。
-所有身体部位、长发、翼尾、道具和特效保留安全空间。避免新增绿色光效。
-Kimi彩虹发饰等原有绿色细节可能被颜色抠像误删；这类片段优先在剪辑软件用人工遮罩导出带alpha母版，再选择alpha导入路线。
-角色固有的角耳翼尾与发饰全程保留；书、折扇、小面板等临时道具应在结束前消失。
-视频平台提供干净源视频时直接使用，不需要照搬上游示例的固定水印遮罩。
+- 图生视频，10秒，16:9，固定全身镜头，背景纯#00FF00。
+- 普通动作首帧用S；支持首尾帧时，两端用同一S。拖拽用H→H。
+- 只复制“精简投喂版”。详细分镜是替代稿，别与精简版拼接。
+- 只有转圈必须额外附三视图；多图功能应设为外观参考，首帧始终只放单个人。
+- 人物、发饰、尾翼、指尖及图标离画边至少10%；不为放道具移动或缩放人物。
+- 支持10秒与具体参数的范围依平台而异。若只能5秒，应按比例改写整条时间线；不要复制原10秒分段后只把时长改成5秒。
+- 不把10秒源片整体硬加速成旧点击动画的1.3秒。应裁出包含蓄力、主动作、收势的完整片段，保证首尾连续。
 
-## 4. 保存视频并查看进度
+图标或手部不稳时先用无叠加图形版。这个版本去掉额外图标和汗珠；归档的两张必要纸卡仍在。先检查人物动作，再补后期效果。
 
-按原动作名保存，建议：
-    video/chibi/deepseek/待机呼吸.mp4
-    video/chibi/deepseek/被鼠标拖拽悬空反馈.mp4
-    video/chibi/gpt/待机呼吸.mp4
-MOV/WebM也支持。原片和中间产物已加入.gitignore，避免大视频误提交。
+## 4. 按上游完成抠像
+
+**上游发布成片采用PR手工抠像；这是复现其干净边缘的重要环节。**
+自动绿幕路线可快速预检，不能用提示词代替抠像修边。
+
+推荐精修流程：
+
+1. 导入源视频，使用抠像工具选择背景绿色，调整边缘、溢色与遮罩。
+2. 检查眼睛、发饰、蕾丝、白裙、尾尖；Kimi彩虹中有绿色，必须用保留遮罩保护，避免一起抠掉。
+3. 道具和特效有绿边时逐段修遮罩；不要扩大抠像阈值导致身体变透明。
+4. 分别在黑、白背景上逐帧看边缘，消除白边/绿边，不要把地板或阴影留进alpha。
+5. 导出真正带alpha的母版，例如ProRes4444 with Alpha的MOV，保留16:9，不烘焙背景。
+6. 从透明母版导入；工具会真实解码alpha验收，扩展名或标签不能证明透明。
+
+平台输出没有水印就无需上游的固定水印遮罩。自动抠像脚本使用软绿幕差值，并非上游HSV脚本的逐行复制；复杂边缘以人工母版为准。
+
+## 5. 保存与导入
+
+正式源片位置：
+
+    video/chibi-v2/deepseek/待机呼吸.mp4
+    video/chibi-v2/deepseek/被鼠标拖拽悬空反馈.mp4
+
+MP4、MOV、WebM均可。原片与中间产物已忽略，不提交Git。v2不自动读取旧video/chibi目录，避免混用人物版本。
+
 ~~~powershell
 python tools/video_pipeline.py plan
 ~~~
-进度清单写到build/video/chibi/plan.json。jobs.json是厂商无关任务清单，不是某家平台的直接API格式。
 
-## 5. 导入、抠像、统一锚点、编码
+进度写到build/video/chibi-v2/plan.json，逐项列出对应v2首帧。
 
-绿幕MP4：
+自动绿幕预检：
+
 ~~~powershell
 python tools/video_pipeline.py import --character deepseek --action "待机呼吸"
 ~~~
-也可显式指定源路径：
-~~~powershell
-python tools/video_pipeline.py import --character deepseek --action "待机呼吸" --input "D:\my-videos\idle.mp4"
-~~~
-人工抠像后导出的透明MOV/VP9-alpha：
+
+精修透明母版：
+
 ~~~powershell
 python tools/video_pipeline.py import --character deepseek --action "待机呼吸" --input "D:\my-videos\idle.mov" --background alpha
 ~~~
 
-工具按逻辑阶段依次执行：解码并统一源尺寸/帧率 → 软绿幕抠像或保留alpha → 固定尺度/水平锚点/足线 → VP9-alpha编码 → 解码验收。
-为减少大中间文件，抠像、归一化和最终编码用管道串联；各阶段记录在report中，不必逐帧落盘。
-输出build/video/chibi/step04/<id>/<原动画名>.webm及report、黑白背景首尾审核图。
-处理不会自动安装或部署到DSH。
+自定义FFmpeg路径放在子命令之前：
 
-几何参数与上游归一化目标一致：2160×1215母版、站立身高900、脚底y=1115，最终640×360、24fps、无音轨。
-源S的身高468、足线612；同一固定变换应用到所有帧。拖拽H的22px升高会保留，不能重新把悬空脚尖贴地。
-不是按每一帧动态包围盒缩放，所以跳跃不会忽大忽小。超出最终画布会报错，不能用放大/裁切掩盖。
+~~~powershell
+python tools/video_pipeline.py --ffmpeg "D:\tools\ffmpeg.exe" import --character deepseek --action "待机呼吸"
+~~~
+
+处理阶段：统一源尺寸1280×720和24fps → 自动抠像或保留alpha → 固定缩放与锚点 → VP9-alpha编码 → 解码验收。
+原始画面必须16:9，工具不会把竖屏强行拉成横屏。
+
+归一化目标跟随上游代码：2160×1215母版、站立身高900、脚底y=1115，最终640×360、24fps、无音轨。
+一条片段使用同一固定变换，禁止每帧按包围盒重新拟合，避免跳跃时忽大忽小。
+悬空H保留姿势导致的身高差与22像素源足线偏移。
+
+结果写到：
+
+    build/video/chibi-v2/step04/<id>/<动作名>.webm
+
+同时生成report及黑白背景首尾审核图。旧build/video/chibi保留，不作为v2输入。
 
 ## 6. 验收
 
 ~~~powershell
 python tools/video_pipeline.py verify --character deepseek --action "待机呼吸"
 ~~~
-程序检查真实解码后的alpha、分辨率、帧率、无音轨、空帧、边缘裁切、首尾位置/尺寸与S/H足线及外观差异。
-文件扩展名、alpha_mode标签或普通播放器的黑底截图都不能单独证明透明成功。
-程序检查通过后仍要人工播放：看五官是否变形，耳角翼尾是否增减，非对称裙装和异色瞳是否镜像，转身是否合理，边缘是否有绿边，以及循环运动是否自然。
-自动检查不等于语义与美术验收。
 
-## 7. 136条齐全后再更新动画包
+自动检查编码/尺寸/帧率/无音轨、真实alpha、空帧、边缘裁切、首尾位置和外观差异、S/H足线与姿势高度。
+失败导入保存为.rejected.webm，不覆盖已经通过的版本。
+
+人工仍须播放确认：
+
+- 缩到约128像素人物高度，脸型、表情和动作仍看得清。
+- 头身比、服装、耳角翼尾数量稳定；编发、异色瞳与非对称裙片不镜像。
+- 手脚是自然的关节运动，发裙稍晚回落，不是把整张PNG缩放/摇摆。
+- 首尾不闪、不跳位、不突然换姿态；连续看三轮循环。
+- 黑白背景边缘均干净，没有绿边或被误抠的彩虹。
+- 跳跃不过高、点击不拖沓、拖拽每轮不落地；必要时重生成。
+
+自动检查不能判断语义、骨骼、美术质量，也不证明视频达到了上游实际效果。
+
+## 7. 全量打包
 
 ~~~powershell
 python tools/video_pipeline.py pack
 ~~~
-必须8×17条全部存在且重新验收通过，才会写入build/video/chibi/plugin/packs。
-保持原文件名和配置，因此切换、工作状态和动作池可继续沿用。缺少视频时直接退出，不生成残缺包。
-确认暂存包后更新仓库内的plugin/packs：
+
+136条齐全并重新验收通过后，才会生成build/video/chibi-v2/plugin/packs。
+文件名与配置引用保持兼容。缺少一条也不会生成残缺发布包。
+
+确认素材后，用现有命令更新仓库插件：
+
 ~~~powershell
 python tools/video_pipeline.py pack --write-plugin
 ~~~
-该命令先备份现有packs与package.json到build/video/chibi/backups，再替换对应136条视频，并递增插件补丁版本，以触发部署版本标记更新。
-它不直接改用户的.dsh目录。然后按现有插件安装方法安装新plugin、重启DSH，检查真实桌面效果。
 
-不要把新视频放进build/webm后又运行旧build_assets.py，它会重新生成旧程序化动画。两条路线使用不同目录。
-旧build_packs.py仍供原路线使用；新路线用video_pipeline.py pack，避免来源混淆。
+工具先备份旧packs及package.json到build/video/chibi-v2/backups，复制136条并递增插件补丁版本以触发部署标记。
+这一步不直接修改本机.dsh。按仓库安装方式安装新plugin后重启DSH，再实际检查桌面行为。
 
-## 8. 睡觉与小憩
+不要把AI视频放到build/webm后运行旧build_assets.py；它会重新生成旧程序动画。
+旧程序路线仍可保留使用，新AI路线统一使用video_pipeline.py。
 
-当前17条中的原地小憩是短打盹，结尾应清醒回S。配置没有真正的睡觉套。
-将来增加右键睡觉时，另做入睡S→P、睡眠循环P→P、醒来P→S，并写入animations.sleep。
-三段沿用同一地面基线、大小和镜头，不能在每个循环末尾站起来。
+## 8. 睡觉不是短打盹
 
-## 9. 本地验证
+原地小憩：S→短盹→S，结尾睁眼。
+真正睡觉：另做入睡S→P、睡眠循环P→P、醒来P→S，三个连接点使用相同姿势与地面线，再增加animations.sleep配置。当前17类没有这组三段。
+
+## 9. 测试与来源
 
 ~~~powershell
 python -m unittest discover -s tests -v
 ~~~
-测试覆盖Q版素材与136条映射完整性、透明白色细节、固定尺度、真实FFmpeg绿幕与alpha导入、失败输入拦截以及不完整素材包阻止发布。
-测试使用短的合成样片，不宣称已经验证尚未生成的136条AI视频或真实DSH安装。
 
-## 上游依据
-
-- [完整从零流程](https://github.com/PC2005-cloud/dsh-pet/blob/main/MAKE-YOUR-OWN-PET.md)
-- [角色包配置](https://github.com/PC2005-cloud/dsh-pet/blob/main/CONFIG.md)
-- [尺度归一化实现](https://github.com/PC2005-cloud/dsh-pet/blob/main/scripts/normalize_step03.py)
-- [实际640×360编码实现](https://github.com/PC2005-cloud/dsh-pet/blob/main/scripts/encode_thumbs.py)
-
-原角色与素材署名继续见[NOTICE.md](../NOTICE.md)。Q版为依据原角色的AI辅助二创，保留原有素材授权说明。
+测试使用实际FFmpeg编码/解码短合成视频检查导入，不等于验证136条尚未生成的AI视频或本机DSH运行。
+[v2修订与上游对照](CHIBI-V2-REVISION.md) · [素材来源](../reference/chibi-v2/sources.md) · [署名与授权](../NOTICE.md)。

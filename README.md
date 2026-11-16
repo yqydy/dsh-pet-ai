@@ -1,21 +1,27 @@
 # AI 娘桌宠 · dsh-pet-ai-girls
 
-## Q版素材与AI视频制作（2026-11-08）
+## 两头身Q版重绘与动画提示词v2（2026-11-17）
 
-已制作 **8个角色的单人透明Q版立绘、正侧背三视图和16张绿幕首帧**，并保存 **136条逐角色动作提示词**。
-后续你只需用视频模型生成动作，再通过新工具导入、抠像、归一化、验收和打包。
+按用户上传的小桌宠参考，重新绘制8个角色为**约2头身、短手短脚、柔和手绘线条**；每人有正侧背与独立悬空姿势。
+136条动作提示词对照[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)实际配方重写，保留当前17类配置映射。
 
-![8角色Q版定稿](docs/screenshots/chibi-all8.png)
+![8角色两头身v2](docs/screenshots/chibi-v2-all8.png)
 
-- [从零制作与视频导入指南](docs/MAKE-CHIBI-PET.md)
-- [每个角色的17条完整提示词](prompts/chibi/README.md)
-- [136条结构化生成任务](prompts/chibi/jobs.json)
-- [Q版立绘、三视图、视频首帧](reference/chibi/)
-- [全部136条提示词合集](prompts/chibi/ALL-PROMPTS.md)
+![相同显示高度对照](docs/screenshots/chibi-v2-comparison.png)
 
-当前发布在plugin/packs内的136条动画仍是原程序化版本；新的Q版AI动作视频等待生成后再导入。
-Q版素材独立保存，原始参考图保留，角色切换和现有插件不受影响。
+- [重绘说明、上游逐项对照与样片使用顺序](docs/CHIBI-V2-REVISION.md)
+- [每角色17条优化提示词](prompts/chibi/README.md)：精简投喂版、详细分镜版、无附加图形版；按需选一版
+- [136条结构化任务](prompts/chibi/jobs.json)与[完整合集](prompts/chibi/ALL-PROMPTS.md)
+- [v2立绘、三视图、悬空姿势与绿幕首帧](reference/chibi-v2/)
+- [从生成视频到精修抠像、归一化、验收与打包](docs/MAKE-CHIBI-PET.md)
+- [128像素高度效果预览](docs/screenshots/chibi-v2-small.png)
 
+**图片已生成，AI动作视频尚待生成。** 当前plugin/packs仍为旧程序动画；不能通过替换静态图就变成新动画。
+新任务只用reference/chibi-v2，原片保存video/chibi-v2；v1图保留在reference/chibi，v1提示词可从提交0864d33还原。
+
+上游成片使用PR手工抠像；要接近其透明边缘，应按指南精修后导入带alpha母版。提示词已优化，但尚未使用视频模型验证实际样片效果。
+
+下面是原有插件与程序动画的说明，AI视频路线见上面的v2指南。
 
 把 [GenderSwapAI · AI 拟人角色图鉴](https://genderswapai.com/zh-TW/ai-gijinka) 里 8 位 AI 娘的立绘，做成了
 **dsh-pet 透明动画桌面宠物**，并打包成一个可安装的 DSH 插件。

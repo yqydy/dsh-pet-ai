@@ -1,0 +1,178 @@
+{
+  "schema_version": 2,
+  "style_version": "two-head-v2",
+  "characters": {
+    "deepseek": {
+      "name": "DeepSeek 娘",
+      "source": "reference/chibi-v2/sheets/deepseek.png",
+      "source_sha256": "4b9da1c8b7a1c838b4d3b59e5e95064568785886cbb11070e3c1df503ce2d580",
+      "portrait": "reference/chibi-v2/portraits/deepseek.png",
+      "views": {
+        "front": "reference/chibi-v2/views/deepseek-front.png",
+        "side": "reference/chibi-v2/views/deepseek-side.png",
+        "back": "reference/chibi-v2/views/deepseek-back.png",
+        "drag": "reference/chibi-v2/views/deepseek-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/deepseek.png",
+      "standing_reference": "reference/chibi-v2/firstframes/deepseek.png",
+      "drag_reference": "reference/chibi-v2/firstframes/deepseek-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 449,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "gpt": {
+      "name": "GPT 娘",
+      "source": "reference/chibi-v2/sheets/gpt.png",
+      "source_sha256": "80fcd1433e373ef57d425ea214704eec118552cf8bcb6bf6cb5d2a44b81e20fc",
+      "portrait": "reference/chibi-v2/portraits/gpt.png",
+      "views": {
+        "front": "reference/chibi-v2/views/gpt-front.png",
+        "side": "reference/chibi-v2/views/gpt-side.png",
+        "back": "reference/chibi-v2/views/gpt-back.png",
+        "drag": "reference/chibi-v2/views/gpt-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/gpt.png",
+      "standing_reference": "reference/chibi-v2/firstframes/gpt.png",
+      "drag_reference": "reference/chibi-v2/firstframes/gpt-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 447,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "claude": {
+      "name": "Claude 娘",
+      "source": "reference/chibi-v2/sheets/claude.png",
+      "source_sha256": "3805f415d7b460ed00bf6789ace772d463a454fdb85c126c2b0a718b73413e27",
+      "portrait": "reference/chibi-v2/portraits/claude.png",
+      "views": {
+        "front": "reference/chibi-v2/views/claude-front.png",
+        "side": "reference/chibi-v2/views/claude-side.png",
+        "back": "reference/chibi-v2/views/claude-back.png",
+        "drag": "reference/chibi-v2/views/claude-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/claude.png",
+      "standing_reference": "reference/chibi-v2/firstframes/claude.png",
+      "drag_reference": "reference/chibi-v2/firstframes/claude-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 455,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "grok": {
+      "name": "Grok 娘",
+      "source": "reference/chibi-v2/sheets/grok.png",
+      "source_sha256": "196c66af642ebba8e06a36bb70dd8e84ea8ade29bd6d1e93351dafc49a9f240a",
+      "portrait": "reference/chibi-v2/portraits/grok.png",
+      "views": {
+        "front": "reference/chibi-v2/views/grok-front.png",
+        "side": "reference/chibi-v2/views/grok-side.png",
+        "back": "reference/chibi-v2/views/grok-back.png",
+        "drag": "reference/chibi-v2/views/grok-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/grok.png",
+      "standing_reference": "reference/chibi-v2/firstframes/grok.png",
+      "drag_reference": "reference/chibi-v2/firstframes/grok-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 454,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "gemini": {
+      "name": "Gemini 娘",
+      "source": "reference/chibi-v2/sheets/gemini.png",
+      "source_sha256": "f299b31e48ef220bbab03dac0987ed54e1717249e890154f56ce4ded3c135e35",
+      "portrait": "reference/chibi-v2/portraits/gemini.png",
+      "views": {
+        "front": "reference/chibi-v2/views/gemini-front.png",
+        "side": "reference/chibi-v2/views/gemini-side.png",
+        "back": "reference/chibi-v2/views/gemini-back.png",
+        "drag": "reference/chibi-v2/views/gemini-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/gemini.png",
+      "standing_reference": "reference/chibi-v2/firstframes/gemini.png",
+      "drag_reference": "reference/chibi-v2/firstframes/gemini-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 459,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "kimi": {
+      "name": "Kimi 娘",
+      "source": "reference/chibi-v2/sheets/kimi.png",
+      "source_sha256": "f3cba71f0001a8830df309d1848e2741e84bff2446348c813bc917d2ca07bbca",
+      "portrait": "reference/chibi-v2/portraits/kimi.png",
+      "views": {
+        "front": "reference/chibi-v2/views/kimi-front.png",
+        "side": "reference/chibi-v2/views/kimi-side.png",
+        "back": "reference/chibi-v2/views/kimi-back.png",
+        "drag": "reference/chibi-v2/views/kimi-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/kimi.png",
+      "standing_reference": "reference/chibi-v2/firstframes/kimi.png",
+      "drag_reference": "reference/chibi-v2/firstframes/kimi-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 457,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "glm": {
+      "name": "GLM 娘",
+      "source": "reference/chibi-v2/sheets/glm.png",
+      "source_sha256": "565a4378264d41f7f3c173178fb4c3478371352cddc3259408d3782dcc60d13a",
+      "portrait": "reference/chibi-v2/portraits/glm.png",
+      "views": {
+        "front": "reference/chibi-v2/views/glm-front.png",
+        "side": "reference/chibi-v2/views/glm-side.png",
+        "back": "reference/chibi-v2/views/glm-back.png",
+        "drag": "reference/chibi-v2/views/glm-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/glm.png",
+      "standing_reference": "reference/chibi-v2/firstframes/glm.png",
+      "drag_reference": "reference/chibi-v2/firstframes/glm-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 460,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    },
+    "qwen": {
+      "name": "Qwen 娘",
+      "source": "reference/chibi-v2/sheets/qwen.png",
+      "source_sha256": "bea45afb7db2d5d503a0d1e92d1a8141bbc7a84bd0d5194ba52de532f862ff4f",
+      "portrait": "reference/chibi-v2/portraits/qwen.png",
+      "views": {
+        "front": "reference/chibi-v2/views/qwen-front.png",
+        "side": "reference/chibi-v2/views/qwen-side.png",
+        "back": "reference/chibi-v2/views/qwen-back.png",
+        "drag": "reference/chibi-v2/views/qwen-drag.png"
+      },
+      "turnaround": "reference/chibi-v2/turnarounds/qwen.png",
+      "standing_reference": "reference/chibi-v2/firstframes/qwen.png",
+      "drag_reference": "reference/chibi-v2/firstframes/qwen-drag.png",
+      "drag_pose_origin": "independently_drawn_fourth_pose",
+      "standing_source_height": 468,
+      "drag_source_height": 456,
+      "drag_scale": "same pixel scale as standing source; no independent height fit"
+    }
+  },
+  "geometry": {
+    "source_size": [
+      1280,
+      720
+    ],
+    "standing_height": 468,
+    "standing_feet_y": 612,
+    "drag_offset_y": 22,
+    "output_size": [
+      640,
+      360
+    ],
+    "fps": 24,
+    "normalised_master": [
+      2160,
+      1215
+    ],
+    "normalised_character_height": 900,
+    "normalised_feet_y": 1115
+  }
+}
