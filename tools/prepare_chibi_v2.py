@@ -92,7 +92,8 @@ def overview():
 def main():
     for d in ("portraits", "views", "firstframes", "turnarounds"):
         (ART/d).mkdir(parents=True, exist_ok=True)
-    manifest = {"schema_version":2, "style_version":"two-head-v2", "characters":{}}
+    generation = json.loads((ART / "image-generation.json").read_text(encoding="utf-8"))
+    manifest = {"schema_version":2, "style_version":generation.get("style_version","two-head-v2"), "characters":{}}
     for char in spec.CHARACTERS:
         cid = char["id"]
         source = ART / "sheets" / (cid + ".png")
@@ -119,7 +120,8 @@ def main():
         triptych = ART / "turnarounds" / (cid+".png")
         turnaround.save(triptych)
         manifest["characters"][cid] = {
-            "name":char["name"],"source":source.relative_to(ROOT).as_posix(),
+             "name":char["name"],"expression":generation["characters"][cid].get("expression",""),
+            "source":source.relative_to(ROOT).as_posix(),
             "source_sha256":digest(source),"portrait":portrait.relative_to(ROOT).as_posix(),
             "views":entries,"turnaround":triptych.relative_to(ROOT).as_posix(),
             "standing_reference":"reference/chibi-v2/firstframes/"+cid+".png",

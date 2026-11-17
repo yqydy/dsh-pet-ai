@@ -43,9 +43,10 @@ def make_prompt(char,recipe,action,clean=False,detailed=False):
                     "头顶图形仅放画高12%–18%、宽45%–55%的空隙，尺寸不超过画高3%，不遮发饰。"
                     if "汗" not in effect else "只在额边添加一滴小蓝汗珠：第3秒渐显，第5秒前滑落一点并淡去，不生成乌云或红叉。")
     prefix="《"+char["name"]+" / "+action["name"]+"》\n"
-    text=prefix+recipe["STYLE"]+"\n角色："+recipe["DESIGNS"][cid]+"\n"+common+"\n"+endpoint+"\n"
+    face = recipe["DRAG_EXPRESSIONS"][cid] if hanging else recipe["EXPRESSIONS"][cid]
+    text=prefix+recipe["STYLE"]+"\n角色："+recipe["DESIGNS"][cid]+"\n日常神态："+face+"（动作表情优先）。\n"+common+"\n"+endpoint+"\n"
     text+="动作："+summary+"\n时间分段："+(" ".join(timeline))+"\n"+effect_text+"\n"
-    text+="次级动作："+recipe["SECONDARY"][cid]
+    text+="次级动作："+recipe["SECONDARY"][cid]+"\n表情演变："+action["face_acting"]
     if detailed:
         text+="\n验收重点："+action["check"]+"\n逐段核对：\n"+"\n".join("- "+step for step in timeline)
         text+="\n以双脚中点为固定根节点，手、肘、肩、膝真实弯曲，发梢裙摆稍晚回落；不把整张静态PNG当纸片晃动。"
@@ -57,11 +58,12 @@ def main():
     actions=recipe["ACTIONS"]
     if [a["name"] for a in actions]!=spec.ANIM_NAMES:
         raise ValueError("Recipe action order differs from spec")
-    overview=["# 两头身桌宠：136条优化动作提示词（v2）\n",
+    overview=["# 两头身桌宠：136条优化动作提示词（v2.1神态修订）\n",
       "先用对应角色的**单人绿幕首帧**图生视频。默认10秒、16:9、固定镜头；支持首尾帧时，两端上传同一张S（站姿）或H（悬空）。",
       "每条先复制「精简投喂版」；「详细分镜版」是替代稿，二选一。图形画不好时用「无叠加图形版」，后期再加图标，归档保留必要纸卡。",
       "三视图仅作外观辅助；不要把三人/四姿势图直接当首帧，否则容易生成多个人。只有转圈必须加三视图。",
       "第一轮先做DeepSeek的待机、挥手、跳跃、忙碌点按、悬空5条，通过后再扩展其余角色。建议先做没有转身的动作。",
+      "日常首帧是清醒、有焦点且各具神态的；眉眼口型可随动作变化，外观锁定不等于冻结表情。小憩/发呆中段允许指定的困倦或放空。",
       "上游并非只靠提示词：其成片使用PR手工抠像，再统一大小/足线并编码。提示词无法保证消除绿边或让任意模型逐帧复现。",
       "\n[重绘与上游对照](../../docs/CHIBI-V2-REVISION.md) · [制作与导入](../../docs/MAKE-CHIBI-PET.md)\n",
       "|角色|17条优化提示词|S|H|三视图|",
@@ -79,6 +81,7 @@ def main():
         overview.append("|"+char["name"]+"|[打开](roles/"+cid+".md)|[PNG](../../"+refs["standing_reference"]+")|[PNG](../../"+refs["drag_reference"]+")|[PNG](../../"+refs["turnaround"]+")|")
         sections=["# "+char["name"]+"：两头身v2动作提示词\n",
             "角色识别："+recipe["DESIGNS"][cid]+"\n",
+            "日常神态："+recipe["EXPRESSIONS"][cid]+"动作中以表情演变为准。\n",
             "[站立首帧S](../../../"+refs["standing_reference"]+") · [悬空首帧H](../../../"+refs["drag_reference"]+") · [三视图](../../../"+refs["turnaround"]+")\n",
             "设置：图生视频，10秒，16:9。支持首尾控制时上传同一S或H；单首帧平台需后期检查回位。复制精简版即可，不与详细版叠加。",
             "主动画做好后再补图标。源片不机械加速到旧程序动画时长；按动作实际节奏剪出完整闭环。\n"]
@@ -99,7 +102,7 @@ def main():
                 "loop_metadata":loop,"config_fields":fields,"endpoint_mode":action["endpoint_mode"],
                 "upstream_heading":action["upstream_heading"],"upstream_source":source_base,
                 "upstream_commit":recipe["upstream"]["commit"],
-                "status":"awaiting_video_generation","prompt":prompt,"negative_prompt":recipe["NEG"],
+                "status":"awaiting_video_generation","expression_reference":recipe["EXPRESSIONS"][cid],"facial_acting":action["face_acting"],"prompt":prompt,"negative_prompt":recipe["NEG"],
                 "storyboard_prompt":detailed,"clean_prompt":clean,"timeline":action["timeline"],
                 "review_focus":action["check"]}
             jobs.append(job)
@@ -118,7 +121,7 @@ def main():
         raise ValueError("Expected 136 unique jobs")
     (DEST/"README.md").write_text("\n\n".join(overview)+"\n\nQ版AI动作视频尚待生成；当前plugin/packs是旧程序动画。v1图片在reference/chibi保留，新任务只使用reference/chibi-v2。\n",encoding="utf-8")
     (DEST/"ALL-PROMPTS.md").write_text("\n".join(all_docs),encoding="utf-8")
-    data={"schema_version":2,"style_version":"two-head-v2","reference_status":"prepared",
+    data={"schema_version":2,"style_version":manifest["style_version"],"reference_status":"prepared",
           "video_status":"awaiting_video_generation","upstream":recipe["upstream"],"jobs":jobs}
     (DEST/"jobs.json").write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     with (DEST/"config-mapping.csv").open("w",encoding="utf-8-sig",newline="") as f:

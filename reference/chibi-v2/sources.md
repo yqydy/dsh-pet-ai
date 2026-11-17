@@ -12,3 +12,8 @@
 
 实际图像生成提示词、身份参考相对路径及SHA256见image-generation.json。每角色四姿势原图的SHA256也记录在manifest.json。
 程序没有生成AI动作视频；新图只供后续图生视频使用。原图作者/授权如有进一步资料，应补充本文件及NOTICE，不把不明来源图片宣称为自行原创。
+
+## v2.1眉眼修订（2026-11-17）
+
+当前sheets是以旧v2四姿势源图为唯一编辑参考，使用内置imagegen修改眉眼口型所得。旧源图与原配方已迁入archive/2026-11-17-half-lidded，作为历史资料，不再用于当前视频首帧。
+实际编辑提示词、输入相对路径和新图SHA256见当前image-generation.json；manifest.json中的expression为每人神态说明。
