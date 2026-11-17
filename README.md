@@ -1,8 +1,12 @@
 # AI 娘桌宠 · dsh-pet-ai-girls
 
-## 两头身Q版重绘与动画提示词v2.1（2026-11-17）
+## 当前入口：v2.1角色图 + Seedance动作v3（2026-11-17）
 
-当前为v2.1神态修订：八个角色使用清醒、有焦点且各具性格的眉眼，已同步单人首帧和136条动作表情提示。[修改前后对照](docs/screenshots/chibi-v2-eyes-before-after.png)。
+角色图沿用v2.1清醒眉眼；动作提示词已按用户所用豆包Seedance 2.0 Flash及「幅度过小」反馈重做为v3。
+
+**先做[挥手、跳跃、点按三条试样](prompts/chibi-v3/PILOT-DEEPSEEK.md)**，再使用[八角色136条双模式提示词](prompts/chibi-v3/README.md)。已备好[17段官方动作MP4](reference/motion-dsh-pet/README.md)，有视频参考入口时可同时上传角色图与动作片段。
+
+[角色眉眼修改前后](docs/screenshots/chibi-v2-eyes-before-after.png) · [本轮动作诊断与使用指南](docs/SEEDANCE-V3-ACTIONS.md)。
 
 按用户上传的小桌宠参考，重新绘制8个角色为**约2头身、短手短脚、柔和手绘线条**；每人有正侧背与独立悬空姿势。
 136条动作提示词对照[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)实际配方重写，保留当前17类配置映射。
@@ -12,8 +16,8 @@
 ![相同显示高度对照](docs/screenshots/chibi-v2-comparison.png)
 
 - [重绘说明、上游逐项对照与样片使用顺序](docs/CHIBI-V2-REVISION.md)
-- [每角色17条优化提示词](prompts/chibi/README.md)：精简投喂版、详细分镜版、无附加图形版；按需选一版
-- [136条结构化任务](prompts/chibi/jobs.json)与[完整合集](prompts/chibi/ALL-PROMPTS.md)
+- [每角色17条Seedance v3提示词](prompts/chibi-v3/README.md)：仅图片、图片＋动作视频两种入口各选一版
+- [136条结构化任务](prompts/chibi-v3/jobs.json)与[完整合集](prompts/chibi-v3/ALL-PROMPTS.md)
 - [v2立绘、三视图、悬空姿势与绿幕首帧](reference/chibi-v2/)
 - [从生成视频到精修抠像、归一化、验收与打包](docs/MAKE-CHIBI-PET.md)
 - [128像素高度效果预览](docs/screenshots/chibi-v2-small.png)

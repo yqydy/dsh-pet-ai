@@ -34,3 +34,9 @@ reference/chibi/为基于上述原角色及三视图、使用内置imagegen制�
 reference/chibi-v2/基于既有角色及用户上传风格参考，使用内置imagegen重绘。实际生成与修订提示词见reference/chibi-v2/image-generation.json，来源与用途见reference/chibi-v2/sources.md。原角色署名和衍生素材限制继续沿用上述说明。用户风格参考的原作者未核实，不将该原图声明为本项目原创。
 
 动作提示词按[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)的实际配方分析、改写；版本与逐项适配见docs/CHIBI-V2-REVISION.md。v2只交付静态参考图与视频生成配方，新AI动作视频仍待生成。
+
+
+## 上游动作参考MP4（2026-11-17）
+
+reference/motion-dsh-pet/clips中的17段视频取自[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)的官方WebM，仅解码、合成浅灰底及转码；拖拽片截取其中的悬空部分。它们用于动作参考，并非本项目八角色新生成成片。
+上游作者链接、固定版本、原始路径与校验记录在该目录sources.json和manifest.json。原角色作者署名及素材授权限制继续沿用上述NOTICE；转换格式不改变授权。

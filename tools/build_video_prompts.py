@@ -131,4 +131,12 @@ def main():
     print("Prepared",len(jobs),"v2 jobs; compact prompt max",max(len(j["prompt"]) for j in jobs),"characters")
 
 if __name__=="__main__":
-    main()
+    import argparse
+    parser=argparse.ArgumentParser(description="Build current Seedance v3 prompts, or explicitly reproduce legacy v2.")
+    parser.add_argument("--legacy-v2",action="store_true",help="Rebuild the historical v2.1 prompt set")
+    args=parser.parse_args()
+    if args.legacy_v2:
+        main()
+    else:
+        from build_seedance_prompts import main as current_main
+        current_main()

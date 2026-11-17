@@ -5098,5 +5098,7 @@
       ],
       "review_focus": "伸展靠关节，不让头身比伸长；角、耳朵和指尖不碰画边。"
     }
-  ]
+  ],
+  "prompt_status": "legacy_v2_1",
+  "superseded_by": "../chibi-v3/jobs.json"
 }

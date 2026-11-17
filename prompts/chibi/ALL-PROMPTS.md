@@ -1,3 +1,5 @@
+> 历史v2.1稿。针对用户Seedance动作幅度反馈，当前请用[v3提示词](../chibi-v3/ALL-PROMPTS.md)。
+
 # 136条两头身桌宠动作提示词 v2
 
 # DeepSeek 娘：两头身v2动作提示词

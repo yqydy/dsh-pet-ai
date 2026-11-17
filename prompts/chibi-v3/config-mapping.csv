@@ -1,0 +1,137 @@
+﻿character_id,animation_name,config_fields,reference_image,motion_reference,source_video
+deepseek,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/deepseek/待机呼吸.mp4
+deepseek,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/deepseek/原地漂浮.mp4
+deepseek,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/deepseek/原地小憩.mp4
+deepseek,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/deepseek/东张西望.mp4
+deepseek,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/deepseek-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/deepseek/被鼠标拖拽悬空反馈.mp4
+deepseek,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/deepseek/点击回应-开心跃动.mp4
+deepseek,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/deepseek/点击回应-害羞惊讶.mp4
+deepseek,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/deepseek/点击回应-元气挥手.mp4
+deepseek,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/deepseek/碎碎念-发呆碎碎念.mp4
+deepseek,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/deepseek/工作状态-思考冒泡.mp4
+deepseek,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/deepseek/工作状态-忙碌点按.mp4
+deepseek,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/deepseek/工作状态-清点归档.mp4
+deepseek,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/deepseek/工作状态-原地踱步张望.mp4
+deepseek,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/deepseek/工作状态-雀跃庆祝.mp4
+deepseek,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/deepseek/工作状态-垂头叹气冒汗.mp4
+deepseek,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/deepseek/转圈展示.mp4
+deepseek,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/deepseek.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/deepseek/伸懒腰.mp4
+gpt,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/gpt/待机呼吸.mp4
+gpt,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/gpt/原地漂浮.mp4
+gpt,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/gpt/原地小憩.mp4
+gpt,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/gpt/东张西望.mp4
+gpt,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/gpt-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/gpt/被鼠标拖拽悬空反馈.mp4
+gpt,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/gpt/点击回应-开心跃动.mp4
+gpt,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/gpt/点击回应-害羞惊讶.mp4
+gpt,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/gpt/点击回应-元气挥手.mp4
+gpt,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/gpt/碎碎念-发呆碎碎念.mp4
+gpt,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/gpt/工作状态-思考冒泡.mp4
+gpt,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/gpt/工作状态-忙碌点按.mp4
+gpt,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/gpt/工作状态-清点归档.mp4
+gpt,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/gpt/工作状态-原地踱步张望.mp4
+gpt,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/gpt/工作状态-雀跃庆祝.mp4
+gpt,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/gpt/工作状态-垂头叹气冒汗.mp4
+gpt,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/gpt/转圈展示.mp4
+gpt,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/gpt.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/gpt/伸懒腰.mp4
+claude,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/claude/待机呼吸.mp4
+claude,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/claude/原地漂浮.mp4
+claude,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/claude/原地小憩.mp4
+claude,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/claude/东张西望.mp4
+claude,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/claude-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/claude/被鼠标拖拽悬空反馈.mp4
+claude,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/claude/点击回应-开心跃动.mp4
+claude,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/claude/点击回应-害羞惊讶.mp4
+claude,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/claude/点击回应-元气挥手.mp4
+claude,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/claude/碎碎念-发呆碎碎念.mp4
+claude,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/claude/工作状态-思考冒泡.mp4
+claude,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/claude/工作状态-忙碌点按.mp4
+claude,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/claude/工作状态-清点归档.mp4
+claude,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/claude/工作状态-原地踱步张望.mp4
+claude,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/claude/工作状态-雀跃庆祝.mp4
+claude,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/claude/工作状态-垂头叹气冒汗.mp4
+claude,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/claude/转圈展示.mp4
+claude,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/claude.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/claude/伸懒腰.mp4
+grok,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/grok/待机呼吸.mp4
+grok,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/grok/原地漂浮.mp4
+grok,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/grok/原地小憩.mp4
+grok,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/grok/东张西望.mp4
+grok,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/grok-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/grok/被鼠标拖拽悬空反馈.mp4
+grok,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/grok/点击回应-开心跃动.mp4
+grok,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/grok/点击回应-害羞惊讶.mp4
+grok,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/grok/点击回应-元气挥手.mp4
+grok,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/grok/碎碎念-发呆碎碎念.mp4
+grok,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/grok/工作状态-思考冒泡.mp4
+grok,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/grok/工作状态-忙碌点按.mp4
+grok,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/grok/工作状态-清点归档.mp4
+grok,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/grok/工作状态-原地踱步张望.mp4
+grok,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/grok/工作状态-雀跃庆祝.mp4
+grok,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/grok/工作状态-垂头叹气冒汗.mp4
+grok,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/grok/转圈展示.mp4
+grok,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/grok.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/grok/伸懒腰.mp4
+gemini,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/gemini/待机呼吸.mp4
+gemini,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/gemini/原地漂浮.mp4
+gemini,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/gemini/原地小憩.mp4
+gemini,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/gemini/东张西望.mp4
+gemini,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/gemini-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/gemini/被鼠标拖拽悬空反馈.mp4
+gemini,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/gemini/点击回应-开心跃动.mp4
+gemini,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/gemini/点击回应-害羞惊讶.mp4
+gemini,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/gemini/点击回应-元气挥手.mp4
+gemini,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/gemini/碎碎念-发呆碎碎念.mp4
+gemini,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/gemini/工作状态-思考冒泡.mp4
+gemini,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/gemini/工作状态-忙碌点按.mp4
+gemini,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/gemini/工作状态-清点归档.mp4
+gemini,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/gemini/工作状态-原地踱步张望.mp4
+gemini,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/gemini/工作状态-雀跃庆祝.mp4
+gemini,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/gemini/工作状态-垂头叹气冒汗.mp4
+gemini,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/gemini/转圈展示.mp4
+gemini,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/gemini.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/gemini/伸懒腰.mp4
+kimi,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/kimi/待机呼吸.mp4
+kimi,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/kimi/原地漂浮.mp4
+kimi,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/kimi/原地小憩.mp4
+kimi,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/kimi/东张西望.mp4
+kimi,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/kimi-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/kimi/被鼠标拖拽悬空反馈.mp4
+kimi,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/kimi/点击回应-开心跃动.mp4
+kimi,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/kimi/点击回应-害羞惊讶.mp4
+kimi,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/kimi/点击回应-元气挥手.mp4
+kimi,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/kimi/碎碎念-发呆碎碎念.mp4
+kimi,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/kimi/工作状态-思考冒泡.mp4
+kimi,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/kimi/工作状态-忙碌点按.mp4
+kimi,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/kimi/工作状态-清点归档.mp4
+kimi,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/kimi/工作状态-原地踱步张望.mp4
+kimi,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/kimi/工作状态-雀跃庆祝.mp4
+kimi,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/kimi/工作状态-垂头叹气冒汗.mp4
+kimi,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/kimi/转圈展示.mp4
+kimi,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/kimi.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/kimi/伸懒腰.mp4
+glm,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/glm/待机呼吸.mp4
+glm,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/glm/原地漂浮.mp4
+glm,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/glm/原地小憩.mp4
+glm,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/glm/东张西望.mp4
+glm,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/glm-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/glm/被鼠标拖拽悬空反馈.mp4
+glm,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/glm/点击回应-开心跃动.mp4
+glm,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/glm/点击回应-害羞惊讶.mp4
+glm,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/glm/点击回应-元气挥手.mp4
+glm,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/glm/碎碎念-发呆碎碎念.mp4
+glm,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/glm/工作状态-思考冒泡.mp4
+glm,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/glm/工作状态-忙碌点按.mp4
+glm,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/glm/工作状态-清点归档.mp4
+glm,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/glm/工作状态-原地踱步张望.mp4
+glm,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/glm/工作状态-雀跃庆祝.mp4
+glm,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/glm/工作状态-垂头叹气冒汗.mp4
+glm,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/glm/转圈展示.mp4
+glm,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/glm.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/glm/伸懒腰.mp4
+qwen,待机呼吸,animations.idle[0]; animations.events.balance[0],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/idle.mp4,video/chibi-v2/qwen/待机呼吸.mp4
+qwen,原地漂浮,animations.idle[1]; animations.events.balance[1],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/step.mp4,video/chibi-v2/qwen/原地漂浮.mp4
+qwen,原地小憩,animations.idle[2]; animations.events.balance[2],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/nap.mp4,video/chibi-v2/qwen/原地小憩.mp4
+qwen,东张西望,animations.turn[0]; animations.categories[0].actions[1],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/look.mp4,video/chibi-v2/qwen/东张西望.mp4
+qwen,被鼠标拖拽悬空反馈,animations.drag[0],reference/chibi-v2/firstframes/qwen-drag.png,reference/motion-dsh-pet/clips/drag.mp4,video/chibi-v2/qwen/被鼠标拖拽悬空反馈.mp4
+qwen,点击回应-开心跃动,animations.clicks[0]; animations.events.balance[3],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/jump.mp4,video/chibi-v2/qwen/点击回应-开心跃动.mp4
+qwen,点击回应-害羞惊讶,animations.clicks[1]; animations.events.balance[4],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/shy.mp4,video/chibi-v2/qwen/点击回应-害羞惊讶.mp4
+qwen,点击回应-元气挥手,animations.clicks[2]; animations.events.balance[5],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/wave.mp4,video/chibi-v2/qwen/点击回应-元气挥手.mp4
+qwen,碎碎念-发呆碎碎念,animations.events.whisper[0],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/whisper.mp4,video/chibi-v2/qwen/碎碎念-发呆碎碎念.mp4
+qwen,工作状态-思考冒泡,animations.events.workStatus[0],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/thinking.mp4,video/chibi-v2/qwen/工作状态-思考冒泡.mp4
+qwen,工作状态-忙碌点按,animations.events.workStatus[1],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/typing.mp4,video/chibi-v2/qwen/工作状态-忙碌点按.mp4
+qwen,工作状态-清点归档,animations.events.workStatus[2],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/archive.mp4,video/chibi-v2/qwen/工作状态-清点归档.mp4
+qwen,工作状态-原地踱步张望,animations.events.workStatus[3],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/waiting.mp4,video/chibi-v2/qwen/工作状态-原地踱步张望.mp4
+qwen,工作状态-雀跃庆祝,animations.events.workStatus[4],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/celebrate.mp4,video/chibi-v2/qwen/工作状态-雀跃庆祝.mp4
+qwen,工作状态-垂头叹气冒汗,animations.events.workStatus[5],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/error.mp4,video/chibi-v2/qwen/工作状态-垂头叹气冒汗.mp4
+qwen,转圈展示,animations.clicks[3]; animations.categories[0].actions[0],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/turn.mp4,video/chibi-v2/qwen/转圈展示.mp4
+qwen,伸懒腰,animations.categories[0].actions[2],reference/chibi-v2/firstframes/qwen.png,reference/motion-dsh-pet/clips/stretch.mp4,video/chibi-v2/qwen/伸懒腰.mp4
