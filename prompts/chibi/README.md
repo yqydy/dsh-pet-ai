@@ -39,4 +39,4 @@
 
 |Qwen 娘|[打开](roles/qwen.md)|[PNG](../../reference/chibi-v2/firstframes/qwen.png)|[PNG](../../reference/chibi-v2/firstframes/qwen-drag.png)|[PNG](../../reference/chibi-v2/turnarounds/qwen.png)|
 
-Q版AI动作视频尚待生成；当前plugin/packs是旧程序动画。v1图片在reference/chibi保留，新任务只使用reference/chibi-v2。
+当前首帧及动作索引见 [Seedance 配方](../chibi-v3/README.md)，旧 Q 版源图见 Git 历史。

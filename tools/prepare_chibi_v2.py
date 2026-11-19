@@ -73,21 +73,6 @@ def overview():
     screenshots = ROOT / "docs/screenshots"
     sheet.save(screenshots / "chibi-v2-all8.png")
     small.save(screenshots / "chibi-v2-small.png")
-    # Comparison at the same actual silhouette height, never stretched.
-    compare = Image.new("RGB", (600, 240), (255,255,255))
-    for i, path in enumerate((ART / "style-target.png", ROOT / "reference/chibi/portraits/deepseek.png", ART / "portraits/deepseek.png")):
-        pic = Image.open(path).convert("RGBA")
-        if i == 0:
-            a = np.array(pic)
-            ink = (np.min(a[:,:,:3],axis=2)<235)&(a[:,:,3]>16)
-            yy,xx=np.nonzero(ink)
-            pic = pic.crop((xx.min(),yy.min(),xx.max()+1,yy.max()+1))
-        else:
-            pic = pic.crop(bbox(pic))
-        pic = pic.resize((round(pic.width*140/pic.height),140),Image.LANCZOS)
-        compare.paste(pic,(i*200+(200-pic.width)//2,25),pic)
-        ImageDraw.Draw(compare).text((i*200+62,190),("target","v1","v2")[i],font=font,fill=(40,44,62))
-    compare.save(screenshots / "chibi-v2-comparison.png")
 
 def main():
     for d in ("portraits", "views", "firstframes", "turnarounds"):
@@ -96,8 +81,16 @@ def main():
     manifest = {"schema_version":2, "style_version":generation.get("style_version","two-head-v2"), "characters":{}}
     for char in spec.CHARACTERS:
         cid = char["id"]
+        character = generation["characters"][cid]
         source = ART / "sheets" / (cid + ".png")
-        front, side, back, hanging = split_four(source)
+        sheet_front, side, back, hanging = split_four(source)
+        front_source = ROOT / character.get("front_source", source.relative_to(ROOT))
+        front = sheet_front
+        if front_source != source:
+            with Image.open(front_source) as approved:
+                front = approved.convert("RGBA")
+            if front.getchannel("A").getextrema() != (0, 255):
+                raise ValueError("Expected transparent approved front: " + str(front_source))
         entries = {}
         for name,crop in (("front",front),("side",side),("back",back),("drag",hanging)):
             target = ART / "views" / (cid+"-"+name+".png")
@@ -106,22 +99,25 @@ def main():
         portrait = ART / "portraits" / (cid+".png")
         place(front,(1200,1200),1000,1100).save(portrait)
         # The drag pose uses the standing SOURCE scale, not a fresh bounding-box fit.
-        front_height = bbox(front)[3]-bbox(front)[1]
+        front_height = bbox(sheet_front)[3]-bbox(sheet_front)[1]
         drag_height = round((bbox(hanging)[3]-bbox(hanging)[1])*HEIGHT/front_height)
         for label,crop,height,feet in (("",front,HEIGHT,FEET),("-drag",hanging,drag_height,FEET-DRAG_OFFSET)):
             frame = place(crop,SOURCE_SIZE,height,feet,(0,255,0,255)).convert("RGB")
             frame.save(ART / "firstframes" / (cid+label+".png"))
             white = place(crop,SOURCE_SIZE,height,feet,(255,255,255,255)).convert("RGB")
             white.save(ART / "firstframes" / (cid+label+"-white.png"))
-        turnaround = Image.new("RGBA",(1500,600),(0,0,0,0))
+        # Use one panel width for all views, including GLM's horizontal ears.
+        panel_width = 560
+        turnaround = Image.new("RGBA",(3 * panel_width,600),(0,0,0,0))
         for i,crop in enumerate((front,side,back)):
-            view = place(crop,(500,600),500,550)
-            turnaround.alpha_composite(view,(i*500,0))
+            view = place(crop,(panel_width,600),500,550)
+            turnaround.alpha_composite(view,(i * panel_width,0))
         triptych = ART / "turnarounds" / (cid+".png")
         turnaround.save(triptych)
         manifest["characters"][cid] = {
-             "name":char["name"],"expression":generation["characters"][cid].get("expression",""),
+            "name":char["name"],"expression":character.get("expression",""),
             "source":source.relative_to(ROOT).as_posix(),
+            "front_source":front_source.relative_to(ROOT).as_posix(),"front_source_sha256":digest(front_source),
             "source_sha256":digest(source),"portrait":portrait.relative_to(ROOT).as_posix(),
             "views":entries,"turnaround":triptych.relative_to(ROOT).as_posix(),
             "standing_reference":"reference/chibi-v2/firstframes/"+cid+".png",

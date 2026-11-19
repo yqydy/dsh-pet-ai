@@ -1,19 +1,17 @@
 # AI 娘桌宠 · dsh-pet-ai-girls
 
-## 当前入口：v2.1角色图 + Seedance动作v3（2026-11-17）
+## 当前入口：八角色正眼 Q 版 + Seedance 动作 v3
 
-角色图沿用v2.1清醒眉眼；动作提示词已按用户所用豆包Seedance 2.0 Flash及「幅度过小」反馈重做为v3。
+八位角色采用已确认的正眼立绘，并配有同一造型的侧面、背面、独立悬空姿势和绿幕首帧。DeepSeek 与 GPT 的 34 条动作配方分别按亲近活泼和故作高冷的性格编排。
 
 **先做[挥手、跳跃、点按三条试样](prompts/chibi-v3/PILOT-DEEPSEEK.md)**，再使用[八角色136条双模式提示词](prompts/chibi-v3/README.md)。已备好[17段官方动作MP4](reference/motion-dsh-pet/README.md)，有视频参考入口时可同时上传角色图与动作片段。
 
-[角色眉眼修改前后](docs/screenshots/chibi-v2-eyes-before-after.png) · [本轮动作诊断与使用指南](docs/SEEDANCE-V3-ACTIONS.md)。
+[八位角色正面原图](reference/chibi-v2/fronts/) · [三视图](reference/chibi-v2/turnarounds/) · [动作诊断与使用指南](docs/SEEDANCE-V3-ACTIONS.md)
 
 按用户上传的小桌宠参考，重新绘制8个角色为**约2头身、短手短脚、柔和手绘线条**；每人有正侧背与独立悬空姿势。
 136条动作提示词对照[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)实际配方重写，保留当前17类配置映射。
 
 ![8角色两头身v2](docs/screenshots/chibi-v2-all8.png)
-
-![相同显示高度对照](docs/screenshots/chibi-v2-comparison.png)
 
 - [重绘说明、上游逐项对照与样片使用顺序](docs/CHIBI-V2-REVISION.md)
 - [每角色17条Seedance v3提示词](prompts/chibi-v3/README.md)：仅图片、图片＋动作视频两种入口各选一版
@@ -23,7 +21,7 @@
 - [128像素高度效果预览](docs/screenshots/chibi-v2-small.png)
 
 **[DeepSeek 娘的 17 条 Seedance 2.0 绿幕动作原片](video/chibi-v2/deepseek/)**已收录，可用于预览和抠像。桌宠安装用的透明 WebM 可按制作指南从原片导入。
-新任务只用reference/chibi-v2，原片保存video/chibi-v2；v1图保留在reference/chibi，v1提示词可从提交0864d33还原。
+新任务使用 [当前 Q 版首帧](reference/chibi-v2/firstframes/)，已有绿幕原片使用生成当时的外观。旧 Q 版源图和试样可在 Git 历史查阅。
 
 上游成片使用 PR 手工抠像。可按指南精修并导入带 Alpha 通道的母版，以获得接近上游的透明边缘。
 

@@ -38,7 +38,7 @@ Python3.8+；FFmpeg查找顺序：命令行--ffmpeg、PET_FFMPEG或FFMPEG_BIN、
 
 ## 3. 逐动作生成视频：当前用Seedance v3
 
-动作配方已根据「上版动作不生动、幅度过小」反馈重做；角色图仍用v2.1清醒眉眼。先打开[DeepSeek三条试样](../prompts/chibi-v3/PILOT-DEEPSEEK.md)，做挥手、跳跃、忙碌点按，再使用[136条索引](../prompts/chibi-v3/README.md)。
+动作配方使用八位角色的[正眼定稿和配套首帧](../reference/chibi-v2/)。DeepSeek 和 GPT 使用各自的动作编排。见 [136 条索引](../prompts/chibi-v3/README.md) 和 [DeepSeek 试样流程](../prompts/chibi-v3/PILOT-DEEPSEEK.md)。
 
 - 10秒、16:9。固定的是镜头；身体可以按动作屈膝、起跳、侧倾、扭转与回弹。
 - 只有图生视频入口：单人S作输入，拖拽用H；复制对应「仅图片」提示词。
@@ -49,7 +49,7 @@ Python3.8+；FFmpeg查找顺序：命令行--ffmpeg、PET_FFMPEG或FFMPEG_BIN、
 - 不把10秒源片硬加速成旧程序动画的1.3秒；保留完整蓄力、主动作、缓冲和收势。
 - 视频导出后继续沿用下文抠像、归一化与打包命令。原片仍存video/chibi-v2，避免改动现有导入路径。
 
-[Seedance v3完整使用与诊断](SEEDANCE-V3-ACTIONS.md)。当前只完成配方和动作参考准备，实际生动度等待豆包试样验证。
+[Seedance v3 使用与诊断](SEEDANCE-V3-ACTIONS.md)。校验动作时同时看首帧所用造型和提示词版本。
 
 ## 4. 按上游完成抠像
 

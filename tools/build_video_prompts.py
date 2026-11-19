@@ -119,7 +119,7 @@ def main():
         all_docs.append("\n".join(sections).replace("../../../reference/","../../reference/"))
     if len(jobs)!=136 or len({(j["character_id"],j["animation_name"]) for j in jobs})!=136:
         raise ValueError("Expected 136 unique jobs")
-    (DEST/"README.md").write_text("\n\n".join(overview)+"\n\nQ版AI动作视频尚待生成；当前plugin/packs是旧程序动画。v1图片在reference/chibi保留，新任务只使用reference/chibi-v2。\n",encoding="utf-8")
+    (DEST/"README.md").write_text("\n\n".join(overview)+"\n\n当前首帧及动作索引见 ../chibi-v3/README.md，旧 Q 版源图见 Git 历史。\n",encoding="utf-8")
     (DEST/"ALL-PROMPTS.md").write_text("\n".join(all_docs),encoding="utf-8")
     data={"schema_version":2,"style_version":manifest["style_version"],"reference_status":"prepared",
           "video_status":"awaiting_video_generation","upstream":recipe["upstream"],"jobs":jobs}

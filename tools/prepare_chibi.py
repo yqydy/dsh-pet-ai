@@ -90,6 +90,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--chars", nargs="+", choices=[c["id"] for c in spec.CHARACTERS])
     args = parser.parse_args(argv)
+    if not (ART / "turnarounds").is_dir():
+        parser.error("Legacy art is in Git history. Use tools/prepare_chibi_v2.py for the current sprites.")
     chars = [c for c in spec.CHARACTERS if not args.chars or c["id"] in args.chars]
     for directory in ("portraits", "views", "firstframes"):
         (ART / directory).mkdir(parents=True, exist_ok=True)

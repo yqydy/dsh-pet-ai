@@ -1,12 +1,14 @@
 {
   "schema_version": 2,
-  "style_version": "two-head-v2.1-expressive-eyes",
+  "style_version": "two-head-v2.2-personality",
   "characters": {
     "deepseek": {
       "name": "DeepSeek 娘",
-      "expression": "亲切好奇，蓝眼明亮聚焦，弧形上眼睑、柔和挑眉，闭嘴浅笑。",
+      "expression": "表情亲近好奇，害羞和委屈也容易读出来。正面时双眼直视镜头。",
       "source": "reference/chibi-v2/sheets/deepseek.png",
-      "source_sha256": "46f4c5f7be6041f4b61f87b36e5e85f9b47e517f1d916289397bde6d2bde0767",
+      "front_source": "reference/chibi-v2/fronts/deepseek.png",
+      "front_source_sha256": "cb6402a8f1c901c146ed824e6f265d4ac5e7e80589a1420b4a48c56ab8ac5a95",
+      "source_sha256": "83dca11f251a4b80c02e5e33cdf44fc72a833ff76baeb3d81a89616eb6986855",
       "portrait": "reference/chibi-v2/portraits/deepseek.png",
       "views": {
         "front": "reference/chibi-v2/views/deepseek-front.png",
@@ -19,14 +21,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/deepseek-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 450,
+      "drag_source_height": 454,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "gpt": {
       "name": "GPT 娘",
-      "expression": "温柔可靠，淡紫杏眼清晰有焦点，眉眼舒展，安定浅笑。",
+      "expression": "故作高冷，反应克制，鼻尖正对镜头时双眼直视。偶尔有淡淡脸红。",
       "source": "reference/chibi-v2/sheets/gpt.png",
-      "source_sha256": "dbde412ae2b74637f61442fa8f0122a7197f970d483759f287094acaa699703a",
+      "front_source": "reference/chibi-v2/fronts/gpt.png",
+      "front_source_sha256": "38c93f945d44dc98e66980315670f65b308c9b94f88ce28f5bfd98e646c13e9f",
+      "source_sha256": "09dd3b9ed9b34c4c91ab7433c00da61d339fde60e87c4bf1dc584756bba2051d",
       "portrait": "reference/chibi-v2/portraits/gpt.png",
       "views": {
         "front": "reference/chibi-v2/views/gpt-front.png",
@@ -39,14 +43,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/gpt-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 447,
+      "drag_source_height": 449,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "claude": {
       "name": "Claude 娘",
-      "expression": "温暖聪慧，琥珀眼含笑但睁开，眉梢轻扬，嘴角与脸颊呼应。",
+      "expression": "温柔踏实，琥珀眼专注，收势时自然闭嘴浅笑，正面时双眼直视。",
       "source": "reference/chibi-v2/sheets/claude.png",
-      "source_sha256": "6f0973f7c4c02879225479fae354100df30b52fe4c47d98cca58d0d3a76fe55c",
+      "front_source": "reference/chibi-v2/fronts/claude.png",
+      "front_source_sha256": "5d981206a2099cde431071afc37691ce540b2b2b81071f680c48c685554be8c1",
+      "source_sha256": "ed2f54beef422cbea6c2ce39adbdace87ee1cabad54cb987a505dc7057348b35",
       "portrait": "reference/chibi-v2/portraits/claude.png",
       "views": {
         "front": "reference/chibi-v2/views/claude-front.png",
@@ -59,14 +65,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/claude-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 455,
+      "drag_source_height": 453,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "grok": {
       "name": "Grok 娘",
-      "expression": "自信俏皮，蓝眼尾稍扬、眼睛正常睁开，一侧眉略挑，嘴角轻翘。",
+      "expression": "最调皮，像刚做完恶作剧，挑眉、露小尖牙，正面时双眼直视。",
       "source": "reference/chibi-v2/sheets/grok.png",
-      "source_sha256": "340df1d5cfdf52364d0f4f33c436dbadec0cf5c7bf4fa3cda96b54e57bef8ed4",
+      "front_source": "reference/chibi-v2/fronts/grok.png",
+      "front_source_sha256": "18f8bf3f5100e6b32902b7594fce388f9ecaafd0c51eabe69398c2ec1ce23b17",
+      "source_sha256": "bfd89595bd59668723ef6fb74ae9791221d2193b245ff358e2097083a12377ed",
       "portrait": "reference/chibi-v2/portraits/grok.png",
       "views": {
         "front": "reference/chibi-v2/views/grok-front.png",
@@ -79,14 +87,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/grok-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 454,
+      "drag_source_height": 458,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "gemini": {
       "name": "Gemini 娘",
-      "expression": "活泼好奇，粉金异瞳圆睁、焦点明确，眉毛轻扬，带小猫般笑意。",
+      "expression": "害羞又俏皮，用脸红和猫嘴笑表达，正面时双眼直视且异瞳不换边。",
       "source": "reference/chibi-v2/sheets/gemini.png",
-      "source_sha256": "4781919320f89ea42305d83c8a703172491bf5891523599692928a9db5d5f463",
+      "front_source": "reference/chibi-v2/fronts/gemini.png",
+      "front_source_sha256": "f679631762de56408b011042bd4c3525598017f1a41c0a6834948279238df723",
+      "source_sha256": "e7642b29bb955965a136ee41ecb97407b7bcf8b23a94ee75ab530fa904c57c0c",
       "portrait": "reference/chibi-v2/portraits/gemini.png",
       "views": {
         "front": "reference/chibi-v2/views/gemini-front.png",
@@ -99,14 +109,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/gemini-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 459,
+      "drag_source_height": 450,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "kimi": {
       "name": "Kimi 娘",
-      "expression": "清醒专注，蓝紫眼略利落、瞳孔清楚，眉毛舒展，含蓄浅笑。",
+      "expression": "文艺文静，像在倾听，嘴角轻轻收住，正面时双眼直视。",
       "source": "reference/chibi-v2/sheets/kimi.png",
-      "source_sha256": "8b614756469400573006a7d25d4344502589d75a8bcc4416b48d809e07558abf",
+      "front_source": "reference/chibi-v2/fronts/kimi.png",
+      "front_source_sha256": "488ca4838efaa41911c66ef6f4d2799c3fd46dfc536108663743fd0745ececfb",
+      "source_sha256": "c2f97fc65355226c837eaf8b8c24c2aaa63f73169250041d75c80386785651b0",
       "portrait": "reference/chibi-v2/portraits/kimi.png",
       "views": {
         "front": "reference/chibi-v2/views/kimi-front.png",
@@ -119,14 +131,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/kimi-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 457,
+      "drag_source_height": 452,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "glm": {
       "name": "GLM 娘",
-      "expression": "机灵狡黠，紫色杏眼正常睁开，单眉轻挑，带小坏笑；眼罩仍在头顶。",
+      "expression": "慵懒，紫瞳半开且有焦点，平眉和短平嘴表达放松，正面时双眼直视。",
       "source": "reference/chibi-v2/sheets/glm.png",
-      "source_sha256": "7e4091e218f2ca26771f83467bdf2c4247a2d5fed35287cdcdd3a305afc9d8b1",
+      "front_source": "reference/chibi-v2/fronts/glm.png",
+      "front_source_sha256": "8ad608bba2f95498b628de2490f9363f978c73b3578c45213bbbdc29535db4eb",
+      "source_sha256": "a7ff62d61d7af13119041782dca19eff6ca375e5df047941645e3a6d10321564",
       "portrait": "reference/chibi-v2/portraits/glm.png",
       "views": {
         "front": "reference/chibi-v2/views/glm-front.png",
@@ -139,14 +153,16 @@
       "drag_reference": "reference/chibi-v2/firstframes/glm-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 462,
+      "drag_source_height": 441,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "qwen": {
       "name": "Qwen 娘",
-      "expression": "温婉灵动，紫色杏眼柔和上扬、视线聚焦，细眉与浅笑呼应。",
+      "expression": "讲究仪态的傲娇大小姐，眉梢精致，浅笑克制，正面时双眼直视。",
       "source": "reference/chibi-v2/sheets/qwen.png",
-      "source_sha256": "b4683c8739ccb009d6ff0c78399fd0ef3e28425b861d7b11fa2e53e5c669ddd3",
+      "front_source": "reference/chibi-v2/fronts/qwen.png",
+      "front_source_sha256": "cef94d86edf9992c9ea83e7e801d1af816ac9f62a579c30e1f57249f4b076554",
+      "source_sha256": "b19e82fa3cca1bd6ce471169b27c8824c56b563baed6c8d8d40ecdbdf45a7339",
       "portrait": "reference/chibi-v2/portraits/qwen.png",
       "views": {
         "front": "reference/chibi-v2/views/qwen-front.png",
@@ -159,7 +175,7 @@
       "drag_reference": "reference/chibi-v2/firstframes/qwen-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 455,
+      "drag_source_height": 456,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     }
   },

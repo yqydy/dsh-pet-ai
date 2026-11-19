@@ -5,15 +5,11 @@
 |素材|来源|作者/平台|时间|用途与授权状态|
 |---|---|---|---|---|
 |style-target.png|用户本聊天上传参考图|用户提供，原图作者未核实|2026-11-17保存|仅作本次画风参考；上传不等于授予原图著作权，不宣称原创|
-|八角色身份参考|../chibi/turnarounds/ 与 ../turnaround-<id>.png|既有仓库角色；来源和署名见../../NOTICE.md|既有素材，本次11-17使用|保留原二创署名及CC BY-NC-SA4.0非商业/相同方式共享说明|
-|sheets/*.png|内置image_gen，基于上两类参考|AI辅助重绘|2026-11-17|项目两头身角色参考；作为衍生素材沿用NOTICE中的限制|
-|portraits、views、turnarounds、firstframes|由sheets导出|tools/prepare_chibi_v2.py|2026-11-17|仅裁切、缩放和排版，未以程序重画人物|
+|八角色身份参考|../turnaround-<id>.png|既有仓库角色，来源和署名见../../NOTICE.md|既有素材|沿用原二创署名及 CC BY-NC-SA 4.0|
+|fronts/*.png|内置 ImageGen，以此前的 Q 版和大版形象为参考|AI 辅助重绘|2026-11-19|用户确认的正眼立绘原图|
+|sheets/*.png|内置 ImageGen，以确认的正眼立绘和旧四姿势图为参考|AI 辅助重绘|2026-11-19|按同一造型配齐正、侧、背、悬空四姿势|
+|portraits、views、turnarounds、firstframes|由 fronts 和 sheets 导出|tools/prepare_chibi_v2.py|2026-11-19|裁切、缩放、排版与绿幕首帧|
 |动作配方与流程|https://github.com/PC2005-cloud/dsh-pet/tree/ef174beecc79df76baf9ca06ed152237bbb96875|PC2005-cloud/dsh-pet|2026-11-17查阅|分析、对应及改写；原作者链接保留于README、NOTICE及修订说明|
 
 实际图像生成提示词、身份参考相对路径及SHA256见image-generation.json。每角色四姿势原图的SHA256也记录在manifest.json。
-程序没有生成AI动作视频；新图只供后续图生视频使用。原图作者/授权如有进一步资料，应补充本文件及NOTICE，不把不明来源图片宣称为自行原创。
-
-## v2.1眉眼修订（2026-11-17）
-
-当前sheets是以旧v2四姿势源图为唯一编辑参考，使用内置imagegen修改眉眼口型所得。旧源图与原配方已迁入archive/2026-11-17-half-lidded，作为历史资料，不再用于当前视频首帧。
-实际编辑提示词、输入相对路径和新图SHA256见当前image-generation.json；manifest.json中的expression为每人神态说明。
+正面站姿使用 fronts 内的确认图，侧面、背面和悬空使用 sheets 的相应姿势。提示词及文件 SHA256 记录在 [image-generation.json](image-generation.json)，各姿势路径见 [manifest.json](manifest.json)。旧 Q 版和原配方可在预先记录的 Git 提交中查阅。

@@ -26,14 +26,14 @@
 
 ## Q版衍生素材（2026-11-08）
 
-reference/chibi/为基于上述原角色及三视图、使用内置imagegen制作的Q版二创，原角色署名和CC BY-NC-SA 4.0说明继续适用。prompts/chibi/image-generation.json记录生成提示词与参考输入。缩放、拆分和绿幕首帧由tools/prepare_chibi.py导出，未把原角色设计声明为本项目原创。
+早期 Q 版曾保存在 reference/chibi，可在 Git 历史查看。原角色署名和 CC BY-NC-SA 4.0 继续适用。prompts/chibi/image-generation.json 记录了早期生成提示词与参考输入。
 
 
 ## 两头身v2衍生素材（2026-11-17）
 
 reference/chibi-v2/基于既有角色及用户上传风格参考，使用内置imagegen重绘。实际生成与修订提示词见reference/chibi-v2/image-generation.json，来源与用途见reference/chibi-v2/sources.md。原角色署名和衍生素材限制继续沿用上述说明。用户风格参考的原作者未核实，不将该原图声明为本项目原创。
 
-动作提示词按[PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet)的实际配方分析、改写；版本与逐项适配见docs/CHIBI-V2-REVISION.md。v2只交付静态参考图与视频生成配方，新AI动作视频仍待生成。
+动作提示词按 [PC2005-cloud/dsh-pet](https://github.com/PC2005-cloud/dsh-pet) 的实际配方分析、改写。适配记录见 [docs/CHIBI-V2-REVISION.md](docs/CHIBI-V2-REVISION.md)。
 
 
 ## 上游动作参考MP4（2026-11-17）

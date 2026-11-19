@@ -12,18 +12,22 @@ ROOT=Path(__file__).resolve().parents[1]
 DEST=ROOT/"prompts/chibi-v3"
 FENCE=chr(96)*3
 
+def action_for_role(action, role):
+    return {**action, **role.get("actions", {}).get(action["id"], {})}
+
 def make_prompt(char,action,recipe,with_motion):
     cid=char["id"]
     role=recipe["roles"][cid]
     if with_motion:
-        lead=("只用图片1角色外观："+role["identity"]+"参考视频1的动作幅度、快慢和重心，按下面10秒编排；不带入视频人物和背景。")
+        lead=("用图片1锁定角色外观。"+role["identity"]+"视频1提供动作类别和重心变化，表情与节奏按下文。")
     else:
         lead="让图片1角色做"+action["name"]+"："+role["identity"]
     secondary=role["calm"] if action["id"] in ("idle","nap","whisper","thinking","error") else role["accent"]
     ending=("首尾为图片1悬空姿势，摆动相位连续。" if action["endpoint_mode"]=="H-H"
             else "第10秒恢复图片1正面站姿并自然收住。")
     technical="10秒16:9，图片1的二维画风与比例构图，固定全身单镜头、#00FF00绿幕；尾翼、手脚及图形距画边至少10%，无字幕。"
-    prompt="\n".join([lead," ".join(action["timeline"]),secondary,action["effects"],action["spatial_rule"],ending,technical])
+    prompt="\n".join(filter(None, (lead, " ".join(action["timeline"]), role.get("performance"), secondary,
+                                    action["effects"], action["spatial_rule"], ending, technical)))
     if len(prompt)>recipe["prompt_budget_characters"]:
         raise ValueError("Prompt exceeds 500 characters: "+cid+"/"+action["id"]+" "+str(len(prompt)))
     return prompt
@@ -73,10 +77,10 @@ def main():
     jobs=[]
     all_doc=["# Seedance 2.0：136条dsh-pet动作提示词 v3\n","两种入口各选一段复制；不要把两段合并。建议先看[PILOT-DEEPSEEK.md](PILOT-DEEPSEEK.md)。\n"]
     overview=["# 豆包 Seedance 2.0：dsh-pet动作提示词 v3\n",
-        "针对反馈「上版不生动、动作幅度太小」重写。当前角色图沿用v2.1清醒眉眼，新版的是动作配方。\n",
-        "**先试[DeepSeek三条](PILOT-DEEPSEEK.md)：挥手、跳跃、忙碌点按。** 这三条通过后再生成其余角色。全部136条已备好，但尚未在豆包生成新样片。\n",
+        "使用确认的八角色正眼立绘和配套首帧。DeepSeek 与 GPT 分别采用逐动作的性格编排，其余角色在共享动作上加入各自的神态约束。\n",
+        "[DeepSeek 试样流程](PILOT-DEEPSEEK.md)涵盖挥手、跳跃、忙碌点按。已收录的绿幕视频见[DeepSeek 原片目录](../../video/chibi-v2/deepseek/)。\n",
         "有全能参考/视频参考入口：图片1选本角色单人绿幕图，视频1选本动作MP4，复制「图片＋视频」版本。只有图生视频入口：只上传该角色图，复制「仅图片」版本。两种模式不要混成一个API请求。\n",
-        "10秒、16:9。动作测试先用单张角色图，不在界面同时锁定同一尾帧；提示词仍要求收势回位。多模态参考中图片是外观参考，不是API的first_frame角色。\n",
+        "默认 10 秒、16:9。站姿先用单张角色图试拍，拖拽可用相同的悬空首尾帧帮助接回循环。多模态参考模式中把图片作为外观参考。\n",
         "主体会蓄力、抬臂、扭肩、屈膝和回弹，固定的是镜头与画幅。不是所有动作都变成大跳：待机舒缓，挥手/跳跃/庆祝明显舒展。\n",
         "[使用与诊断指南](../../docs/SEEDANCE-V3-ACTIONS.md) · [17段上游参考](../../reference/motion-dsh-pet/README.md) · [全部提示词](ALL-PROMPTS.md)\n",
         "|角色|17条双模式提示词|站姿S|悬空H|",
@@ -90,6 +94,7 @@ def main():
             "两种入口的提示词二选一，不叠加。固定镜头不代表冻结身体，最后一帧要收回原姿势，但不用前后各站着不动一秒。\n"]
         overview.append("|"+char["name"]+"|[打开](roles/"+cid+".md)|[S](../../"+r["standing_reference"]+")|[H](../../"+r["drag_reference"]+")|")
         for i,(action,anim) in enumerate(zip(recipe["actions"],spec.ANIMATIONS)):
+            action=action_for_role(action,recipe["roles"][cid])
             name,duration,loop,category,_=anim
             reference=r["drag_reference"] if action["endpoint_mode"]=="H-H" else r["standing_reference"]
             job={"id":cid+"-"+action["id"],"action_id":action["id"],"action_index":i+1,
@@ -135,7 +140,7 @@ def main():
     for pilot_id in recipe["pilot_ids"]:
         j=next(j for j in jobs if j["character_id"]=="deepseek" and j["action_id"]==pilot_id)
         if j["priority"]=="pilot":
-            action=next(a for a in recipe["actions"] if a["id"]==j["action_id"])
+            action=action_for_role(next(a for a in recipe["actions"] if a["id"]==j["action_id"]),recipe["roles"]["deepseek"])
             pilot+=section(j,action,"../../")
     pilot+=["## 如何判定幅度是否解决\n",
         "- 挥手：手掌从肩外侧摆到耳旁，轨迹至少半个头宽，肩肘和躯干一起动。",
@@ -144,7 +149,7 @@ def main():
         "- 再检查脸型、耳角翼尾和服装是否稳定；大动作不以变形换取。\n",
         "若仍偏小：只替换该动作的幅度句，保持其他输入不变。挥手可写“双臂从肩下到头两侧完整展开”；点按可写“每次抬前臂再按下，躯干跟着前俯回弹”。不要只追加‘更生动’。\n",
         "若身体已好但首尾接不上，再单独试尾帧约束或补回位片段；先不要同时改变时长、参考输入和整条文案。\n",
-        "回填[试样记录表](PILOT-RESULTS.csv)；目前没有任何一条新视频被标记为已验证。"]
+        "用[试样记录表](PILOT-RESULTS.csv)记录新首帧与动作配方的实际结果。"]
     (DEST/"PILOT-DEEPSEEK.md").write_text("\n".join(pilot),encoding="utf-8")
     results=DEST/"PILOT-RESULTS.csv"
     if not results.exists():
