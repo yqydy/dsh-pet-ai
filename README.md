@@ -22,10 +22,10 @@
 - [从生成视频到精修抠像、归一化、验收与打包](docs/MAKE-CHIBI-PET.md)
 - [128像素高度效果预览](docs/screenshots/chibi-v2-small.png)
 
-**图片已生成，AI动作视频尚待生成。** 当前plugin/packs仍为旧程序动画；不能通过替换静态图就变成新动画。
+**[DeepSeek 娘的 17 条 Seedance 2.0 绿幕动作原片](video/chibi-v2/deepseek/)**已收录，可用于预览和抠像。桌宠安装用的透明 WebM 可按制作指南从原片导入。
 新任务只用reference/chibi-v2，原片保存video/chibi-v2；v1图保留在reference/chibi，v1提示词可从提交0864d33还原。
 
-上游成片使用PR手工抠像；要接近其透明边缘，应按指南精修后导入带alpha母版。提示词已优化，但尚未使用视频模型验证实际样片效果。
+上游成片使用 PR 手工抠像。可按指南精修并导入带 Alpha 通道的母版，以获得接近上游的透明边缘。
 
 下面是原有插件与程序动画的说明，AI视频路线见上面的v2指南。
 
