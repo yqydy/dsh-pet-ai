@@ -74,7 +74,7 @@ Python3.8+；FFmpeg查找顺序：命令行--ffmpeg、PET_FFMPEG或FFMPEG_BIN、
     video/chibi-v2/deepseek/待机呼吸.mp4
     video/chibi-v2/deepseek/被鼠标拖拽悬空反馈.mp4
 
-MP4、MOV、WebM均可。[DeepSeek 娘的 17 条绿幕原片](../video/chibi-v2/deepseek/)已收录供预览和导入，其他原片与中间产物默认由 Git 忽略。v2不自动读取旧video/chibi目录，避免混用人物版本。
+MP4、MOV、WebM 均可。[大肥鱼的 17 条绿幕原片](../video/chibi-v2/deepseek/)与[龙娘的 17 条绿幕原片](../video/chibi-v2/gpt/)可供预览和导入。其他原片与中间产物默认由 Git 忽略。v2 的原片读取路径为 `video/chibi-v2/`。
 
 ~~~powershell
 python tools/video_pipeline.py plan

@@ -2,7 +2,7 @@
 
 使用确认的八角色正眼立绘和配套首帧。DeepSeek 与 GPT 分别采用逐动作的性格编排，其余角色在共享动作上加入各自的神态约束。
 
-[DeepSeek 试样流程](PILOT-DEEPSEEK.md)涵盖挥手、跳跃、忙碌点按。已收录的绿幕视频见[DeepSeek 原片目录](../../video/chibi-v2/deepseek/)。
+[DeepSeek 试样流程](PILOT-DEEPSEEK.md)涵盖挥手、跳跃、忙碌点按。新版绿幕原片各 17 条，见[大肥鱼](../../video/chibi-v2/deepseek/)与[龙娘](../../video/chibi-v2/gpt/)。
 
 有全能参考/视频参考入口：图片1选本角色单人绿幕图，视频1选本动作MP4，复制「图片＋视频」版本。只有图生视频入口：只上传该角色图，复制「仅图片」版本。两种模式不要混成一个API请求。
 

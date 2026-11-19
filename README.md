@@ -20,8 +20,7 @@
 - [从生成视频到精修抠像、归一化、验收与打包](docs/MAKE-CHIBI-PET.md)
 - [128像素高度效果预览](docs/screenshots/chibi-v2-small.png)
 
-**[DeepSeek 娘的 17 条 Seedance 2.0 绿幕动作原片](video/chibi-v2/deepseek/)**已收录，可用于预览和抠像。桌宠安装用的透明 WebM 可按制作指南从原片导入。
-新任务使用 [当前 Q 版首帧](reference/chibi-v2/firstframes/)，已有绿幕原片使用生成当时的外观。旧 Q 版源图和试样可在 Git 历史查阅。
+**[大肥鱼的 17 条动作](video/chibi-v2/deepseek/) · [龙娘的 17 条动作](video/chibi-v2/gpt/)**。两套动作使用[当前 Q 版首帧](reference/chibi-v2/firstframes/)及各自的性格配方生成，规格为 1280×720、24 fps 的绿幕 MP4，可用于预览和抠像。旧版可在 Git 历史查阅。
 
 上游成片使用 PR 手工抠像。可按指南精修并导入带 Alpha 通道的母版，以获得接近上游的透明边缘。
 
