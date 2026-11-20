@@ -38,7 +38,7 @@ Python3.8+；FFmpeg查找顺序：命令行--ffmpeg、PET_FFMPEG或FFMPEG_BIN、
 
 ## 3. 逐动作生成视频：当前用Seedance v3
 
-动作配方使用八位角色的[正眼定稿和配套首帧](../reference/chibi-v2/)。DeepSeek 和 GPT 使用各自的动作编排。见 [136 条索引](../prompts/chibi-v3/README.md) 和 [DeepSeek 试样流程](../prompts/chibi-v3/PILOT-DEEPSEEK.md)。
+八位角色各有独立的动作编排，使用配套的[立绘与首帧](../reference/chibi-v2/)。见 [136 条索引](../prompts/chibi-v3/README.md) 和 [DeepSeek 试样流程](../prompts/chibi-v3/PILOT-DEEPSEEK.md)。
 
 - 10秒、16:9。固定的是镜头；身体可以按动作屈膝、起跳、侧倾、扭转与回弹。
 - 只有图生视频入口：单人S作输入，拖拽用H；复制对应「仅图片」提示词。
@@ -74,7 +74,7 @@ Python3.8+；FFmpeg查找顺序：命令行--ffmpeg、PET_FFMPEG或FFMPEG_BIN、
     video/chibi-v2/deepseek/待机呼吸.mp4
     video/chibi-v2/deepseek/被鼠标拖拽悬空反馈.mp4
 
-MP4、MOV、WebM 均可。[大肥鱼的 17 条绿幕原片](../video/chibi-v2/deepseek/)与[龙娘的 17 条绿幕原片](../video/chibi-v2/gpt/)可供预览和导入。其他原片与中间产物默认由 Git 忽略。v2 的原片读取路径为 `video/chibi-v2/`。
+MP4、MOV、WebM 均可。[八位角色的 136 条绿幕原片](../video/chibi-v2/)可供预览和导入。新生成的文件与中间产物默认由 Git 忽略。v2 的原片读取路径为 `video/chibi-v2/`。
 
 ~~~powershell
 python tools/video_pipeline.py plan

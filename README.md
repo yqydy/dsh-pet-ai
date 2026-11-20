@@ -20,7 +20,7 @@
 - [从生成视频到精修抠像、归一化、验收与打包](docs/MAKE-CHIBI-PET.md)
 - [128像素高度效果预览](docs/screenshots/chibi-v2-small.png)
 
-**[大肥鱼的 17 条动作](video/chibi-v2/deepseek/) · [龙娘的 17 条动作](video/chibi-v2/gpt/)**。两套动作使用[当前 Q 版首帧](reference/chibi-v2/firstframes/)及各自的性格配方生成，规格为 1280×720、24 fps 的绿幕 MP4，可用于预览和抠像。旧版可在 Git 历史查阅。
+**[八位角色的 136 条绿幕动作原片](video/chibi-v2/)**。每位角色各 17 条，规格为 1280×720、24 fps 的绿幕 MP4，可用于预览和抠像。GLM 使用新版睁眼立绘和配套[绿幕首帧](reference/chibi-v2/firstframes/glm.png)。
 
 上游成片使用 PR 手工抠像。可按指南精修并导入带 Alpha 通道的母版，以获得接近上游的透明边缘。
 

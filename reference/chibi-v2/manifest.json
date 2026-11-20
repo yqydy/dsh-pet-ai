@@ -136,11 +136,11 @@
     },
     "glm": {
       "name": "GLM 娘",
-      "expression": "慵懒，紫瞳半开且有焦点，平眉和短平嘴表达放松，正面时双眼直视。",
+      "expression": "圆润紫瞳自然睁开，眼神清醒明亮。正面时双眼直视镜头，表情随动作变化。",
       "source": "reference/chibi-v2/sheets/glm.png",
       "front_source": "reference/chibi-v2/fronts/glm.png",
-      "front_source_sha256": "8ad608bba2f95498b628de2490f9363f978c73b3578c45213bbbdc29535db4eb",
-      "source_sha256": "a7ff62d61d7af13119041782dca19eff6ca375e5df047941645e3a6d10321564",
+      "front_source_sha256": "728da8b6c34a4f7617b327c755fa0ee58d9f5bc91d6405a395bd026780b0ee83",
+      "source_sha256": "37f834735c3633fc11ec37eabe34a1a942bad1b97015fff5fcfe0fe430cb53d3",
       "portrait": "reference/chibi-v2/portraits/glm.png",
       "views": {
         "front": "reference/chibi-v2/views/glm-front.png",
@@ -153,7 +153,7 @@
       "drag_reference": "reference/chibi-v2/firstframes/glm-drag.png",
       "drag_pose_origin": "independently_drawn_fourth_pose",
       "standing_source_height": 468,
-      "drag_source_height": 441,
+      "drag_source_height": 440,
       "drag_scale": "same pixel scale as standing source; no independent height fit"
     },
     "qwen": {
